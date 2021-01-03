@@ -5,8 +5,6 @@
       - linux-hardened
       - linux-hardened-headers
     state: present
-  notify:
-    - rebuild grub
 
 - name: Enable unprivileged containers for non-root users
   copy:

@@ -11,6 +11,7 @@ AllowUsers {{ user.name }}
 LoginGraceTime 1m
 ChallengeResponseAuthentication no
 PubkeyAuthentication yes
+AllowAgentForwarding yes
 Subsystem	sftp	/usr/lib/ssh/sftp-server
 # Preferred algorithms from:
 # https://wiki.mozilla.org/Security/Guidelines/OpenSSH#Modern_.28OpenSSH_6.7.2B.29

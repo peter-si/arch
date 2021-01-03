@@ -1,18 +1,32 @@
 ---
-- name: Install rcm
-  aur: name=rcm user={{ user.name }}
-  when: dotfiles is defined
-  tags:
-    - aur
-
-- name: Clone user dotfiles
-  git: repo={{ dotfiles.url }} dest=/home/{{ user.name }}/{{ dotfiles.destination }} accept_hostkey=yes update=no
-  when: dotfiles is defined
-  become: yes
+- name: Clone dotfiles to user home
   become_user: "{{ user.name }}"
-
-- name: Install user dotfiles
-  command: rcup -d /home/{{ user.name}}/{{ dotfiles.destination}} {{ dotfiles.rcup_flags }}
-  when: dotfiles is defined
   become: yes
+  git:
+    repo: "{{ dotfiles.url }}"
+    dest: /home/{{ user.name }}/{{ dotfiles.name }}
+    recursive: yes
+    bare: yes
+    key_file: /home/{{ user.name }}/.ssh/id_rsa
+
+- name: Checkout dotfiles
   become_user: "{{ user.name }}"
+  become: yes
+  command: git --git-dir=/home/{{ user.name }}/.dotfiles.git --work-tree=/home/{{ user.name }} checkout --force
+
+- name: Remove README from home
+  file:
+    path: /home/{{ user.name }}/README.md
+    state: absent
+
+- name: Creates directory for runable scripts
+  become_user: "{{ user.name }}"
+  become: yes
+  file:
+    path: "/home/{{ user.name }}/.local/bin"
+    state: directory
+    mode: 0775
+    recurse: yes
+
+- include: zsh.yaml
+- include: bitwarden.yaml

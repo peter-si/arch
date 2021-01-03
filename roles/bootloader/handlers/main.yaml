@@ -1,0 +1,5 @@
+- name: rebuild bootloader
+  command: mkinitcpio -P
+
+- name: make plymouth theme default
+  command: plymouth-set-default-theme -R arch-glow

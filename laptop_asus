@@ -1,2 +1,0 @@
-[laptop_asus]
-laptop_asus   ansible_connection=local

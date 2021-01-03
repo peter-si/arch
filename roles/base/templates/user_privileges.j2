@@ -1,0 +1,12 @@
+## {{ ansible_managed }}
+##
+## User privilege specification
+##
+root ALL=(ALL) ALL
+
+Defaults:{{ user.name }} timestamp_timeout=300
+
+%wheel ALL=(ALL) ALL
+{% for entry in passwordless_sudo %}
+%wheel ALL=(ALL) NOPASSWD:{{ entry }}
+{% endfor %}

@@ -10,7 +10,14 @@
     - sudo
     - user
 
+- name: Load additional configs
+  lineinfile:
+    path: /etc/sudoers
+    line: '@includedir /etc/sudoers.d'
+    regexp: '^\@includedir  \/etc\/sudoers.d'
+    state: present
+
 - name: Copy sudo configuration
-  template: src=sudoers.j2 dest=/etc/sudoers mode=440 validate='visudo -cf %s'
+  template: src=user_privileges.j2 dest=/etc/sudoers.d/user_privileges mode=0440 validate='visudo -c'
   tags:
     - sudo

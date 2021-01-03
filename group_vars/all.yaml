@@ -1,74 +1,32 @@
 user:
-    name: pigmonkey
-    uid: 1000
-    group: pigmonkey
-    shell: /usr/bin/zsh
-    email:  peter@havenaut.net
-    log:
-        dir: log
-        rotate: 8
+  name: alulord
+  uid: 1000
+  group: users
+  shell: /usr/bin/zsh
+  log:
+    dir: .log
+    rotate: 8
+  timezone: Europe/Bratislava
 
-hostname: nous
+bootloader:
+  path: /boot
+  theme_path: refind-theme-regular
+  kernel_parameters:
+  silent: True
 
-interception:
-    caps2esc:
-        enabled: True
-        mode: 1
-        delay: 20000
+
+additional_hosts: |
+  192.168.2.102 sonarr.rasp plex.rasp radarr.rasp jackett.rasp ombi.rasp resilio.rasp traefik.rasp monit.rasp muximux.rasp
+  127.0.0.1 sonarr.docker plex.docker radarr.docker jackett.docker ombi.docker resilio.docker traefik.docker monit.docker muximux.docker
+  127.0.0.1 admin.odin auth.odin platform.odin helpdesk.odin frm.odin web.odin rest.odin rabbitmq.odin phpmyadmin.odin services.odin
+  10.1.13.70 kibana.ws.int
 
 dotfiles:
-    url: git@github.com:pigmonkey/dotfiles.git
-    destination: projects/dotfiles
-    rcup_flags: -fx README.md
+  url: git@github.com:alulord/arch.git
+  name: .dotfiles.git
 
-aur:
-    dir: aur
-    packages:
-        - yay
-        - downgrade
-        - zplug
-        - miller
-        - myrepos
-        - ctmg
-        - spiped
-
-ssh:
-    port: 22
-    user_key: /root/id_rsa
-    enable_sshd: False
-
-gnupg:
-    enable_agent: True
-    emulate_ssh: True
-
-mail:
-    sync_tool: isync
-    sync_pim: True
-    sync_taskwarrior: True
-    sync_notmuch: False
-    sync_time: 5min
-    sync_boot_delay: 2min
-    sync_on: trusted
-
-network:
-    spoof_mac: True
-    conn_check:
-        interval: 0
-    trusted_uuid:
-        - b21284e6-01af-492f-8bea-45a69ef22a23
-        - 4ddd6988-aad1-4927-b650-ea7d24e0138b
-        - f9b3c62c-2d9f-450a-ac9b-528ba4c85ded
-        - b94375d1-70f8-424f-a6d7-dc52d0ab7288
-        - f74f2bd5-8748-4e1e-98f9-dae2dd44b916
-        - faeec88c-79ec-4840-ab25-ea356af8a81b
-
-editors:
-    - gvim
-
-video_drivers:
-    - libva-intel-driver
-
-base_packages:
+pacman:
+  base_packages:
     - base-devel
     - man-db
     - man-pages
@@ -82,207 +40,47 @@ base_packages:
     - moreutils
     - dateutils
     - bc
-    - ranger
     - arch-wiki-lite
     - arch-wiki-docs
     - python-keyring
     - python-secretstorage
-    - tig
-    - ruby
     - pv
-    - minicom
     - jq
     - screen
-    - termdown
-    - fzf
-    - cpulimit
-
-filesystem_packages:
-    - dosfstools
-    - ntfs-3g
-    - exfat-utils
-
-browser_choices:
-    - firefox -P default
-    - firefox -P work
-    - firewarden chromium
-    - firewarden -c qutebrowser
-    - tor-browser-en
-    - play
-    - qcode
-    - "| xclip -selection c"
-
-passwordless_sudo:
-    - /usr/bin/openvpn*
-
-tarsnapper:
-  deltas: 1h 1d 7d 30d 365d
-  period: DAILY
-  ac_only: True
-  run_on: trusted
-  random_delay: 600
-
-gitannex:
-    stop_on_untrusted: True
-
-bitlbee:
-    run_on: trusted
-    torify: True
-
-bootloader: grub
-
-postgresql:
-    enable: True
-    root: /home/postgres
-
-fingerprint: False
-
-etesync: False
-
-tor:
-    run_on: trusted
-
-localtime:
-    run_on: trusted
-
-unbound:
-    tls: True
-    roothints_update: trusted
-    nameservers:
-        - 1.1.1.1@853#cloudflare-dns.com  # Cloudflare
-        - 9.9.9.9@853#dns.quad9.net  # Quad9
-    private_domains:
-        - corp
-        - home
-        - intranet
-        - lan
-        - mesh
-        - private
-    allow_lan_dns: True
-
-bluetooth:
-    disable: False
-
-firejail:
-    blacklist:
-        - ~/.calendars
-        - ~/.config/vdirsyncer
-        - ~/.contacts
-        - ~/.keys
-        - ~/.mbsyncrc
-        - ~/.offlineimap
-        - ~/.offlineimaprc
-        - ~/.password-store
-        - ~/.vdirsyncer
-        - ~/library
-
-cryptshot:
-    - name: alta
-      uuid: 0a0db776-84c5-48e1-9079-cacfbc5de8a3
-      keyfile: /home/pigmonkey/.keys/usb-alta.key
-      retain:
-        - level: daily
-          interval: 7
-        - level: weekly
-          interval: 6
-        - level: monthly
-          interval: 3
-    - name: bishorn
-      uuid: baeb40a2-b19e-4adc-8ef6-44ee720a4d1a
-      keyfile: /home/pigmonkey/.keys/usb-bishorn.key
-      retain:
-        - level: daily
-          interval: 7
-        - level: weekly
-          interval: 6
-        - level: monthly
-          interval: 3
-    - name: pilchuck
-      uuid: d96a0fc3-7ea1-42f7-b0d0-42e573c478bd
-      keyfile: /home/pigmonkey/.keys/usb-pilchuck.key
-      retain:
-        - level: daily
-          interval: 7
-        - level: weekly
-          interval: 6
-        - level: monthly
-          interval: 3
-
-journal:
-    max_size: 500M
-
-udisks:
-    auto_mount: False
-    shared_mount: True
-
-hostsctl:
-    url: https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
-
-himawaripy:
-    run_time: 15min
-    run_boot_delay: 2min
-    run_on: never
-    flags: --auto-offset --level 4
-
-goesimage:
-    run_time: 15min
-    run_boot_delay: 2min
-    run_on: trusted
-    flags: -w -e
-
-libinput:
-    middle_click_scroll: 12
-    button_mapping: "1 2 3 4 5 6 7 8 9 10 11 2"
-
-display_manager: lightdm
-gdm:
-    sound: False
-    font_scaling_factor: 1
-    logo_path: False
-    touchpad:
-        tap_to_click: True
-    accessibility_menu: True
-
-desktop_environment: i3
-gnome:
-    night_light:
-        enabled: True
-        color_temperature: 4000 # in Kelvin
-    date_time:
-        show_date_in_clock: True
-        show_weeks_in_calendar: True
-    battery:
-        show_percentage: True
-    power:
-        sleep_timeout_when_computer_on_ac: 3600 # in seconds
-        timeout_action_when_computer_on_ac: suspend
-        sleep_timeout_when_computer_on_battery: 1800 # in seconds
-        timeout_action_when_computer_on_battery: suspend
-        power_button_action: suspend
-    touchpad:
-        tap_to_click: True
-        natural_scrolling: True
-        disabled_while_typing: True
-    online_accounts_support: True
-    lock_screen:
-        automatic_lock: True
-        lock_screen_after_blank_for: 0 # in seconds
-        show_notifications: True
-        show_full_name_of_user: True
-    theme:
-        theme_name: Adwaita
-        icon_theme_name: Adwaita
-        font_name: Dejavu Sans 13
-        dark_variant: True
-    gnome_shell:
-        disable_top_left_hot_corner: False
-        extensions_support: True
-
-base_fonts:
+    - nano
+    - wget
+    - zsh
+    - alacritty
+    - jre-openjdk
+    - gnome-keyring
+  packages:
+    - leafpad
+    - filezilla
+    - gimp
+    - gsimplecal
+    - nemo
+    - nemo-fileroller
+    - neofetch
+    - rsync
+    - transmission-gtk
+    - steam
+    - pacman-contrib
+    - phototonic
+    - papirus-icon-theme
+    - lm_sensors
+    - seahorse
+    - archiso
+    - gnome-calculator
+    - jre-openjdk
+    - gucharmap
+    - todotxt
+    - hdparm
+  fonts:
     - adobe-source-code-pro-fonts
     - cantarell-fonts
     - gsfonts
     - noto-fonts
+    - noto-fonts-emoji
     - terminus-font
     - tex-gyre-fonts
     - ttf-caladea
@@ -295,8 +93,21 @@ base_fonts:
     - ttf-liberation
     - ttf-opensans
     - ttf-ubuntu-font-family
+    - ttf-font-awesome
 
-aur_fonts:
+aur:
+  dir: .aur
+  packages:
+    - yay
+    - ctop
+    - downgrade
+    - myrepos
+    - teamviewer
+    - yay
+    - mailspring-libre
+    - recapp-git
+    - nvme-cli
+  fonts:
     - ttf-bitstream-charter
     - ttf-cooper-hewitt
     - ttf-courier-prime
@@ -306,21 +117,234 @@ aur_fonts:
     - ttf-oswald
     - ttf-quintessential
     - ttf-signika
+    - nerd-fonts-fira-code
+    - nerd-fonts-jetbrains-mono
+    - ttf-font-awesome-4
+    - ttf-weather-icons
+
+ssh:
+  port: 22
+  user_dir: /install/.ssh
+  enable_sshd: False
+
+gnupg:
+  enable_agent: True
+  emulate_ssh: True
+
+mail:
+  sync_tool: isync
+  sync_pim: True
+  sync_taskwarrior: True
+  sync_notmuch: False
+  sync_time: 5min
+  sync_boot_delay: 2min
+  sync_on: trusted
+
+network:
+  spoof_mac: True
+  conn_check:
+    interval: 0
+  trusted_uuid:
+    - bfa4a571-e6b0-46f1-84ca-e8bce047dd64
+    - 535ee41f-f3f9-30bd-92d8-8a9e227621de
+
+editors:
+  - gvim
+
+video_drivers:
+  - libva-intel-driver
+
+filesystem_packages:
+  - dosfstools
+  - ntfs-3g
+  - exfat-utils
+
+browser_choices:
+  - firefox -P default
+  - firefox -P work
+  - firewarden chromium
+  - firewarden -c qutebrowser
+  - tor-browser-en
+  - play
+  - qcode
+  - "| xclip -selection c"
+
+passwordless_sudo:
+  - /usr/bin/openvpn*
+
+tarsnapper:
+  deltas: 1h 1d 7d 30d 365d
+  period: DAILY
+  ac_only: True
+  run_on: trusted
+  random_delay: 600
+
+gitannex:
+  stop_on_untrusted: True
+
+bitlbee:
+  run_on: trusted
+  torify: True
+
+postgresql:
+  enable: True
+  root: /home/postgres
+
+fingerprint: False
+
+etesync: False
+
+tor:
+  run_on: trusted
+
+localtime:
+  run_on: trusted
+
+unbound:
+  tls: True
+  roothints_update: trusted
+  nameservers:
+    - 1.1.1.1@853#cloudflare-dns.com  # Cloudflare
+    - 9.9.9.9@853#dns.quad9.net  # Quad9
+  private_domains:
+    - corp
+    - home
+    - intranet
+    - lan
+    - mesh
+    - private
+  allow_lan_dns: True
+
+bluetooth:
+  disable: False
+
+firejail:
+  blacklist:
+    - ~/.calendars
+    - ~/.config/vdirsyncer
+    - ~/.contacts
+    - ~/.keys
+    - ~/.mbsyncrc
+    - ~/.offlineimap
+    - ~/.offlineimaprc
+    - ~/.password-store
+    - ~/.vdirsyncer
+    - ~/library
+
+cryptshot:
+  - name: alta
+    uuid: 0a0db776-84c5-48e1-9079-cacfbc5de8a3
+    keyfile: /home/pigmonkey/.keys/usb-alta.key
+    retain:
+      - level: daily
+        interval: 7
+      - level: weekly
+        interval: 6
+      - level: monthly
+        interval: 3
+  - name: bishorn
+    uuid: baeb40a2-b19e-4adc-8ef6-44ee720a4d1a
+    keyfile: /home/pigmonkey/.keys/usb-bishorn.key
+    retain:
+      - level: daily
+        interval: 7
+      - level: weekly
+        interval: 6
+      - level: monthly
+        interval: 3
+  - name: pilchuck
+    uuid: d96a0fc3-7ea1-42f7-b0d0-42e573c478bd
+    keyfile: /home/pigmonkey/.keys/usb-pilchuck.key
+    retain:
+      - level: daily
+        interval: 7
+      - level: weekly
+        interval: 6
+      - level: monthly
+        interval: 3
+
+journal:
+  max_size: 500M
+
+udisks:
+  auto_mount: False
+  shared_mount: True
+
+hostsctl:
+  url: https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
+
+himawaripy:
+  run_time: 15min
+  run_boot_delay: 2min
+  run_on: never
+  flags: --auto-offset --level 4
+
+goesimage:
+  run_time: 15min
+  run_boot_delay: 2min
+  run_on: trusted
+  flags: -w -e
+
+x:
+  middle_click_button: "274"
+  keyboard_model: "pc105"
+
+display_manager:
+gdm:
+  sound: False
+  font_scaling_factor: 1
+  logo_path: False
+  touchpad:
+    tap_to_click: True
+  accessibility_menu: True
+
+desktop_environment: i3
+gnome:
+  night_light:
+    enabled: True
+    color_temperature: 4000 # in Kelvin
+  date_time:
+    show_date_in_clock: True
+    show_weeks_in_calendar: True
+  battery:
+    show_percentage: True
+  power:
+    sleep_timeout_when_computer_on_ac: 3600 # in seconds
+    timeout_action_when_computer_on_ac: suspend
+    sleep_timeout_when_computer_on_battery: 1800 # in seconds
+    timeout_action_when_computer_on_battery: suspend
+    power_button_action: suspend
+  touchpad:
+    tap_to_click: True
+    natural_scrolling: True
+    disabled_while_typing: True
+  online_accounts_support: True
+  lock_screen:
+    automatic_lock: True
+    lock_screen_after_blank_for: 0 # in seconds
+    show_notifications: True
+    show_full_name_of_user: True
+  theme:
+    theme_name: Adwaita
+    icon_theme_name: Adwaita
+    font_name: Dejavu Sans 13
+    dark_variant: True
+  gnome_shell:
+    disable_top_left_hot_corner: False
+    extensions_support: True
 
 syncthing:
-    run_on: trusted
-    open_ports: true
+  run_on: trusted
+  open_ports: False
 
 mirrorlist:
-    run_on: trusted
+  run_on: trusted
 
 units:
-    run_on: trusted
+  run_on: trusted
 
 pkgfile:
-    run_on: trusted
+  run_on: trusted
 
 hardened:
-    enable_namespaces: true
-
-kernel_parameters: "quiet consoleblank=60"
+  enable_namespaces: true

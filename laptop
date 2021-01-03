@@ -1,0 +1,2 @@
+[pc]
+asus   ansible_connection=local

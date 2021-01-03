@@ -1,0 +1,10 @@
+---
+- name: Create directory for getty drop-in service
+  file: path=/etc/systemd/system/getty@tty1.service.d state=directory
+
+- name: Skip prompt on login
+  template:
+    dest: "/etc/systemd/system/getty@tty1.service.d/skip-prompt.conf"
+    src: "skip-prompt.conf"
+  notify:
+    - reload systemd config

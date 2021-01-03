@@ -1,0 +1,20 @@
+---
+- name: Generate en_US locale
+  locale_gen:
+    name: en_US.UTF-8
+    state: present
+
+- name: Generate sk_SK locale
+  locale_gen:
+    name: sk_SK.UTF-8
+    state: present
+
+- name: Generate locales
+  lineinfile:
+    path: /etc/vconsole.conf
+    line: "KEYMAP=us"
+    create: yes
+
+- name: Set timezone
+  timezone:
+    name: "{{ user.timezone }}"

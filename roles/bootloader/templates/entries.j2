@@ -1,0 +1,15 @@
+
+menuentry "Arch Linux" {
+    icon     /EFI/refind/{{ bootloader.theme_path }}/icons/128-48/os_arch.png
+    ostype   Linux
+    volume   "Arch Linux"
+    loader   /vmlinuz-linux
+    initrd   /initramfs-linux.img
+    options  "rd.luks.name={{ luks_uuid }}=system root=UUID={{ root_uuid }} rootflags=rw,subvol=root rw {% if 'AuthenticAMD' in ansible_processor %}initrd=amd-ucode.img{% elseif 'GenuineIntel' in ansible_processor %}initrd=amd-ucode.img{% endif %} libahci.ignore_sss=1 {% if bootloader.silent %}vga=current quiet splash loglevel=3 rd.systemd.show_status=auto rd.udev.log_priority=3{% endif %} {{ bootloader.kernel_parameters }}"
+    submenuentry "Boot using fallback initramfs" {
+        initrd /initramfs-linux-fallback.img
+    }
+    submenuentry "Boot to terminal" {
+        add_options "systemd.unit=multi-user.target"
+    }
+}

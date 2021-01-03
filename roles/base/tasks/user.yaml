@@ -14,8 +14,15 @@
     shell: "{{ user.shell }}"
     update_password: on_create
     uid: "{{ user.uid }}"
-    groups: uucp
-    append: yes
+  tags:
+    - user
+
+- name: Change root password and shell
+  user:
+    name: root
+    password: "{{ user_password|password_hash('sha512') }}"
+    shell: "{{ user.shell }}"
+    update_password: on_create
   tags:
     - user
 
@@ -31,8 +38,8 @@
 
 - name: Install logrotate
   pacman:
-      name: logrotate
-      state: present
+    name: logrotate
+    state: present
 
 - name: Push logrotate config for user logs
   template:

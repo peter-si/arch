@@ -1,0 +1,25 @@
+---
+- name: Cleanup bootloader theme .git
+  file:
+    path: "{{ bootloader.path }}/EFI/refind/{{ bootloader.theme_path }}/.git"
+    state: absent
+
+- name: Cleanup bootloader theme src
+  file:
+    path: "{{ bootloader.path }}/EFI/refind/{{ bootloader.theme_path }}/src"
+    state: absent
+
+- name: Cleanup bootloader theme install.sh
+  file:
+    path: "{{ bootloader.path }}/EFI/refind/{{ bootloader.theme_path }}/install.sh"
+    state: absent
+
+- name: Cleanup bootloader theme theme.conf
+  file:
+    path: "{{ bootloader.path }}/EFI/refind/{{ bootloader.theme_path }}/theme.conf"
+    state: absent
+
+- name: Cleanup bootloader default entries
+  file:
+    path: "{{ bootloader.path }}/refind_linux.conf"
+    state: absent

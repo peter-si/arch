@@ -1,0 +1,17 @@
+---
+- name: Template bootloader entries
+  template:
+    src: entries.j2
+    dest: "{{ bootloader.path }}/EFI/refind/entries.conf"
+  when: not ansible_check_mode
+
+- name: Remove root partition from fstab since we are loading it rw
+  lineinfile:
+    path: /etc/fstab
+    regexp: "subvol=root"
+    state: absent
+
+- name: Add swap to cryptsetup
+  lineinfile:
+    path: /etc/crypttab
+    line: "swap /dev/disk/by-partlabel/cryptswap  /dev/urandom  swap,offset=2048,cipher=aes-xts-plain64,size=256"

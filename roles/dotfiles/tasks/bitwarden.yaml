@@ -1,0 +1,32 @@
+---
+- name: Install bitwarden
+  aur:
+    user: "{{ user.name }}"
+    name:
+      - bitwarden-bin
+      - bitwarden-cli-bin
+
+#- name: Creates directory for bitwarden rofi script
+#  become_user: "{{ user.name }}"
+#  become: yes
+#  file:
+#    path: "/home/{{ user.name }}/.local/share/scripts"
+#    state: directory
+#    mode: 0775
+#    recurse: yes
+#
+#- name: Clone bitwarden script for rofi
+#  become_user: "{{ user.name }}"
+#  become: yes
+#  git:
+#    repo: "https://github.com/xnick/rofi-bw.git"
+#    dest: "/home/{{ user.name }}/.local/share/scripts/rofi-bw"
+#
+#- name: Link bitwarden script for rofi so it is executable
+#  become_user: "{{ user.name }}"
+#  become: yes
+#  file:
+#    src: "/home/{{ user.name }}/.local/share/scripts/rofi-bw/rofi-bw"
+#    dest: "/home/{{ user.name }}/.local/bin/rofi-bw"
+#    state: link
+

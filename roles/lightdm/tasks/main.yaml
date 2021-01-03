@@ -4,31 +4,76 @@
     name:
       - lightdm
       - lightdm-gtk-greeter
+      - numlockx
     state: present
 
+- name: Create autologin group
+  group:
+    name: autologin
+    state: present
+
+- name: Create nopasswdlogin group
+  group:
+    name: nopasswdlogin
+    state: present
+
+- name: Add the user to autologin group
+  user: name={{ user.name }} groups=autologin append=yes
+  tags:
+    - user
+
+- name: Add the user to nopasswdlogin group
+  user: name={{ user.name }} groups=nopasswdlogin append=yes
+  tags:
+    - user
+
+- name: Copy lightdm greeter config
+  copy:
+    dest: /etc/lightdm/lightdm-gtk-greeter.conf
+    src: lightdm-gtk-greeter.conf
+
+- name: Specify LightDM greeter session
+  lineinfile:
+    dest: /etc/lightdm/lightdm.conf
+    regexp: "^\\#?greeter-session="
+    line: "greeter-session=lightdm-gtk-greeter"
+
+- name: Specify LightDM greeter session wrapper
+  lineinfile:
+    dest: /etc/lightdm/lightdm.conf
+    regexp: "^\\#?session-wrapper="
+    line: "session-wrapper=/etc/lightdm/Xsession"
+
+- name: Specify LightDM greeter greeter setup script
+  lineinfile:
+    dest: /etc/lightdm/lightdm.conf
+    regexp: "^\\#?greeter-setup-script="
+    line: "greeter-setup-script=/usr/bin/numlockx on"
+
+- name: Specify LightDM greeter session setup script
+  lineinfile:
+    dest: /etc/lightdm/lightdm.conf
+    regexp: "^\\#?session-setup-script="
+    line: "session-setup-script=/usr/bin/numlockx on"
+
+- name: Specify LightDM greeter autologin user
+  lineinfile:
+    dest: /etc/lightdm/lightdm.conf
+    regexp: "^\\#?autologin-user="
+    line: "autologin-user={{ user.name }}"
+
+- name: Specify LightDM greeter autologin session
+  lineinfile:
+    dest: /etc/lightdm/lightdm.conf
+    regexp: "^\\#?autologin-session=i3"
+    line: "autologin-session=i3"
+
+- name: Add nopasswdlogin to lightdm pam config
+  lineinfile:
+    dest: /etc/pam.d/lightdm
+    line: "auth        sufficient  pam_succeed_if.so user ingroup nopasswdlogin"
+    insertafter: "^\\#\\%PAM"
+    firstmatch: yes
+
 - name: Enable LightDM
-  service: name=lightdm.service enabled=yes
-
-- name: Create background dir
-  file: path=/usr/share/backgrounds state=directory
-
-- name: Push LightDM greeter background
-  copy: src=onosendai.jpg dest=/usr/share/backgrounds/onosendai.jpg
-
-- name: Specify LightDM greeter background
-  lineinfile: dest=/etc/lightdm/lightdm-gtk-greeter.conf
-              regexp="^background="
-              state=present
-              line="background=/usr/share/backgrounds/onosendai.jpg"
-
-- name: Hide user images
-  lineinfile: dest=/etc/lightdm/lightdm-gtk-greeter.conf
-              regexp="^hide-user-image="
-              state=present
-              line="hide-user-image=true"
-
-- name: Force LightDM greeter theme
-  lineinfile: dest=/usr/share/xgreeters/lightdm-gtk-greeter.desktop
-              regexp="^Exec="
-              state=present
-              line="Exec=env GTK_THEME=Adwaita:dark lightdm-gtk-greeter"
+  service: name=lightdm-plymouth.service enabled=yes
