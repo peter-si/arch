@@ -52,7 +52,7 @@
     - reload systemd config
     - restart tarsnapper
 
-- include_tasks: roles/nmtrust/tasks/unit.yml
+- include_tasks: roles/nmtrust/tasks/unit.yaml
   vars:
       unit: tarsnapper.timer
       run_on: "{{ tarsnapper.run_on }}"

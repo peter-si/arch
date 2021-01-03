@@ -12,7 +12,7 @@
     src: user.conf.j2
     dest: /etc/parcimonie.sh.d/{{ user.name }}.conf
 
-- include_tasks: roles/nmtrust/tasks/unit.yml
+- include_tasks: roles/nmtrust/tasks/unit.yaml
   vars:
       unit: "parcimonie.sh@{{ user.name }}.service"
       run_on: "{{ tor.run_on }}"

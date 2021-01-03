@@ -45,10 +45,10 @@
   tags:
     - libinput
 
-- include: sxhkd.yml
-- include: unclutter.yml
-- include: autorandr.yml
-- include: srandrd.yml
-- include: termite.yml
-- include: autocutsel.yml
-- include: xdg.yml
+- include: sxhkd.yaml
+- include: unclutter.yaml
+- include: autorandr.yaml
+- include: srandrd.yaml
+- include: termite.yaml
+- include: autocutsel.yaml
+- include: xdg.yaml

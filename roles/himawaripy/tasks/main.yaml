@@ -26,7 +26,7 @@
     - reload systemd config
     - restart himawaripy
 
-- include_tasks: roles/nmtrust/tasks/unit.yml
+- include_tasks: roles/nmtrust/tasks/unit.yaml
   vars:
       unit: himawaripy.timer
       run_on: "{{ himawaripy.run_on }}"

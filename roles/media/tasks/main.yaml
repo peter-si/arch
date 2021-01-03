@@ -1,17 +1,17 @@
 ---
-- include: beets.yml
-- include: abcde.yml
-- include: imagemagick.yml
-- include: inkscape.yml
-- include: gimp.yml
-- include: gthumb.yml
-- include: feh.yml
-- include: imv.yml
-- include: mcomix.yml
-- include: teiler.yml
-- include: flac2all.yml
-- include: darktable.yml
-- include: qcode.yml
+- include: beets.yaml
+- include: abcde.yaml
+- include: imagemagick.yaml
+- include: inkscape.yaml
+- include: gimp.yaml
+- include: gthumb.yaml
+- include: feh.yaml
+- include: imv.yaml
+- include: mcomix.yaml
+- include: teiler.yaml
+- include: flac2all.yaml
+- include: darktable.yaml
+- include: qcode.yaml
 
 - name: Install misc media codecs and helpers
   pacman:

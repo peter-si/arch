@@ -2,7 +2,7 @@
 - name: Install syncthing
   pacman: name=syncthing state=present
 
-- include_tasks: roles/nmtrust/tasks/unit.yml
+- include_tasks: roles/nmtrust/tasks/unit.yaml
   vars:
       unit: syncthing.service
       run_on: "{{ syncthing.run_on }}"

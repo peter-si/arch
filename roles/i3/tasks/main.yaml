@@ -20,4 +20,4 @@
               line='[Default Applications]'
               insertbefore=BOF
 
-- include: rofi.yml
+- include: rofi.yaml

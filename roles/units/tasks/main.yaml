@@ -19,7 +19,7 @@
     - reload systemd config
     - restart units_cur
 
-- include_tasks: roles/nmtrust/tasks/unit.yml
+- include_tasks: roles/nmtrust/tasks/unit.yaml
   vars:
       unit: units_cur.timer
       run_on: "{{ units.run_on }}"

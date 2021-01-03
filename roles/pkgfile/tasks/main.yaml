@@ -4,7 +4,7 @@
       name: pkgfile
       state: present
 
-- include_tasks: roles/nmtrust/tasks/unit.yml
+- include_tasks: roles/nmtrust/tasks/unit.yaml
   vars:
       unit: pkgfile-update.timer
       run_on: "{{ pkgfile.run_on }}"

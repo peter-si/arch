@@ -30,7 +30,7 @@
     - reload systemd config
     - restart reflector update
 
-- include_tasks: roles/nmtrust/tasks/unit.yml
+- include_tasks: roles/nmtrust/tasks/unit.yaml
   vars:
       unit: reflector-update.timer
       run_on: "{{ mirrorlist.run_on }}"

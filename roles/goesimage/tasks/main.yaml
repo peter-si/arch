@@ -21,7 +21,7 @@
     - reload systemd config
     - restart GOESImage
 
-- include_tasks: roles/nmtrust/tasks/unit.yml
+- include_tasks: roles/nmtrust/tasks/unit.yaml
   vars:
       unit: goesimage.timer
       run_on: "{{ goesimage.run_on }}"

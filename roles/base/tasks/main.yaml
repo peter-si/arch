@@ -30,8 +30,8 @@
   tags:
     - kernelparams
 
-- include: shell.yml
-- include: user.yml
-- include: sudo.yml
-- include: packages.yml
-- include: journal.yml
+- include: shell.yaml
+- include: user.yaml
+- include: sudo.yaml
+- include: packages.yaml
+- include: journal.yaml

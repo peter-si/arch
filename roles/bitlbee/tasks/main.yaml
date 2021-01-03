@@ -24,7 +24,7 @@
   tags:
     - firejail
 
-- include_tasks: roles/nmtrust/tasks/unit.yml
+- include_tasks: roles/nmtrust/tasks/unit.yaml
   vars:
       unit: bitlbee.service
       run_on: "{{ bitlbee.run_on }}"

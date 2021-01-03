@@ -28,7 +28,7 @@ Second, install and update the submodules:
     
 Run the playbook as root.
 
-    # ansible-playbook -i localhost playbook.yml
+    # ansible-playbook -i localhost playbook.yaml
 
 When run, Ansible will prompt for the user password. This only needs to be
 provided on the first run when the user is being created. On later runs,

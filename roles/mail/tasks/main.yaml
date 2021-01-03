@@ -74,7 +74,7 @@
     regexp: "^x-scheme-handler/mailto="
     line: "x-scheme-handler/mailto=mutt.desktop"
 
-- include: msmtp.yml
-- include: isync.yml
-- include: offlineimap.yml
-- include: mailsync.yml
+- include: msmtp.yaml
+- include: isync.yaml
+- include: offlineimap.yaml
+- include: mailsync.yaml

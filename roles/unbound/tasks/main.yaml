@@ -38,7 +38,7 @@
     - reload systemd config
     - restart roothints
 
-- include_tasks: roles/nmtrust/tasks/unit.yml
+- include_tasks: roles/nmtrust/tasks/unit.yaml
   vars:
       unit: roothints.timer
       run_on: "{{ unbound.roothints_update }}"

@@ -36,7 +36,7 @@
   tags:
     - firejail
 
-- include_tasks: roles/nmtrust/tasks/unit.yml
+- include_tasks: roles/nmtrust/tasks/unit.yaml
   vars:
       unit: tor.service
       run_on: "{{ tor.run_on }}"
