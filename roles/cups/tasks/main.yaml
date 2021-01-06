@@ -7,7 +7,6 @@
       - cups
       - cups-pdf
       - gutenprint
-      - hplip
     state: present
 
 - name: Add a print admin group

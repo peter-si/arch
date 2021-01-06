@@ -3,3 +3,48 @@
   pacman:
     name: "{{ filesystem_packages }}"
     state: present
+
+- name: Check that snapper config exists
+  stat:
+    path: /etc/snapper/configs/root
+  register: snapper_config
+
+- name: Unmout snapshots before creating config
+  mount:
+    state: unmounted
+    path: /.snapshots
+  when: not snapper_config.stat.exists
+  tags: snapper
+
+- name: Remove .snapshots dir
+  file:
+    path: /.snapshots
+    state: absent
+  when: not snapper_config.stat.exists
+  tags: snapper
+
+- name: Create snapper config
+  shell: snapper -c root create-config /
+  when: not snapper_config.stat.exists
+  tags: snapper
+
+- name: Disable time snapshots
+  lineinfile:
+    path: /etc/snapper/configs/root
+    regexp: "^TIMELINE_CREATE="
+    line: 'TIMELINE_CREATE="no"'
+  tags: snapper
+
+- name: Set number of snapshots
+  lineinfile:
+    path: /etc/snapper/configs/root
+    regexp: "^NUMBER_LIMIT="
+    line: 'NUMBER_LIMIT="20"'
+  tags: snapper
+
+- name: Set number of important snapshots
+  lineinfile:
+    path: /etc/snapper/configs/root
+    regexp: "^NUMBER_LIMIT_IMPORTANT="
+    line: 'NUMBER_LIMIT_IMPORTANT="10"'
+  tags: snapper

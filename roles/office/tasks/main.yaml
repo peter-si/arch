@@ -52,35 +52,6 @@
       - pandoc-citeproc
     state: present
 
-- name: Install texlive-core
-  pacman:
-    name: texlive-core
-    state: present
-
-- name: Install texlive-latexextra
-  pacman:
-    name: texlive-latexextra
-    state: present
-
-- name: Install qalculate
-  pacman:
-    name: qalculate-gtk
-    state: present
-
-- name: Install undertime and dependencies
-  aur:
-    name:
-      - python-dateparser
-      - python-undertime
-    user: "{{ user.name }}"
-  tags:
-    - aur
-
-- name: Install GNU Plot
-  pacman:
-    name: gnuplot
-    state: present
-
 - name: Install xsv
   aur:
     name: xsv

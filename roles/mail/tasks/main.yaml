@@ -1,80 +1,9 @@
 ---
-- name: Install neomutt
-  pacman:
-    name: neomutt
-    state: present
+- name: Install Protonmail brdige
+  aur: name=protonmail-bridge-bin user="{{ user.name }}"
 
-- name: Make neomutt available as mutt
-  file:
-    src: /usr/bin/neomutt
-    dest: /usr/local/bin/mutt
-    state: link
+- name: Install Mailspring
+  aur: name=mailspring-libre user="{{ user.name }}"
 
-- name: Verify mutt firejail local profile exists
-  file:
-    path: /etc/firejail/mutt.local
-    state: touch
-  tags:
-    - firejail
-
-- name: Whitelist mutt related files
-  blockinfile:
-    dest: /etc/firejail/mutt.local
-    block: |
-        noblacklist ~/.config/vdirsyncer
-        noblacklist ~/.vdirsyncer
-        noblacklist ~/.calendars
-        noblacklist ~/.contacts
-        noblacklist ~/.mbsyncrc
-        noblacklist ~/.offlineimap
-        noblacklist ~/.offlineimaprc
-  tags:
-    - firejail
-
-- name: Install urlscan
-  pacman:
-    name: urlscan
-
-- name: Install notmuch
-  pacman:
-    name: notmuch
-    state: present
-
-- name: Install mutt-ics
-  aur:
-    name: mutt-ics
-    user: "{{ user.name }}"
-  tags:
-    - aur
-
-- name: Push mutt-mailto script
-  copy:
-    src: mutt-mailto.sh
-    dest: /usr/local/bin/mutt-mailto
-    mode: 0755
-
-- name: Create local desktop application dir
-  file:
-    path: /usr/local/share/applications
-    state: directory
-
-- name: Push mutt desktop file
-  copy:
-    src: mutt.desktop
-    dest: /usr/local/share/applications/mutt.desktop
-
-- name: Verify mimeapps.list exists
-  file:
-    path: /etc/xdg/mimeapps.list
-    state: touch
-
-- name: Set mutt as default application for mailto links
-  lineinfile:
-    dest: /etc/xdg/mimeapps.list
-    regexp: "^x-scheme-handler/mailto="
-    line: "x-scheme-handler/mailto=mutt.desktop"
-
-- include: msmtp.yaml
-- include: isync.yaml
-- include: offlineimap.yaml
-- include: mailsync.yaml
+# TODO firejail mailsync and protonmail-bridge
+# possibly run only on trusted networks

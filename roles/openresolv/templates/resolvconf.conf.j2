@@ -3,7 +3,7 @@
 
 resolv_conf=/etc/resolv.conf
 
-{% if unbound %}
+{% if unbound is defined %}
 name_servers=127.0.0.1
 {% if unbound.allow_lan_dns %}
 unbound_conf=/etc/unbound/resolvconf.conf

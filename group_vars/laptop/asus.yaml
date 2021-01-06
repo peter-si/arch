@@ -1,2 +1,8 @@
 
 hostname: aluwork
+
+video_drivers:
+  - nouveau
+  - nvidia
+
+display_manager: no-dm

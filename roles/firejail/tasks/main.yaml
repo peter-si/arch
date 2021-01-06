@@ -5,9 +5,7 @@
     state: present
 
 - name: Install firewarden
-  aur:
-    name: firewarden
-    user: "{{ user.name }}"
+  aur: name=firewarden user="{{ user.name }}"
   tags:
     - aur
 
@@ -22,14 +20,10 @@
     path: /usr/local/etc/firejail
     state: directory
 
-- name: Verify firejail globals file exists
-  file:
-    path: /etc/firejail/globals.local
-    state: touch
-
 - name: Add blacklist to globals
   lineinfile:
     dest: /etc/firejail/globals.local
     state: present
     line: "blacklist {{ item }}"
+    create: yes
   with_items: "{{ firejail.blacklist }}"

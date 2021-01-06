@@ -1,16 +1,8 @@
 ---
-- include: beets.yaml
-- include: abcde.yaml
 - include: imagemagick.yaml
-- include: inkscape.yaml
 - include: gimp.yaml
 - include: gthumb.yaml
 - include: feh.yaml
-- include: imv.yaml
-- include: mcomix.yaml
-- include: teiler.yaml
-- include: flac2all.yaml
-- include: darktable.yaml
 - include: qcode.yaml
 
 - name: Install misc media codecs and helpers
@@ -24,6 +16,13 @@
       - perl-image-exiftool
       - perl-archive-zip
       - opus-tools
+      - playerctl
+      - a52dec
+      - libmad
+      - libmpeg2
+      - lxappearance
+      - ffmpegthumbnailer
+      - vlc
     state: present
 
 - name: Install Metadata Anonymisation Toolkit
@@ -43,22 +42,45 @@
     name: zbar
     state: present
 
-- name: Install sxiv
-  pacman:
-    name: sxiv
-    state: present
-
 - name: Install svgcleaner
   pacman:
     name: svgcleaner
     state: present
 
-- name: Install flameshot
+- name: Install gnome-screenshot
   pacman:
-    name: flameshot
+    name: gnome-screenshot
     state: present
 
 - name: Install digikam
   pacman:
     name: digikam
     state: present
+
+- name: Install recapp for screen recording
+  aur: name=recapp-git user="{{ user.name }}"
+
+- name: Install gtk theme
+  pacman:
+    name: arc-gtk-theme
+    state: present
+
+- name: Copy icon theme
+  synchronize:
+    dest: /usr/share/icons
+    src: Green-Maia
+  when: not ansible_check_mode
+
+- name: Copy cursor theme
+  synchronize:
+    dest: /usr/share/icons
+    src: Volantes-Cursors
+  when: not ansible_check_mode
+
+- name: Create background dir
+  file: path=/usr/share/backgrounds state=directory
+
+- name: Copy backround
+  copy:
+    dest: /usr/share/backgrounds/fight.jpg
+    src: fight.jpg

@@ -4,7 +4,6 @@
     name:
       - dunst
       - betterlockscreen
-      - gnome-screenshot
       - python-pywal
       - picom
       - i3-gaps

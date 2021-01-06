@@ -1,0 +1,11 @@
+- name: Install nvidia video driver(s)
+  pacman:
+    name:
+      - nvidia
+      - nvidia-utils
+      - nvidia-settings
+      - lib32-nvidia-utils
+      - libva-utils
+      - libva-vdpau-driver
+    state: present
+

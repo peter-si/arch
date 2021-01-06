@@ -4,6 +4,6 @@
 
 - include_tasks: roles/nmtrust/tasks/unit.yaml
   vars:
-      unit: syncthing.service
-      run_on: "{{ syncthing.run_on }}"
-      user_unit: true
+    unit: syncthing.service
+    run_on: "{{ syncthing.run_on }}"
+    user_unit: true

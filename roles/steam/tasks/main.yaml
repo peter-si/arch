@@ -1,0 +1,11 @@
+---
+- name: Install Steam
+  pacman: name=steam state=present
+
+- name: Jail GIMP
+  file: src=/usr/bin/firejail
+        dest=/usr/local/bin/steam
+        state=link
+  tags:
+    - steam
+    - firejail

@@ -1,0 +1,5 @@
+# Set the cachesize here.
+cache-size=500
+
+# If you want to disable negative caching, uncomment this.
+no-negcache

@@ -14,5 +14,5 @@
 
 - include_tasks: roles/nmtrust/tasks/unit.yaml
   vars:
-      unit: "parcimonie.sh@{{ user.name }}.service"
-      run_on: "{{ tor.run_on }}"
+    unit: "parcimonie.sh@{{ user.name }}.service"
+    run_on: "{{ tor.run_on }}"

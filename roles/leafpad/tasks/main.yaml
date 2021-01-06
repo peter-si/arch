@@ -1,0 +1,11 @@
+---
+- name: Install Leafpad
+  pacman: name=leafpad state=present
+
+- name: Jail Leafpad
+  file:
+    src: /usr/bin/firejail
+    dest: /usr/local/bin/leafpad
+    state: link
+  tags:
+    - firejail

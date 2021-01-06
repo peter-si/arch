@@ -1,0 +1,12 @@
+- name: Install amdgpu video driver(s)
+  pacman:
+    name:
+      - mesa
+      - lib32-mesa
+      - vulkan-radeon
+      - lib32-vulkan-radeon
+      - libva-mesa-driver
+      - lib32-libva-mesa-driver
+      - mesa-vdpau
+      - lib32-mesa-vdpau
+    state: present

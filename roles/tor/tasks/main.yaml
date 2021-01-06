@@ -38,5 +38,5 @@
 
 - include_tasks: roles/nmtrust/tasks/unit.yaml
   vars:
-      unit: tor.service
-      run_on: "{{ tor.run_on }}"
+    unit: tor.service
+    run_on: "{{ tor.run_on }}"

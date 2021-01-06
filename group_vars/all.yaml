@@ -54,27 +54,17 @@ pacman:
     - jre-openjdk
     - gnome-keyring
   packages:
-    - leafpad
-    - filezilla
-    - gimp
     - gsimplecal
-    - nemo
-    - nemo-fileroller
     - neofetch
     - rsync
-    - transmission-gtk
-    - steam
     - pacman-contrib
-    - phototonic
     - papirus-icon-theme
     - lm_sensors
-    - seahorse
     - archiso
     - gnome-calculator
     - jre-openjdk
     - gucharmap
     - todotxt
-    - hdparm
   fonts:
     - adobe-source-code-pro-fonts
     - cantarell-fonts
@@ -104,8 +94,6 @@ aur:
     - myrepos
     - teamviewer
     - yay
-    - mailspring-libre
-    - recapp-git
     - nvme-cli
   fonts:
     - ttf-bitstream-charter
@@ -131,15 +119,6 @@ gnupg:
   enable_agent: True
   emulate_ssh: True
 
-mail:
-  sync_tool: isync
-  sync_pim: True
-  sync_taskwarrior: True
-  sync_notmuch: False
-  sync_time: 5min
-  sync_boot_delay: 2min
-  sync_on: trusted
-
 network:
   spoof_mac: True
   conn_check:
@@ -148,51 +127,26 @@ network:
     - bfa4a571-e6b0-46f1-84ca-e8bce047dd64
     - 535ee41f-f3f9-30bd-92d8-8a9e227621de
 
-editors:
-  - gvim
-
 video_drivers:
-  - libva-intel-driver
 
 filesystem_packages:
   - dosfstools
   - ntfs-3g
   - exfat-utils
+  - btrfs-progs
+  - snapper
+  - snap-pac
 
 browser_choices:
   - firefox -P default
   - firefox -P work
   - firewarden chromium
-  - firewarden -c qutebrowser
   - tor-browser-en
-  - play
-  - qcode
-  - "| xclip -selection c"
 
 passwordless_sudo:
   - /usr/bin/openvpn*
 
-tarsnapper:
-  deltas: 1h 1d 7d 30d 365d
-  period: DAILY
-  ac_only: True
-  run_on: trusted
-  random_delay: 600
-
-gitannex:
-  stop_on_untrusted: True
-
-bitlbee:
-  run_on: trusted
-  torify: True
-
-postgresql:
-  enable: True
-  root: /home/postgres
-
 fingerprint: False
-
-etesync: False
 
 tor:
   run_on: trusted
@@ -200,20 +154,17 @@ tor:
 localtime:
   run_on: trusted
 
-unbound:
-  tls: True
-  roothints_update: trusted
-  nameservers:
-    - 1.1.1.1@853#cloudflare-dns.com  # Cloudflare
-    - 9.9.9.9@853#dns.quad9.net  # Quad9
-  private_domains:
-    - corp
-    - home
-    - intranet
-    - lan
-    - mesh
-    - private
-  allow_lan_dns: True
+#unbound:
+#  tls: True
+#  roothints_update: trusted
+#  nameservers:
+#    - 1.1.1.1@853#cloudflare-dns.com  # Cloudflare
+#    - 9.9.9.9@853#dns.quad9.net  # Quad9
+#  private_domains:
+#    - odin
+#    - rasp
+#    - docker
+#  allow_lan_dns: True
 
 bluetooth:
   disable: False
@@ -230,38 +181,13 @@ firejail:
     - ~/.password-store
     - ~/.vdirsyncer
     - ~/library
-
-cryptshot:
-  - name: alta
-    uuid: 0a0db776-84c5-48e1-9079-cacfbc5de8a3
-    keyfile: /home/pigmonkey/.keys/usb-alta.key
-    retain:
-      - level: daily
-        interval: 7
-      - level: weekly
-        interval: 6
-      - level: monthly
-        interval: 3
-  - name: bishorn
-    uuid: baeb40a2-b19e-4adc-8ef6-44ee720a4d1a
-    keyfile: /home/pigmonkey/.keys/usb-bishorn.key
-    retain:
-      - level: daily
-        interval: 7
-      - level: weekly
-        interval: 6
-      - level: monthly
-        interval: 3
-  - name: pilchuck
-    uuid: d96a0fc3-7ea1-42f7-b0d0-42e573c478bd
-    keyfile: /home/pigmonkey/.keys/usb-pilchuck.key
-    retain:
-      - level: daily
-        interval: 7
-      - level: weekly
-        interval: 6
-      - level: monthly
-        interval: 3
+    - ~/.cache/keepassxc
+    - ~/.cache/protonmail
+    - ~/.config/Bitwarden
+    - /.config/Bitwarden/Bitwarden\ CLI
+    - /.config/syncthing
+    - /.config/syncthing-gtk
+    - /.local/tasks
 
 journal:
   max_size: 500M
@@ -272,18 +198,6 @@ udisks:
 
 hostsctl:
   url: https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
-
-himawaripy:
-  run_time: 15min
-  run_boot_delay: 2min
-  run_on: never
-  flags: --auto-offset --level 4
-
-goesimage:
-  run_time: 15min
-  run_boot_delay: 2min
-  run_on: trusted
-  flags: -w -e
 
 x:
   middle_click_button: "274"
@@ -338,9 +252,6 @@ syncthing:
   open_ports: False
 
 mirrorlist:
-  run_on: trusted
-
-units:
   run_on: trusted
 
 pkgfile:

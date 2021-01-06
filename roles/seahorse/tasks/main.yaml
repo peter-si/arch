@@ -1,0 +1,11 @@
+---
+- name: Install Seahorse
+  pacman: name=seahorse state=present
+
+- name: Jail Seahorse
+  file:
+    src: /usr/bin/firejail
+    dest: /usr/local/bin/seahorse
+    state: link
+  tags:
+    - firejail

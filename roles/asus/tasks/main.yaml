@@ -1,0 +1,9 @@
+---
+- name: Enable kernel module asus_wmi
+  modprobe: name=asus_wmi
+
+- name: Enable kernel module asus_nb_wmi
+  modprobe: name=asus_nb_wmi
+  tags:
+    - never
+    - laptop

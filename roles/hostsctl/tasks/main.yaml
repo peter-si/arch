@@ -9,3 +9,8 @@
 
 - name: Update hostsctl
   command: hostsctl update
+
+- name: Update hostsctl regulary
+  copy:
+    src: update-hostsctl.sh
+    dest: /etc/cron.monthly/update-hostsctl

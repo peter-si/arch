@@ -1,0 +1,18 @@
+---
+- name: Install hdparm
+  pacman: name=hdparm state=present
+
+- name: Install btrfsmaintenance-git
+  aur: name=btrfsmaintenance-git user="{{ user.name }}"
+
+- name: Check for TRIM support
+  shell: "hdparm -I /dev/disk/by-partlabel/cryptsystem | grep TRIM"
+  register: hdparm
+  ignore_errors: True
+
+- name: Enable and start filesystem TRIM timer
+  service: name=btrfs-trim.timer enabled=yes state=started
+  when:  not ansible_check_mode and hdparm.rc == 0
+
+- name: Enable and start filesystem Balance timer
+  service: name=btrfs-balance.timer enabled=yes state=started

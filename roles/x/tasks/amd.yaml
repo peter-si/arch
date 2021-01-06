@@ -1,0 +1,6 @@
+- name: Install amd video driver(s)
+  aur:
+    user: "{{ user.name }}"
+    name:
+      - amdgpu-pro-libgl
+      - lib32-amdgpu-pro-libgl

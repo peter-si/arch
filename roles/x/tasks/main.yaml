@@ -23,11 +23,6 @@
 - name: Install xautomation
   pacman: name=xautomation state=present
 
-- name: Install video driver(s)
-  pacman:
-    name: "{{ video_drivers }}"
-    state: present
-
 - name: Add user to video group
   user: name={{ user.name }} groups=video append=yes
   tags:
@@ -46,8 +41,15 @@
     - libinput
 
 
-- include: sxhkd.yaml
 - include: unclutter.yaml
 - include: autorandr.yaml
 - include: srandrd.yaml
 - include: autocutsel.yaml
+- include: amd.yaml
+  when: '"amd" in video_drivers'
+- include: amdgpu.yaml
+  when: '"amdgpu" in video_drivers'
+- include: nouveau.yaml
+  when: '"nouveau" in video_drivers'
+- include: nvidia.yaml
+  when: '"nvidia" in video_drivers'

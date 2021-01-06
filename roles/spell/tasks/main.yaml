@@ -8,11 +8,21 @@
   tags:
     - hunspell
 
+- name: Install hunspell-sk
+  aur: name=hunspell-sk user="{{ user.name }}"
+  tags:
+    - hunspell
+
 - name: Install aspell
   pacman:
     name:
       - aspell
       - aspell-en
     state: present
+  tags:
+    - aspell
+
+- name: Install aspell-sk
+  aur: name=aspell-sk user="{{ user.name }}"
   tags:
     - aspell

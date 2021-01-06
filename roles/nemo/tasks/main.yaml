@@ -1,0 +1,15 @@
+---
+- name: Install Nemo
+  pacman:
+    name:
+      - nemo
+      - nemo-fileroller
+    state: present
+
+- name: Jail Nemo
+  file:
+    src: /usr/bin/firejail
+    dest: /usr/local/bin/nemo
+    state: link
+  tags:
+    - firejail

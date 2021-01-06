@@ -18,11 +18,6 @@
     state: present
     line: "load-module module-switch-on-connect"
 
-- name: Install pasystray
-  pacman:
-    name: pasystray
-    state: present
-
 - name: Install pulseaudio-ctl
   aur:
     name: pulseaudio-ctl

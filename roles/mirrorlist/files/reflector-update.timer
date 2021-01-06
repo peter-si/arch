@@ -3,7 +3,7 @@ Description=Reflector Update Timer
 
 [Timer]
 Unit=reflector-update.service
-OnCalendar=daily
+OnCalendar=weekly
 Persistent=True
 RandomizedDelaySec=1h
 

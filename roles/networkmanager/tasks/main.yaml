@@ -12,6 +12,11 @@
     src: rc-manager.conf
     dest: /etc/NetworkManager/conf.d/20-rc-manager.conf
 
+- name: Push NetworkManager dnsmasq cache config.
+  copy:
+    src: cache
+    dest: /etc/NetworkManager/dnsmasq.d/cache
+
 - name: Push connectivity check config
   template:
     src: connectivity.conf.j2
@@ -29,8 +34,3 @@
     name: NetworkManager-dispatcher.service
     enabled: yes
     state: started
-
-#- name: Disable dhcpcd service
-#  service:
-#    name: dhcpcd.service
-#    enabled: no

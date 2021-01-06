@@ -1,0 +1,11 @@
+---
+- name: Install Filezilla
+  pacman: name=filezilla state=present
+
+- name: Jail Filezilla
+  file:
+    src: /usr/bin/firejail
+    dest: /usr/local/bin/filezilla
+    state: link
+  tags:
+    - firejail
