@@ -1,7 +1,3 @@
 #!/bin/sh
 
-PASSWORD="$1"
-
-passwd root --stdin <<EOF
-$PASSWORD
-EOF
+echo "root:$1" | chpasswd
