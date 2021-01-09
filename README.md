@@ -19,7 +19,7 @@ cp -r /usr/share/archiso/configs/releng ~/archlive
 git clone git@github.com:peter-si/arch-ansible.git ~/archlive/airootfs/install
 cd ~/archlive/airootfs/install && git submodule update --recursive --remote && cd ~
 sudo mkarchiso -v -w /tmp/archiso-tmp ~/archlive
-sudo dd bs=4M if="location of iso" of=/dev/sdd status=progress oflag=sync
+sudo dd bs=4M status=progress oflag=sync if="location of iso" of=/dev/sdd
 ```
 
 You should also add .ssh folder with keys to download dotfiles. These will be automatically installed on new pc

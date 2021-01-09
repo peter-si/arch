@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-drive="$1"
-o=defaults,discard,x-mount.mkdir
-o_btrfs=$o,compress=lzo,ssd,space_cache,noatime
-
 function help() {
   echo ""
   echo "This is a utility to prepare disk for running ansible playbook. Based on parameters, it will:"
@@ -116,6 +112,8 @@ function clean_install() {
   rm -rf /mnt/install
 }
 
+############################################################################
+
 while getopts ":s:nmch" opt; do
   case "${opt}" in
   n) noFormat=true ;;
@@ -130,6 +128,10 @@ while getopts ":s:nmch" opt; do
   esac
 done
 shift $((OPTIND - 1))
+
+drive="$1"
+o=defaults,discard,x-mount.mkdir
+o_btrfs=$o,compress=lzo,ssd,space_cache,noatime
 
 if [[ -n "$mountOnly" ]]; then
   mount_volumes

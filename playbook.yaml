@@ -70,6 +70,7 @@
     - { role: vpn, tags: ['vpn'] }
     - { role: docker, tags: ['docker'] }
     - { role: steam, tags: ['steam'] }
+    - { role: signal, tags: [ 'signal' ] }
     - { role: jetbrains, tags: ['jetbrains'] }
     - { role: spotify, tags: ['spotify'] }
     - { role: nemo, tags: ['nemo'] }
