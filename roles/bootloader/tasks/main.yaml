@@ -10,12 +10,17 @@
     name: plymouth-git
     user: "{{ user.name }}"
 
+- name: Check bootloader theme folder exists
+  stat:
+    path: "{{ bootloader.path }}/EFI/refind/{{ bootloader.theme_path }}"
+  register: bootloader_folder
+
 - name: Install bootloader theme
   git:
     dest: "{{ bootloader.path }}/EFI/refind/{{ bootloader.theme_path }}"
     repo: "{{ bootloader.theme_repo }}"
     depth: 1
-  when: bootloader.theme_repo is defined and bootloader.theme_path is defined
+  when: bootloader.theme_repo is defined and bootloader.theme_path is defined and not bootloader_folder.stat.exists
 
 - name: Copy Arch hardened icon
   copy:

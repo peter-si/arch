@@ -63,7 +63,6 @@ pacman:
     - gnome-calculator
     - jre-openjdk
     - gucharmap
-    - todotxt
   fonts:
     - adobe-source-code-pro-fonts
     - cantarell-fonts

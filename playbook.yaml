@@ -1,14 +1,7 @@
 ---
-- hosts: asus
-  become: yes
-  roles:
-    - { role: laptop, tags: ['laptop'] }
-    - { role: asus, tags: ['asus'] }
-#    - { role: thinkpad, tags: ['thinkpad'], when: "'ThinkPad' in ansible_product_version" }
-#    - { role: optical, tags: ['optical'] }
-    - { role: bluetooth, tags: ['bluetooth'], when: "bluetooth is defined" }
-
-- hosts: all
+- hosts:
+    - desktop
+    - asus
   become: yes
   roles:
     - { role: base, tags: ['base'] }
@@ -81,3 +74,15 @@
     - name: user_password
       prompt: "Enter desired user password"
       confirm: yes
+
+- hosts: asus
+  become: yes
+  roles:
+    - { role: laptop, tags: ['laptop'] }
+    - { role: asus, tags: ['asus'] }
+    #    - { role: thinkpad, tags: ['thinkpad'], when: "'ThinkPad' in ansible_product_version" }
+    #    - { role: optical, tags: ['optical'] }
+    - { role: bluetooth, tags: ['bluetooth'], when: "bluetooth is defined" }
+
+
+

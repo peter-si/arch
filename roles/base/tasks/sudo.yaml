@@ -18,6 +18,6 @@
     state: present
 
 - name: Copy sudo configuration
-  template: src=user_privileges.j2 dest=/etc/sudoers.d/user_privileges mode=0440 validate='visudo -c'
+  template: src=user_privileges.j2 dest=/etc/sudoers.d/user_privileges mode=0440 validate='visudo -cf %s'
   tags:
     - sudo

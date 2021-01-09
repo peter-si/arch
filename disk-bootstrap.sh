@@ -41,17 +41,18 @@ function clear_disk() {
 
 function create_partitions() {
   banner "Creating partitions"
+  partprobe "$drive"
   partNum=$(sgdisk -p "$drive" | tail -n 1 | awk '{print $1}')
   sgdisk \
     --new="$((partNum=partNum+1)):0:+550MiB" --typecode=1:ef00 --change-name=1:EFI \
     --new="$((partNum=partNum+1)):0:+8GiB" --typecode=2:8200 --change-name=2:cryptswap \
     --new="$((partNum=partNum+1)):0:${diskSize:-0}" --typecode=3:8300 --change-name=3:cryptsystem \
     "$drive"
-  partprobe "$drive"
 }
 
 function encrypt_disk() {
   banner "Encrypting disk"
+  partprobe "$drive"
   cryptsetup luksFormat --align-payload=8192 -s 256 -c aes-xts-plain64 /dev/disk/by-partlabel/cryptsystem
   cryptsetup open /dev/disk/by-partlabel/cryptsystem system
   cryptsetup open --type plain --key-file /dev/urandom /dev/disk/by-partlabel/cryptswap swap
