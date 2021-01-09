@@ -41,10 +41,12 @@ function clear_disk() {
 
 function create_partitions() {
   banner "Creating partitions"
+  partNum=$(sgdisk -p "$drive" | tail -n 1 | awk '{print $1}')
+  partNum=${partNum:-0}
   sgdisk \
-    --new=1:0:+550MiB --typecode=1:ef00 --change-name=1:EFI \
-    --new=2:0:+8GiB --typecode=2:8200 --change-name=2:cryptswap \
-    --new=3:0:"${diskSize:-0}" --typecode=3:8300 --change-name=3:cryptsystem \
+    --new="$((partNum=partNum+1)):0:+550MiB" --typecode=1:ef00 --change-name=1:EFI \
+    --new="$((partNum=partNum+1)):0:+8GiB" --typecode=2:8200 --change-name=2:cryptswap \
+    --new="$((partNum=partNum+1)):0:${diskSize:-0}" --typecode=3:8300 --change-name=3:cryptsystem \
     "$drive"
   partprobe "$drive"
 }
