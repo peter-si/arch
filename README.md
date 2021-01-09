@@ -1,39 +1,101 @@
-# Spark
+# Ansible playbook to bootstrap Arch linux
 
-Spark is an [Ansible][1] playbook meant to provision a personal machine running
+
+This is an [Ansible][1] playbook meant to provision a personal machine running
 [Arch Linux][2]. It is intended to run locally on a fresh Arch install (ie,
 taking the place of any [post-installation][3]), but due to Ansible's
-idempotent nature it may also be run on top of an already configured machine.
+idempotent nature it may also be run on top of an already configured machine. 
+Contains `disk-bootstrap.sh` which will partition given disk, encrypt and bootstrap 
+btrfs with snapshots. Then you can run this ansible playbook to install Arch linux ready to use.
 
-Spark assumes it will be run on a laptop and performs some configuration based
-on this assumption. This behaviour may be changed by removing the `laptop` role
-from the playbook or by skipping the `laptop` tag.
-
-If Spark is run on either a ThinkPad or a MacBook, it will detect this and
-execute platform-specific tasks.
-
-**Note:** If you would like to try recreating all the tasks that are currently 
-included in the ansible playbook, through a VM, you would need a disk of at least 
+**Note:** If you would like to try recreating all the tasks that are currently
+included in the ansible playbook, through a VM, you would need a disk of at least
 **16GB** in size.
+
+For best experience this should be added to live usb
+
+```bash
+cp -r /usr/share/archiso/configs/releng ~/archlive
+git clone git@github.com:peter-si/arch-ansible.git ~/archlive/airootfs/install
+cd ~/archlive/airootfs/install && git submodule update --recursive --remote && cd ~
+sudo mkarchiso -v -w /tmp/archiso-tmp ~/archlive
+sudo dd bs=4M if="location of iso" of=/dev/sdd status=progress oflag=sync
+```
+
+You should also add .ssh folder with keys to download dotfiles. These will be automatically installed on new pc
+
+```bash
+cp -r ~/.ssh ~/archlive/airootfs/install
+```
+
+**Note:** Don't leave your unencrypted private keys in live usb
 
 ## Running
 
-First, sync mirrors and install Ansible:
+If you are on wifi connect to internet via `iwctl`
 
-    $ pacman -Syy python-passlib ansible
+```iwctl
+station wlan0 connect name_of_network
+```
 
-Second, install and update the submodules:
+Copy your `.ssh` folder to `/install`
 
-    $ git submodule init && git submodule update
-    
-Run the playbook as root.
+```bash
+cp -r /media/location/.ssh /install
+```
 
-    # ansible-playbook -i localhost playbook.yaml
+Navigate to `/install` and set up disks with following command (and follow prompts)
+
+```bash
+./disk-bootstrap.sh /dev/sdX 
+```
+
+Once installed you will be in `systemd-nspawn` system. Right now `chpasswd` is not working, so we have to set up password manually. Run following commands to get to correct nspawn container:
+
+```bash
+passwd
+logout
+```
+
+Once inside navigate to `/install` and run ansible playbook as root.
+
+```bash
+ansible-playbook -i pc -l desktop playbook.yaml
+```
+Or
+```bash
+ansible-playbook -i laptop -l asus playbook.yaml
+```
 
 When run, Ansible will prompt for the user password. This only needs to be
 provided on the first run when the user is being created. On later runs,
 providing any password -- whether the current user password or a new one --
 will have no effect.
+
+This will bootstrap installation with dotfiles and necessary configs. If it is done, you can `poweroff` nspawn container.
+
+We have to regenerate bootloader
+
+```bash
+refind-install
+```
+
+After this you can reboot into system a finish installation
+
+### Finishing installation
+
+If needed connect to wifi using
+
+```bash
+nmcli d wifi c name_of_network password SecretPassword
+```
+
+To [check iptables dropped packets](https://wiki.archlinux.org/index.php/iptables#Logging) use
+
+```bash
+journalctl -k | grep "IN=.*OUT=.*" | less
+```
+
 
 ## SSH
 
@@ -140,105 +202,6 @@ Trusted networks are defined using their NetworkManager UUIDs, configured in
 the `network.trusted_uuid` list. NetworkManager UUIDs may be discovered using
 `nmcli con`.
 
-
-## Mail
-
-### Receiving Mail
-
-Receiving mail is supported by syncing from IMAP servers via both [isync][13]
-and [OfflineIMAP][14]. By default isync is enabled, but this can be changed to
-OfflineIMAP by setting the value of the `mail.sync_tool` variable to
-`offlineimap`.
-
-### Sending Mail
-
-[msmtp][15] is used to send mail. Included as part of msmtp's documentation are
-a set of [msmtpq scripts][16] for queuing mail. These scripts are copied to the
-user's path for use. When calling `msmtpq` instead of `msmtp`, mail is sent
-normally if internet connectivity is available. If the user is offline, the
-mail is saved in a queue, to be sent out when internet connectivity is again
-available. This helps support a seamless workflow, both offline and online.
-
-### System Mail
-
-If the `email.user` variable is defined, the system will be configured to
-forward mail for the user and root to this address. Removing this variable will
-cause no mail aliases to be put in place.
-
-The cron implementation is configured to send mail using `msmtp`.
-
-### Syncing and Scheduling Mail
-
-A shell script called `mailsync` is included to sync mail, by first sending any
-mail in the msmtp queue and then syncing with the chosen IMAP servers via
-either isync or OfflineIMAP. The script will also attempt to sync contacts and
-calendars via [vdirsyncer][17]. To disable this behavior, set the
-`mail.sync_pim` variable to `False`.
-
-Before syncing, the `mailsync` script checks for internet connectivity using
-NetworkMananger. `mailsync` may be called directly by the user, ie by
-configuring a hotkey in Mutt.
-
-A [systemd timer][18] is also included to periodically call `mailsync`. The
-timer is set to sync every 5 minutes (configurable through the `mail.sync_time`
-variable).
-
-The timer is not started or enabled by default. Instead, the timer is added to
-`/etc/nmtrust/trusted_units`, causing the NetworkManager trusted unit
-dispatcher to activate the timer whenever a connection is established to a
-trusted network. The timer is stopped whenever the network goes down or a
-connection is established to an untrusted network.
-
-To have the timer activated at boot, change the `mail.sync_on` variable from
-`trusted` to `all`.
-
-If the `mail.sync_on` variable is set to anything other than `trusted` or
-`all`, the timer will never be activated.
-
-
-## Tarsnap
-
-[Tarsnap][19] is installed with its default configuration file. However,
-setting up Tarsnap is left as an exercise for the user. New Tarsnap users
-should [register their machine and generate a key][20]. Existing users should
-recover their key(s) and cache directory from their backups (or, alternatively,
-recover their key(s) and rebuild the cache directory with `tarsnap --fsck`).
-
-[Tarsnapper][21] is installed to manage backups. A basic configuration file to
-backup `/etc` is included. Tarsnapper is configured to look in
-`/usr/local/etc/tarsnapper.d` for additional jobs. As with with the Tarsnap key
-and cache directory, users should recover their jobs files from backups after
-the Tarsnapper install is complete. See the Tarsnapper documentation for more
-details.
-
-### Running Tarsnap
-
-A systemd unit file and timer are included for Tarsnapper. Rather than calling
-it directly, the systemd unit wraps Tarsnapper with [backitup][22].
-
-The timer is set to execute the unit hourly, but backitup will only call
-Tarsnapper once within the period defined in the `tarsnapper.period` variable.
-This defaults to `DAILY`. This increases the likelyhood of completing daily
-backups by checking each hour if the unit has run succesfully on the current
-calendar day.
-
-In addition to the period limitation, backitup defaults to only calling
-Tarsnapper when it detects the machine ison AC power. To allow Tarsnapper to
-run when on battery, set the `tarsnapper.ac_only` variable to `False`.
-
-As with `mailsync`, the timer is not started or enabled by default. Instead,
-the timer is added to `/etc/nmtrust/trusted_units`, causing the NetworkManager
-trusted unit dispatcher to activate the timer whenever a connection is
-established to a trusted network. The timer is stopped whenever the network
-goes down or a connection is established to an untrusted network.
-
-To have the timer activated at boot, change the `tarsnapper.run_on` variable
-from `trusted` to `all`.
-
-If the `tarsnapper.run_on` variable is set to anything other than `trusted` or
-`all`, the timer will never be activated.
-
-
 ## Tor
 
 [Tor][23] is installed by default. A systemd service unit for Tor is installed,
@@ -261,83 +224,6 @@ GnuPG keyring over the Tor network. The service is added to
 `/etc/nmtrust/trusted_units` and respects the `tor.run_on` variable.
 
 
-## BitlBee
-
-[BitlBee][25] and [WeeChat][26] are used to provide chat services. A systemd
-service unit for BitlBee is installed, but not enabled or started by default.
-Instead, the service is added to `/etc/nmtrust/trusted_units`, causing the
-NetworkManager trusted unit dispatcher to activate the service whenever a
-connection is established to a trusted network. The service is stopped whenever
-the network goes down or a connection is established to an untrusted network.
-
-To have the service activated at boot, change the `bitlbee.run_on` variable
-from `trusted` to `all`.
-
-If the `bitlbee.run_on` variable is set to anything other than `trusted` or
-`all`, the service will never be activated.
-
-By default BitlBee will be configured to proxy through Tor. To disable this,
-remove the `bitlebee.torify` variable or disable Tor entirely by removing the
-`tor` variable.
-
-## git-annex
-
-[git-annex][27] is installed for file syncing. A systemd service unit for the
-git-annex assistant is enabled and started by default. To prevent this, remove
-the `gitannex` variable from the config.
-
-Additionally, the git-annex unit is added to `/etc/nmtrust/trusted_units`,
-causing the NetworkManager trusted unit dispatcher to activate the service
-whenever a connection is established to a trusted network. The service is
-stopped whenever a connection is established to an untrusted network. Unlike
-other units using the trusted network framework, the git-annex unit is also
-activated when there are no active network connections. This allows the
-git-annex assistant to be used when on trusted networks and when offline, but
-not when on untrusted networks.
-
-If the `gitannex.stop_on_untrusted` variable is set to anything other than
-`True` or is not defined, the git-annex unit will not be added to the trusted
-unit file, resulting in the git-annex assistant not being stopped on untrusted
-networks.
-
-## PostgreSQL
-
-[PostgreSQL][28] is installed and enabled by default. If the
-`postgresql.enable` variable is set to anything other than `True` or is not
-defined, the service will not be started or enabled.
-
-This is intended for local development. PostgreSQL is configured to only listen
-on localhost and no additional ports are opened in the default firewall. This
-configuration means that PostgreSQL is not a network service. As such, the
-PostgreSQL service is not added to `/etc/nmtrust/trusted_units`.
-
-Additional configuration options are set which improve performance but make the
-database service inappropriate for production use.
-
-## Himawaripy
-
-[Himawaripy][29] is provided to fetch near-realtime photos of Earth from the
-Japanese [Himawari 8][30] weather satellite and set them as the user's desktop
-background via feh. This should provide early warning of the presence of any
-Vogon constructor fleets appearing over the Eastern Hemisphere.
-
-A systemd service unit and timer is installed, but not enabled or started by
-default. Instead, the service is added to `/etc/nmtrust/trusted_units`, causing
-the NetworkManager trusted unit dispatcher to activate the service whenever a
-connection is established to a trusted network. The service is stopped whenever
-the network goes down or a connection is established to an untrusted network.
-
-To have the service activated at boot, change the `himawaripy.run_on` variable
-from `trusted` to `all`.
-
-If the `himawaripy.run_on` variable is set to anything other than `trusted` or
-`all`, the service will never be activated.
-
-By default the timer is scheduled to fetch a new image at 15 minute intervals.
-This can be changed by modifying the `himawaripy.run_time` variable.
-
-By completely removing the `himawaripy` variable, no related tasks will be run.
-
 
 [1]: http://www.ansible.com
 [2]: https://www.archlinux.org
@@ -351,21 +237,5 @@ By completely removing the `himawaripy` variable, no related tasks will be run.
 [10]: https://firejail.wordpress.com/
 [11]: https://github.com/EtiennePerot/macchiato
 [12]: https://github.com/pigmonkey/nmtrust
-[13]: http://isync.sourceforge.net/
-[14]: http://offlineimap.org/
-[15]: http://msmtp.sourceforge.net/
-[16]: http://sourceforge.net/p/msmtp/code/ci/master/tree/scripts/msmtpq/README.msmtpq
-[17]: https://github.com/pimutils/vdirsyncer
-[18]: https://wiki.archlinux.org/index.php/Systemd/Timers
-[19]: https://www.tarsnap.com/
-[20]: https://www.tarsnap.com/gettingstarted.html
-[21]: https://github.com/miracle2k/tarsnapper
-[22]: https://github.com/pigmonkey/backitup
 [23]: https://www.torproject.org/
 [24]: https://github.com/EtiennePerot/parcimonie.sh
-[25]: https://www.bitlbee.org/main.php/news.r.html
-[26]: https://weechat.org/
-[27]: https://git-annex.branchable.com/
-[28]: http://www.postgresql.org/
-[29]: https://github.com/boramalper/himawaripy
-[30]: https://en.wikipedia.org/wiki/Himawari_8

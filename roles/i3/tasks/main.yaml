@@ -19,9 +19,10 @@
       - polybar
       - xidlehook
       - python-fontawesome
-      - todotxt
       - i3gopher
       - i3icons2-git
+  tags:
+    - aur
 
 - name: Verify that default applications file exists
   file: path=/etc/xdg/mimeapps.list state=touch

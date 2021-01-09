@@ -1,7 +1,13 @@
 ---
 - name: Install filesystem packages
   pacman:
-    name: "{{ filesystem_packages }}"
+    name:
+      - dosfstools
+      - ntfs-3g
+      - exfat-utils
+      - btrfs-progs
+      - snapper
+      - snap-pac
     state: present
 
 - name: Check that snapper config exists

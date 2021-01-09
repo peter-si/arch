@@ -4,6 +4,10 @@
     src: pacman.conf
     dest: /etc/pacman.conf
 
+- name: Add archlinux gpg keys
+  command:
+    cmd: pacman-key -u --populate archlinux
+
 - name: Refresh pacman mirrors
   pacman:
     update_cache: yes
@@ -48,17 +52,6 @@
   notify:
     - reload sysctl
 
-- name: Add gnome-keyring session to pam config
-  lineinfile:
-    dest: /etc/pam.d/login
-    line: "session    optional     pam_gnome_keyring.so auto_start"
-
-- name: Add gnome-keyring auth to pam config
-  lineinfile:
-    dest: /etc/pam.d/login
-    line: "auth optional pam_gnome_keyring.so"
-    insertafter: "^auth"
-
 - include: locale.yaml
 - include: shell.yaml
 - include: user.yaml
@@ -66,3 +59,4 @@
 - include: packages.yaml
 - include: journal.yaml
 - include: xdg.yaml
+- include: gnome-keyring.yaml

@@ -11,9 +11,9 @@ user:
 bootloader:
   path: /boot
   theme_path: refind-theme-regular
+  theme_repo: https://github.com/bobafetthotmail/refind-theme-regular.git
   kernel_parameters:
   silent: True
-
 
 additional_hosts: |
   192.168.2.102 sonarr.rasp plex.rasp radarr.rasp jackett.rasp ombi.rasp resilio.rasp traefik.rasp monit.rasp muximux.rasp
@@ -52,7 +52,6 @@ pacman:
     - zsh
     - alacritty
     - jre-openjdk
-    - gnome-keyring
   packages:
     - gsimplecal
     - neofetch
@@ -86,7 +85,6 @@ pacman:
     - ttf-font-awesome
 
 aur:
-  dir: .aur
   packages:
     - yay
     - ctop
@@ -125,17 +123,15 @@ network:
     interval: 0
   trusted_uuid:
     - bfa4a571-e6b0-46f1-84ca-e8bce047dd64
+    - 7fd5436b-ce00-4659-91ab-406b9fa1a1e8
     - 535ee41f-f3f9-30bd-92d8-8a9e227621de
 
-video_drivers:
+wireless_packages:
+  - wireless_tools
+  - iw
+  - iwd
 
-filesystem_packages:
-  - dosfstools
-  - ntfs-3g
-  - exfat-utils
-  - btrfs-progs
-  - snapper
-  - snap-pac
+video_drivers:
 
 browser_choices:
   - firefox -P default
@@ -147,12 +143,6 @@ passwordless_sudo:
   - /usr/bin/openvpn*
 
 fingerprint: False
-
-tor:
-  run_on: trusted
-
-localtime:
-  run_on: trusted
 
 #unbound:
 #  tls: True
@@ -204,6 +194,9 @@ x:
   keyboard_model: "pc105"
 
 display_manager:
+
+desktop_environment: i3
+
 gdm:
   sound: False
   font_scaling_factor: 1
@@ -212,7 +205,6 @@ gdm:
     tap_to_click: True
   accessibility_menu: True
 
-desktop_environment: i3
 gnome:
   night_light:
     enabled: True
@@ -247,6 +239,9 @@ gnome:
     disable_top_left_hot_corner: False
     extensions_support: True
 
+hardened:
+  enable_namespaces: true
+
 syncthing:
   run_on: trusted
   open_ports: False
@@ -257,5 +252,8 @@ mirrorlist:
 pkgfile:
   run_on: trusted
 
-hardened:
-  enable_namespaces: true
+tor:
+  run_on: trusted
+
+localtime:
+  run_on: trusted

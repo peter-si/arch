@@ -13,13 +13,20 @@
 - name: Install bootloader theme
   git:
     dest: "{{ bootloader.path }}/EFI/refind/{{ bootloader.theme_path }}"
-    repo: https://github.com/bobafetthotmail/refind-theme-regular.git
+    repo: "{{ bootloader.theme_repo }}"
     depth: 1
+  when: bootloader.theme_repo is defined and bootloader.theme_path is defined
+
+- name: Copy Arch hardened icon
+  copy:
+    dest: "{{ bootloader.path }}/EFI/refind/icons/os_arch_hardened.png"
+    src: os_arch_hardened.png
 
 - name: Copy bootloader background
   copy:
     dest: "{{ bootloader.path }}/EFI/refind/{{ bootloader.theme_path }}/icons/128-48/bg_plymouth.png"
     src: plymouth/bg_plymouth.png
+  when: bootloader.theme_path is defined
 
 - name: Copy bootloader theme config
   copy:
@@ -47,14 +54,6 @@
   copy:
     dest: /etc/plymouth/plymouthd.conf
     src: plymouth/plymouthd.conf
-
-- name: Edit mkinitcpio config
-  lineinfile:
-    path: /etc/mkinitcpio.conf
-    line: "HOOKS=(base systemd keyboard autodetect sd-plymouth sd-vconsole modconf block filesystems sd-encrypt btrfs)"
-    regexp: "^HOOKS="
-  notify:
-    - rebuild bootloader
 
 - include: microcode.yaml
 - include: entries.yaml

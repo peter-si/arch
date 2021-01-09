@@ -1,4 +1,3 @@
 ---
 dependencies:
   - { role: mkinitcpio }
-  - { role: sysctl }

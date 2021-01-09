@@ -4,6 +4,7 @@
 - include: gthumb.yaml
 - include: feh.yaml
 - include: qcode.yaml
+- include: theme.yaml
 
 - name: Install misc media codecs and helpers
   pacman:
@@ -60,27 +61,3 @@
 - name: Install recapp for screen recording
   aur: name=recapp-git user="{{ user.name }}"
 
-- name: Install gtk theme
-  pacman:
-    name: arc-gtk-theme
-    state: present
-
-- name: Copy icon theme
-  synchronize:
-    dest: /usr/share/icons
-    src: Green-Maia
-  when: not ansible_check_mode
-
-- name: Copy cursor theme
-  synchronize:
-    dest: /usr/share/icons
-    src: Volantes-Cursors
-  when: not ansible_check_mode
-
-- name: Create background dir
-  file: path=/usr/share/backgrounds state=directory
-
-- name: Copy backround
-  copy:
-    dest: /usr/share/backgrounds/fight.jpg
-    src: fight.jpg

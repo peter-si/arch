@@ -5,6 +5,8 @@
       - linux-hardened
       - linux-hardened-headers
     state: present
+  notify:
+    - rebuild bootloader
 
 - name: Enable unprivileged containers for non-root users
   copy:

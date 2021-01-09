@@ -1,0 +1,8 @@
+---
+- name: Edit mkinitcpio config
+  lineinfile:
+    path: /etc/mkinitcpio.conf
+    line: "HOOKS=(base systemd keyboard autodetect sd-plymouth sd-vconsole modconf block filesystems sd-encrypt btrfs)"
+    regexp: "^HOOKS="
+  notify:
+    - rebuild bootloader

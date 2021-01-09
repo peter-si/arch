@@ -12,6 +12,7 @@
   become: yes
   roles:
     - { role: base, tags: ['base'] }
+    - { role: mkinitcpio, tags: ['mkinitcpio'] }
     - { role: bootloader, tags: ['bootloader'] }
     - { role: gnupg, tags: ['gnupg'] }
     - { role: sysmon, tags: ['sysmon'] }
@@ -29,6 +30,7 @@
     - { role: gnome, tags: ['gnome'], when: "desktop_environment == 'gnome'" }
     - { role: iptables, tags: ['iptables'] }
     - { role: nettools, tags: ['nettools'] }
+    - { role: wireless, tags: ['wireless'] }
     - { role: nmtrust, tags: ['nmtrust'] }
 #    - { role: unbound, tags: ['unbound'] }
     - { role: openresolv, tags: ['openresolv'] }
@@ -65,6 +67,7 @@
     - { role: mirrorlist, tags: ['mirrorlist'], when: "mirrorlist is defined" }
     - { role: pkgfile, tags: ['pkgfile'], when: "pkgfile is defined" }
     - { role: pydev, tags: ['pydev'] }
+    - { role: vpn, tags: ['vpn'] }
     - { role: docker, tags: ['docker'] }
     - { role: steam, tags: ['steam'] }
     - { role: jetbrains, tags: ['jetbrains'] }
@@ -76,4 +79,4 @@
   vars_prompt:
     - name: user_password
       prompt: "Enter desired user password"
-#      confirm: yes
+      confirm: yes

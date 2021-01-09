@@ -1,0 +1,3 @@
+---
+- name: rebuild bootloader
+  command: mkinitcpio -P

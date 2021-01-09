@@ -40,7 +40,6 @@
   tags:
     - libinput
 
-
 - include: unclutter.yaml
 - include: autorandr.yaml
 - include: srandrd.yaml

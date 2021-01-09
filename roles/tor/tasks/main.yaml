@@ -6,6 +6,9 @@
       - torsocks
     state: present
 
+- name: Verify Tor config exists
+  file: path=/etc/tor/torrc state=touch
+
 - name: Set Tor to run as tor
   lineinfile: dest=/etc/tor/torrc
               regexp=^User
