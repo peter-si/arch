@@ -42,7 +42,6 @@ function clear_disk() {
 function create_partitions() {
   banner "Creating partitions"
   partNum=$(sgdisk -p "$drive" | tail -n 1 | awk '{print $1}')
-  partNum=${partNum:-0}
   sgdisk \
     --new="$((partNum=partNum+1)):0:+550MiB" --typecode=1:ef00 --change-name=1:EFI \
     --new="$((partNum=partNum+1)):0:+8GiB" --typecode=2:8200 --change-name=2:cryptswap \
