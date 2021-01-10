@@ -5,6 +5,7 @@
       - linux-hardened
       - linux-hardened-headers
     state: present
+  when: hardened is defined
   notify:
     - rebuild bootloader
 

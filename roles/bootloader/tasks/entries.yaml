@@ -5,11 +5,12 @@
     dest: "{{ bootloader.path }}/EFI/refind/entries.conf"
   when: not ansible_check_mode
 
-- name: Remove root partition from fstab since we are loading it rw
-  lineinfile:
+- name: Comment out root partition from fstab since we are loading it rw
+  replace:
     path: /etc/fstab
-    regexp: "subvol=root"
-    state: absent
+    regexp: "(.*subvol=root.*)"
+    replace: '#\1'
+    backup: yes
 
 - name: Add swap to cryptsetup
   lineinfile:

@@ -1,10 +1,6 @@
 ---
 - name: Install nordvpn
-  become: yes
-  become_user: "{{ user.name }}"
-  aur:
-    name: nordvpn-bin
-    state: present
+  aur: name=nordvpn-bin user="{{ user.name }}"
 
 #- name: Enable nordvpnd.service
 #  systemd:

@@ -1,5 +1,5 @@
 ---
-- name: Install Protonmail brdige
+- name: Install Protonmail bridge
   aur: name=protonmail-bridge-bin user="{{ user.name }}"
 
 - name: Install Mailspring

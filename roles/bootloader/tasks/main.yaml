@@ -24,8 +24,9 @@
 
 - name: Copy Arch hardened icon
   copy:
-    dest: "{{ bootloader.path }}/EFI/refind/icons/os_arch_hardened.png"
+    dest: "{{ bootloader.path }}/EFI/refind/{{ bootloader.theme_path }}/icons/128-48/os_arch_hardened.png"
     src: os_arch_hardened.png
+  when: bootloader.theme_path is defined
 
 - name: Copy bootloader background
   copy:

@@ -22,7 +22,7 @@ additional_hosts: |
   10.1.13.70 kibana.ws.int
 
 dotfiles:
-  url: git@github.com:alulord/arch.git
+  url: git@github.com:peter-si/arch-dotfiles.git
   name: .dotfiles.git
 
 pacman:

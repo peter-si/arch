@@ -3,7 +3,6 @@
   pacman:
     name:
       - dunst
-      - betterlockscreen
       - python-pywal
       - picom
       - i3-gaps
@@ -21,6 +20,8 @@
       - python-fontawesome
       - i3gopher
       - i3icons2-git
+      - i3lock-color
+      - betterlockscreen
   tags:
     - aur
 

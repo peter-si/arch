@@ -58,6 +58,10 @@
     name: digikam
     state: present
 
-- name: Install recapp for screen recording
-  aur: name=recapp-git user="{{ user.name }}"
+#- name: Install recapp for screen recording
+#  aur:
+#    name:
+#      - recapp-git
+#      - python-pulse-control
+#    user: "{{ user.name }}"
 
