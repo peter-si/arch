@@ -91,7 +91,7 @@ function mount_volumes() {
 
 function bootstrap_arch() {
   banner "Bootstrapping Arch"
-  pacstrap /mnt base base-devel linux linux-firmware linux-headers git nano ansible rsync
+  pacstrap /mnt base base-devel linux linux-firmware linux-headers git nano ansible rsync refind
   genfstab -L -p /mnt >>/mnt/etc/fstab
   sed -i "s+LABEL=swap+/dev/mapper/swap+" /mnt/etc/fstab
 }

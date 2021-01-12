@@ -1,10 +1,4 @@
 ---
-- name: Install bootloader
-  pacman: name=refind state=present
-
-- name: Install bootloader to boot
-  command: refind-install
-
 - name: Install plymouth
   aur:
     name: plymouth-git
