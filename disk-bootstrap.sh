@@ -109,9 +109,9 @@ function chroot_system() {
   banner "Chrooting into system"
   read -rsp 'Root password: ' rootPass
   echo ""
+  arch-chroot /mnt refind-install
   systemd-nspawn -D /mnt /install/root_pass.sh "$rootPass"
   systemd-nspawn --bind /sys/firmware/efi/efivars -bD /mnt
-  arch-chroot /mnt refind-install
 }
 
 function clean_install() {

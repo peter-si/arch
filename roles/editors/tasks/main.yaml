@@ -1,0 +1,24 @@
+- name: Install nano
+  pacman: name=nano state=present
+
+- name: Create local nano directory
+  file:
+    path: "/usr/local/share/nano"
+    state: directory
+    mode: 755
+
+- name: Copy nano files
+  synchronize:
+    dest: "/usr/local/share"
+    src: "files/nano"
+
+- name: Copy nanorc for root
+  copy:
+    dest: "/root/.nanorc"
+    src: "files/nanorc"
+
+- name: Copy nanorc for user
+  copy:
+    dest: "/home/{{ user.name }}/.nanorc"
+    src: "files/nanorc"
+    owner: "{{ user.name }}"

@@ -47,7 +47,6 @@ pacman:
     - pv
     - jq
     - screen
-    - nano
     - wget
     - zsh
     - alacritty
@@ -173,10 +172,10 @@ firejail:
     - ~/.cache/keepassxc
     - ~/.cache/protonmail
     - ~/.config/Bitwarden
-    - /.config/Bitwarden/Bitwarden\ CLI
-    - /.config/syncthing
-    - /.config/syncthing-gtk
-    - /.local/tasks
+    - ~/.config/Bitwarden/Bitwarden CLI
+    - ~/.config/syncthing
+    - ~/.config/syncthing-gtk
+    - ~/.local/tasks
 
 journal:
   max_size: 500M
@@ -192,7 +191,7 @@ x:
   middle_click_button: "274"
   keyboard_model: "pc105"
 
-display_manager:
+display_manager: no-dm
 
 desktop_environment: i3
 

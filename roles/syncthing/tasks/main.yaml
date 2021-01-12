@@ -1,6 +1,10 @@
 ---
 - name: Install syncthing
-  pacman: name=syncthing state=present
+  pacman:
+    name:
+      - syncthing
+      - syncthing-gtk
+    state: present
 
 - include_tasks: roles/nmtrust/tasks/unit.yaml
   vars:

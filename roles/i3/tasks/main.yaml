@@ -4,6 +4,7 @@
     name:
       - dunst
       - python-pywal
+      - python-dbus
       - picom
       - i3-gaps
     state: present

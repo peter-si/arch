@@ -12,11 +12,12 @@
     - { role: cron, tags: ['cron'] }
     - { role: hardened, tags: ['hardened'] }
     - { role: ssh, tags: ['ssh'] }
+    - { role: editors, tags: ['editors'] }
     - { role: dotfiles, tags: ['dotfiles'] }
     - { role: ssd, tags: ['ssd'] }
     - { role: fonts, tags: ['fonts'] }
     - { role: x, tags: ['x'] }
-    - { role: no-dm, tags: ['no-dm'], when: "display_manager == ''" }
+    - { role: no-dm, tags: ['no-dm'], when: "display_manager == 'no-dm'" }
     - { role: lightdm, tags: ['lightdm'], when: "display_manager == 'lightdm'" }
     - { role: gdm, tags: ['gdm'], when: "display_manager == 'gdm'" }
     - { role: i3, tags: ['i3'], when: "desktop_environment == 'i3'" }
