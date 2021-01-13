@@ -1,3 +1,4 @@
+{% if hardened is defined %}
 menuentry "Arch Linux Hardened" {
     icon     /EFI/refind/{{ bootloader.theme_path }}/icons/128-48/os_arch_hardened.png
     ostype   Linux
@@ -12,6 +13,7 @@ menuentry "Arch Linux Hardened" {
         add_options "systemd.unit=multi-user.target"
     }
 }
+{% endif %}
 
 menuentry "Arch Linux" {
     icon     /EFI/refind/{{ bootloader.theme_path }}/icons/128-48/os_arch.png

@@ -32,7 +32,7 @@
     - user
 
 - name: Enable and start CUPS
-  service:
+  systemd:
     name: cups.service
     enabled: yes
     state: started

@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 set -e
 
+if [[ "$EUID" -ne 0 ]]; then
+  echo "Please run as root"
+  exit
+fi
+
 function help() {
   echo ""
   echo "This is a utility to prepare disk for running ansible playbook. Based on parameters, it will:"
@@ -44,9 +49,9 @@ function create_partitions() {
   partprobe "$drive"
   partNum=$(sgdisk -p "$drive" | tail -n 1 | awk '{print $1}')
   sgdisk \
-    --new="$((partNum=partNum+1)):0:+550MiB" --typecode=1:ef00 --change-name=1:EFI \
-    --new="$((partNum=partNum+1)):0:+8GiB" --typecode=2:8200 --change-name=2:cryptswap \
-    --new="$((partNum=partNum+1)):0:${diskSize:-0}" --typecode=3:8300 --change-name=3:cryptsystem \
+    --new="$((partNum=partNum+1)):0:+550MiB" --typecode="${partNum}":ef00 --change-name="${partNum}":EFI \
+    --new="$((partNum=partNum+1)):0:+8GiB" --typecode="${partNum}":8200 --change-name="${partNum}":cryptswap \
+    --new="$((partNum=partNum+1)):0:${diskSize:-0}" --typecode="${partNum}":8300 --change-name="${partNum}":cryptsystem \
     "$drive"
 }
 
@@ -120,23 +125,6 @@ function clean_install() {
 }
 
 ############################################################################
-
-while getopts ":s:nmch" opt; do
-  case "${opt}" in
-  n) noFormat=true ;;
-  m) mountOnly=true ;;
-  c) cleanInstall=true ;;
-  s) diskSize="+${OPTARG}" ;;
-  h) help ;;
-  *)
-    echo "Invalid Option: -$OPTARG" 1>&2
-    help
-    ;;
-  esac
-done
-shift $((OPTIND - 1))
-
-drive="$1"
 
 if [[ -n "$mountOnly" ]]; then
   open_luks
