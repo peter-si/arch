@@ -1,5 +1,5 @@
 {% if hardened is defined %}
-menuentry "Arch Linux Hardened" {
+menuentry "Arch Hardened" {
     icon     /EFI/refind/{{ bootloader.theme_path }}/icons/128-48/os_arch_hardened.png
     ostype   Linux
     volume   "Arch Linux"
@@ -15,7 +15,7 @@ menuentry "Arch Linux Hardened" {
 }
 {% endif %}
 
-menuentry "Arch Linux" {
+menuentry "Arch" {
     icon     /EFI/refind/{{ bootloader.theme_path }}/icons/128-48/os_arch.png
     ostype   Linux
     volume   "Arch Linux"
