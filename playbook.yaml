@@ -1,7 +1,5 @@
 ---
-- hosts:
-    - desktop
-    - asus
+- hosts: pc
   become: yes
   roles:
     - { role: base, tags: ['base'] }
@@ -81,9 +79,9 @@
   roles:
     - { role: laptop, tags: ['laptop'] }
     - { role: asus, tags: ['asus'] }
-    #    - { role: thinkpad, tags: ['thinkpad'], when: "'ThinkPad' in ansible_product_version" }
-    #    - { role: optical, tags: ['optical'] }
     - { role: bluetooth, tags: ['bluetooth'], when: "bluetooth is defined" }
 
+#    - { role: thinkpad, tags: ['thinkpad'], when: "'ThinkPad' in ansible_product_version" }
+#    - { role: optical, tags: ['optical'] }
 
 

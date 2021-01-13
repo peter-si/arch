@@ -57,14 +57,14 @@ passwd
 logout
 ```
 
-Once inside navigate to `/install` and run ansible playbook as root.
+Once inside navigate to `/install` and run ansible playbook as root. By default it will run a "pc" inventory. You can change it by adding `-i some_inventory`.
 
 ```bash
-ansible-playbook -i pc -l desktop playbook.yaml
+ansible-playbook -l desktop playbook.yaml
 ```
 Or
 ```bash
-ansible-playbook -i laptop -l asus playbook.yaml
+ansible-playbook -l asus playbook.yaml
 ```
 
 When run, Ansible will prompt for the user password. This only needs to be

@@ -1,2 +1,3 @@
 [pc]
 desktop   ansible_connection=local
+asus   ansible_connection=local
