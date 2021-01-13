@@ -1,12 +1,14 @@
 ---
-- name: Clone Oh My ZSH repo for user.
+- name: Install zplug
   aur: name=zplug user="{{ user.name }}"
+  notify: zplug install as user
 
 - name: Copy zshrc to root
   synchronize:
     dest: "/root/"
     src: "/home/{{ user.name }}/.zshrc"
     archive: no
+  notify: zplug install as root
 
 - name: Copy powerlevel to root
   synchronize:

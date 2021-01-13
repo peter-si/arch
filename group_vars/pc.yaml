@@ -92,7 +92,6 @@ aur:
     - yay
     - nvme-cli
   fonts:
-    - ttf-bitstream-charter
     - ttf-cooper-hewitt
     - ttf-courier-prime
     - ttf-heuristica
