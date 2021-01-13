@@ -126,6 +126,23 @@ function clean_install() {
 
 ############################################################################
 
+while getopts ":s:nmch" opt; do
+  case "${opt}" in
+  n) noFormat=true ;;
+  m) mountOnly=true ;;
+  c) cleanInstall=true ;;
+  s) diskSize="+${OPTARG}" ;;
+  h) help ;;
+  *)
+    echo "Invalid Option: -$OPTARG" 1>&2
+    help
+    ;;
+  esac
+done
+shift $((OPTIND - 1))
+
+drive="$1"
+
 if [[ -n "$mountOnly" ]]; then
   open_luks
   mount_volumes
