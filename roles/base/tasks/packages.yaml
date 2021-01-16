@@ -6,13 +6,12 @@
   tags:
     - packages
 
-- name: Install additional packages
+- name: Install non-essential packages
   pacman:
     name: "{{ pacman.packages }}"
     state: present
   tags:
     - packages
-    - additional
 
 - name: Create pacman hook directory
   file: path=/etc/pacman.d/hooks

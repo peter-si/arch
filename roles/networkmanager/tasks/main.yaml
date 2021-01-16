@@ -5,6 +5,7 @@
       - networkmanager
       - networkmanager-openvpn
       - network-manager-applet
+      - dnsmasq
     state: present
 
 - name: Push NetworkManager openresolv config.
@@ -12,16 +13,34 @@
     src: rc-manager.conf
     dest: /etc/NetworkManager/conf.d/20-rc-manager.conf
 
-- name: Push NetworkManager dnsmasq cache config.
+- name: Push NetworkManager dnsmasq config
   copy:
-    src: cache
-    dest: /etc/NetworkManager/dnsmasq.d/cache
+    src: dnsmasq.conf
+    dest: /etc/NetworkManager/conf.d/20-dnsmasq.conf
+
+- name: Enable Dnsmasq cache
+  lineinfile:
+    path: /etc/dnsmasq.conf
+    line: "cache-size=500"
+    regexp: "cache-size"
+
+- name: Disable Dnsmasq negative cache so it won't cache failed requests
+  lineinfile:
+    path: /etc/dnsmasq.conf
+    line: "no-negcache"
+    regexp: "#no-negcache"
 
 - name: Push connectivity check config
   template:
     src: connectivity.conf.j2
     dest: /etc/NetworkManager/conf.d/20-connectivity.conf
   when: network.conn_check is defined
+
+- name: Enable and start Dnsmasq
+  service:
+    name: dnsmasq.service
+    enabled: yes
+    state: started
 
 - name: Enable and start NetworkManager
   service:
