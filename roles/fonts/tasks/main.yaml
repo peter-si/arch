@@ -39,12 +39,12 @@
 
 - name: Install base fonts
   pacman:
-    name: "{{ pacman.fonts }}"
+    name: "{{ pacman_fonts }}"
     state: present
 
 - name: Install AUR fonts
   aur:
-    name: "{{ aur.fonts }}"
+    name: "{{ aur_fonts }}"
     user: "{{ user.name }}"
   tags:
     - aur

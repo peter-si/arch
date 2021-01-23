@@ -1,3 +1,6 @@
-[pc]
+[gui]
 desktop   ansible_connection=local
 asus   ansible_connection=local
+
+[cli]
+htpc   ansible_connection=local

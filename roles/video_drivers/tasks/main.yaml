@@ -1,0 +1,9 @@
+---
+- include: amd.yaml
+  when: '"amd" in video_drivers'
+- include: amdgpu.yaml
+  when: '"amdgpu" in video_drivers'
+- include: nouveau.yaml
+  when: '"nouveau" in video_drivers'
+- include: nvidia.yaml
+  when: '"nvidia" in video_drivers'

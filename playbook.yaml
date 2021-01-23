@@ -1,45 +1,65 @@
 ---
-- hosts: pc
+
+- hosts:
+    - cli
+    - gui
   become: yes
   roles:
-    - { role: base, tags: ['base'] }
-    - { role: mkinitcpio, tags: ['mkinitcpio'] }
-    - { role: bootloader, tags: ['bootloader'] }
-    - { role: gnupg, tags: ['gnupg'] }
-    - { role: sysmon, tags: ['sysmon'] }
-    - { role: cron, tags: ['cron'] }
-    - { role: hardened, tags: ['hardened'] }
-    - { role: ssh, tags: ['ssh'] }
-    - { role: editors, tags: ['editors'] }
+    - { role: base, tags: [ 'base' ] }
+    - { role: mkinitcpio, tags: [ 'mkinitcpio' ] }
+    - { role: bootloader, tags: [ 'bootloader' ] }
+    - { role: gnupg, tags: [ 'gnupg' ] }
+    - { role: sysmon, tags: [ 'sysmon' ] }
+    - { role: cron, tags: [ 'cron' ] }
+    - { role: hardened, tags: [ 'hardened' ] }
+    - { role: ssh, tags: [ 'ssh' ] }
+    - { role: editors, tags: [ 'editors' ] }
+    - { role: fonts, tags: [ 'fonts' ] }
+    - { role: ntp, tags: [ 'ntp' ] }
+    - { role: iptables, tags: [ 'iptables' ] }
+    - { role: nettools, tags: [ 'nettools' ] }
+    - { role: openresolv, tags: [ 'openresolv' ] }
+    - { role: networkmanager, tags: [ 'networkmanager' ] }
+    - { role: macchiato, tags: [ 'macchiato' ] }
+    - { role: nmtrust, tags: [ 'nmtrust' ] }
+    - { role: video_drivers, tags: [ 'video_drivers' ] }
+    - { role: filesystems, tags: [ 'filesystems' ] }
+    - { role: archive, tags: [ 'archive' ] }
+    - { role: taskwarrior, tags: [ 'taskwarrior' ] }
+    - { role: virtualenv, tags: [ 'virtualenv' ] }
+    - { role: wormhole, tags: [ 'wormhole' ] }
+    - { role: hostsctl, tags: [ 'hostsctl' ], when: "hostsctl is defined" }
+    - { role: mirrorlist, tags: [ 'mirrorlist' ], when: "mirrorlist is defined" }
+    - { role: pkgfile, tags: [ 'pkgfile' ], when: "pkgfile is defined" }
+    - { role: pydev, tags: [ 'pydev' ] }
+    - { role: docker, tags: [ 'docker' ] }
+    - { role: syncthing, tags: [ 'syncthing' ], when: "syncthing is defined" }
+    - { role: firejail, tags: ['firejail'] }
+  vars_prompt:
+    - name: user_password
+      prompt: "Enter desired user password"
+      confirm: yes
+
+- hosts: gui
+  become: yes
+  roles:
     - { role: dotfiles, tags: ['dotfiles'] }
     - { role: ssd, tags: ['ssd'] }
-    - { role: fonts, tags: ['fonts'] }
     - { role: x, tags: ['x'] }
     - { role: no-dm, tags: ['no-dm'], when: "display_manager == 'no-dm'" }
     - { role: lightdm, tags: ['lightdm'], when: "display_manager == 'lightdm'" }
     - { role: gdm, tags: ['gdm'], when: "display_manager == 'gdm'" }
     - { role: i3, tags: ['i3'], when: "desktop_environment == 'i3'" }
     - { role: gnome, tags: ['gnome'], when: "desktop_environment == 'gnome'" }
-    - { role: iptables, tags: ['iptables'] }
-    - { role: nettools, tags: ['nettools'] }
     - { role: wireless, tags: ['wireless'] }
-    - { role: nmtrust, tags: ['nmtrust'] }
 #    - { role: unbound, tags: ['unbound'] }
-    - { role: openresolv, tags: ['openresolv'] }
-    - { role: networkmanager, tags: ['networkmanager'] }
-    - { role: macchiato, tags: ['macchiato'] }
-    - { role: ntp, tags: ['ntp'] }
-    - { role: firejail, tags: ['firejail'] }
     - { role: tor, tags: ['tor'], when: "tor is defined" }
-    - { role: filesystems, tags: ['filesystems'] }
-    - { role: archive, tags: ['archive'] }
     - { role: udisks, tags: ['udisks'] }
     - { role: spell, tags: ['spell'] }
     - { role: browsers, tags: ['browsers'] }
 #    - { role: yubikey, tags: ['yubikey'] }
     - { role: media, tags: ['media'] }
     - { role: mpv, tags: ['mpv'] }
-    - { role: taskwarrior, tags: ['taskwarrior'] }
     - { role: mail, tags: ['mail'] }
     - { role: cups, tags: ['cups'] }
     - { role: office, tags: ['office'] }
@@ -47,20 +67,12 @@
     - { role: redshift, tags: ['redshift'] }
     - { role: torrent, tags: ['torrent'] }
     - { role: virtualbox, tags: ['virtualbox'] }
-    - { role: virtualenv, tags: ['virtualenv'] }
     - { role: sound, tags: ['sound'] }
     - { role: parcimonie, tags: ['parcimonie'], when: "tor is defined" }
     - { role: localtime, tags: ['localtime'], when: "localtime is defined" }
-    - { role: wormhole, tags: ['wormhole'] }
     - { role: clipboard, tags: ['clipboard'] }
     - { role: wttr, tags: ['wttr'] }
-    - { role: hostsctl, tags: ['hostsctl'], when: "hostsctl is defined" }
-    - { role: syncthing, tags: ['syncthing'], when: "syncthing is defined" }
-    - { role: mirrorlist, tags: ['mirrorlist'], when: "mirrorlist is defined" }
-    - { role: pkgfile, tags: ['pkgfile'], when: "pkgfile is defined" }
-    - { role: pydev, tags: ['pydev'] }
     - { role: vpn, tags: ['vpn'] }
-    - { role: docker, tags: ['docker'] }
     - { role: steam, tags: ['steam'] }
     - { role: signal, tags: [ 'signal' ] }
     - { role: jetbrains, tags: ['jetbrains'] }
@@ -69,10 +81,6 @@
     - { role: leafpad, tags: ['leafpad'] }
     - { role: filezilla, tags: ['filezilla'] }
     - { role: seahorse, tags: ['seahorse'] }
-  vars_prompt:
-    - name: user_password
-      prompt: "Enter desired user password"
-      confirm: yes
 
 - hosts: asus
   become: yes

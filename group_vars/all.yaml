@@ -10,6 +10,7 @@ user:
 
 bootloader:
   path: /boot
+  time: 3
   theme_path: refind-theme-regular
   theme_repo: https://github.com/bobafetthotmail/refind-theme-regular.git
   kernel_parameters:
@@ -25,8 +26,7 @@ dotfiles:
   url: git@github.com:peter-si/arch-dotfiles.git
   name: .dotfiles.git
 
-pacman:
-  base_packages:
+pacman_base_packages:
     - base-devel
     - man-db
     - man-pages
@@ -50,19 +50,19 @@ pacman:
     - wget
     - zsh
     - alacritty
-    - jre-openjdk
-  packages:
-    - gsimplecal
     - neofetch
-    - rsync
+    - xclip
+    - lm_sensors
+pacman_packages:
+    - jre-openjdk
+    - gsimplecal
     - pacman-contrib
     - papirus-icon-theme
-    - lm_sensors
     - archiso
     - gnome-calculator
     - jre-openjdk
     - gucharmap
-  fonts:
+pacman_fonts:
     - adobe-source-code-pro-fonts
     - cantarell-fonts
     - gsfonts
@@ -82,16 +82,14 @@ pacman:
     - ttf-ubuntu-font-family
     - ttf-font-awesome
 
-aur:
-  packages:
+aur_packages:
     - yay
     - ctop
     - downgrade
     - myrepos
     - teamviewer
-    - yay
     - nvme-cli
-  fonts:
+aur_fonts:
     - ttf-cooper-hewitt
     - ttf-courier-prime
     - ttf-heuristica

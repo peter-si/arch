@@ -29,7 +29,7 @@
   when: bootloader.theme_path is defined
 
 - name: Copy bootloader theme config
-  copy:
+  template:
     dest: "{{ bootloader.path }}/EFI/refind/theme.conf"
     src: theme.conf
 

@@ -1,17 +1,18 @@
 ---
 - name: Install universal base packages
   pacman:
-    name: "{{ pacman.base_packages }}"
+    name: "{{ pacman_base_packages }}"
     state: present
   tags:
     - packages
 
 - name: Install non-essential packages
   pacman:
-    name: "{{ pacman.packages }}"
+    name: "{{ pacman_packages }}"
     state: present
   tags:
     - packages
+    - additional
 
 - name: Create pacman hook directory
   file: path=/etc/pacman.d/hooks
@@ -27,7 +28,7 @@
 
 - name: Install AUR base packages
   aur:
-    name: "{{ aur.packages }}"
+    name: "{{ aur_packages }}"
     user: "{{ user.name }}"
   tags:
     - aur

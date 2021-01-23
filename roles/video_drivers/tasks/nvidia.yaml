@@ -1,0 +1,29 @@
+- name: Install nvidia video driver(s)
+  pacman:
+    name:
+      - nvidia
+      - nvidia-utils
+      - nvidia-settings
+      - lib32-nvidia-utils
+      - libva-utils
+      - libva-vdpau-driver
+    state: present
+
+- name: Install nvidia dkms on hardened
+  pacman:
+    name:
+      - nvidia-dkms
+    state: present
+  tags:
+    - hardened
+
+- name: Copy nvdia kernel module config
+  copy: src=nvidia.conf dest=/etc/modprobe.d/nvidia.conf
+
+- name: Enable suspend/hibernate services for nvidia
+  systemd:
+    name: "{{ item }}"
+    enabled: yes
+  with_items:
+    - nvidia-hibernate
+    - nvidia-suspend
