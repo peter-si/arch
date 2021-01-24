@@ -20,13 +20,13 @@
   copy:
     dest: "{{ bootloader.path }}/EFI/refind/{{ bootloader.theme_path }}/icons/128-48/os_arch_hardened.png"
     src: os_arch_hardened.png
-  when: bootloader.theme_path is defined
+  when: bootloader.theme_repo is defined and bootloader.theme_path is defined and not bootloader_folder.stat.exists
 
 - name: Copy bootloader background
   copy:
     dest: "{{ bootloader.path }}/EFI/refind/{{ bootloader.theme_path }}/icons/128-48/bg_plymouth.png"
     src: plymouth/bg_plymouth.png
-  when: bootloader.theme_path is defined
+  when: bootloader.theme_repo is defined and bootloader.theme_path is defined and not bootloader_folder.stat.exists
 
 - name: Copy bootloader theme config
   template:

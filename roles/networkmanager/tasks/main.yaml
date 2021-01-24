@@ -40,7 +40,7 @@
   service:
     name: dnsmasq.service
     enabled: yes
-    state: started
+#    state: started
 
 - name: Enable and start NetworkManager
   service:
