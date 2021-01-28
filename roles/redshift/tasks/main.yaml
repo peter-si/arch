@@ -36,6 +36,12 @@
   tags:
     - firejail
 
+- name: Push Geoclue user service
+  copy: src=geoclue-agent.service dest=/home/{{ user.name }}/.config/systemd/user/geoclue-agent.service
+
+- name: Enable Geoclue user service
+  systemd: unit=geoclue-agent.service user=True enabled=True
+
 - name: Allow RedShift to access geoclue
   blockinfile:
     dest: /etc/geoclue/geoclue.conf
