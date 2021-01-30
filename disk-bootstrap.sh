@@ -125,7 +125,7 @@ function install_system() {
     --settings=false \
     --bind-ro=/install:/install \
     --directory=/mnt \
-      ansible-playbook /install/playbook.yaml -M /install/library/ansible-aur -i /install/localhost -l "$host" --extra-vars "user_password=$(cat $root_pass_file)"
+      ansible-playbook /install/playbook.yaml -M /install/library/ansible-aur/library -i /install/localhost -l "$host" --extra-vars "user_password=$(cat $root_pass_file)"
 }
 
 ############################################################################
