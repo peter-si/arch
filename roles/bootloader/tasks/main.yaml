@@ -14,11 +14,17 @@
   aur:
     name: plymouth-git
 
+- name: Check that bootloader theme exists
+  stat:
+    path: "{{ bootloader.path }}/EFI/refind/{{ bootloader.theme_path }}"
+  register: bootloader_theme
+
 - name: Install bootloader theme
   git:
     dest: "{{ bootloader.path }}/EFI/refind/{{ bootloader.theme_path }}"
     repo: "{{ bootloader.theme_repo }}"
     depth: 1
+  when: not bootloader_theme.stat.exists
 
 - name: Copy Arch hardened icon
   copy:
