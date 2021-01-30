@@ -1,0 +1,14 @@
+---
+- name: Install gnome-keyring
+  pacman: name=gnome-keyring state=present
+
+- name: Add gnome-keyring session to pam config
+  lineinfile:
+    dest: /etc/pam.d/login
+    line: "session optional pam_gnome_keyring.so auto_start"
+
+- name: Add gnome-keyring auth to pam config
+  lineinfile:
+    dest: /etc/pam.d/passwd
+    line: "password	optional pam_gnome_keyring.so"
+    insertafter: "^password"

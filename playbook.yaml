@@ -16,12 +16,13 @@
     - { role: fonts, tags: [ 'fonts' ] }
     - { role: ntp, tags: [ 'ntp' ] }
     - { role: iptables, tags: [ 'iptables' ] }
+    - { role: video_drivers, tags: [ 'video_drivers' ] }
     - { role: nettools, tags: [ 'nettools' ] }
     - { role: openresolv, tags: [ 'openresolv' ] }
     - { role: networkmanager, tags: [ 'networkmanager' ] }
+    - { role: gnome-keyring, tags: [ 'gnome-keyring' ] }
     - { role: macchiato, tags: [ 'macchiato' ] }
     - { role: nmtrust, tags: [ 'nmtrust' ] }
-    - { role: video_drivers, tags: [ 'video_drivers' ] }
     - { role: filesystems, tags: [ 'filesystems' ] }
     - { role: archive, tags: [ 'archive' ] }
     - { role: taskwarrior, tags: [ 'taskwarrior' ] }

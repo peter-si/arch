@@ -17,9 +17,3 @@
 
 - name: Autologin GDM
   template: src=custom.conf dest=/etc/gdm/custom.conf
-
-- name: Add gnome-keyring auth to pam config
-  lineinfile:
-    dest: /etc/pam.d/passwd
-    line: "password	optional	pam_gnome_keyring.so"
-    insertafter: "^password"

@@ -61,4 +61,3 @@
 - include: packages.yaml
 - include: journal.yaml
 - include: xdg.yaml
-- include: gnome-keyring.yaml
