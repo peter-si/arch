@@ -1,7 +1,8 @@
 ---
 - name: Install bitwarden
+  become: yes
+  become_user: "{{ user.name }}"
   aur:
-    user: "{{ user.name }}"
     name:
       - bitwarden-bin
       - bitwarden-cli-bin

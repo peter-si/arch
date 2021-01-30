@@ -1,8 +1,9 @@
 ---
 - name: install greenclip from AUR
+  become: yes
+  become_user: "{{ user.name }}"
   aur:
     name: rofi-greenclip
-    user: "{{ user.name }}"
   tags:
     - aur
 

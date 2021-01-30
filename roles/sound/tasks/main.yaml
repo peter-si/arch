@@ -19,9 +19,10 @@
     line: "load-module module-switch-on-connect"
 
 - name: Install pulseaudio-ctl
+  become: yes
+  become_user: "{{ user.name }}"
   aur:
     name: pulseaudio-ctl
-    user: "{{ user.name }}"
   tags:
     - aur
 

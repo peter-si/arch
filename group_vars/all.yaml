@@ -54,6 +54,7 @@ pacman_base_packages:
     - neofetch
     - xclip
     - lm_sensors
+    - freetype2
 pacman_packages:
     - jre-openjdk
     - gsimplecal

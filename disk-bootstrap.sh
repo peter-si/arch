@@ -6,6 +6,8 @@ if [[ "$EUID" -ne 0 ]]; then
   exit
 fi
 
+root_pass_file="/tmp/rootPass"
+
 function help() {
   echo ""
   echo "This is a utility to prepare disk for running ansible playbook. Based on parameters, it will:"
@@ -38,6 +40,14 @@ banner() {
   echo ""
 }
 
+function ask_root_pass(){
+  if [[ ! -f "$root_pass_file" ]]; then
+    read -rsp 'Root password: ' rootPass
+    echo ""
+    echo "${rootPass}" > $root_pass_file
+  fi
+}
+
 function clear_disk() {
   banner "Clearing disk, you have 3 seconds to cancel"
   sleep 3
@@ -59,12 +69,14 @@ function create_partitions() {
 function encrypt_disk() {
   banner "Encrypting disk"
   partprobe "$drive"
-  cryptsetup luksFormat /dev/disk/by-partlabel/cryptsystem
+  ask_root_pass
+  cryptsetup luksFormat /dev/disk/by-partlabel/cryptsystem --key-file=$root_pass_file
 }
 
 function open_luks() {
   banner "Opening luks encrypted disk"
-  cryptsetup luksOpen /dev/disk/by-partlabel/cryptsystem system
+  ask_root_pass
+  cryptsetup luksOpen /dev/disk/by-partlabel/cryptsystem system --key-file=$root_pass_file
   cryptsetup plainOpen --key-file /dev/urandom /dev/disk/by-partlabel/cryptswap swap
 }
 
@@ -104,6 +116,8 @@ function bootstrap_arch() {
 
 function install_system() {
   banner "Installing system"
+  ask_root_pass
+  systemd-nspawn --bind-ro=/install:/install --directory=/mnt /install/root_pass.sh "$(cat $root_pass_file)"
   systemd-nspawn \
     --as-pid2 \
     --keep-unit \
@@ -111,7 +125,7 @@ function install_system() {
     --settings=false \
     --bind-ro=/install:/install \
     --directory=/mnt \
-      ansible-playbook /install/playbook.yaml -M /install/library/ansible-aur -i /install/localhost -l "$host"
+      ansible-playbook /install/playbook.yaml -M /install/library/ansible-aur -i /install/localhost -l "$host" --extra-vars "user_password=$(cat $root_pass_file)"
 }
 
 ############################################################################

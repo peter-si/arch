@@ -27,9 +27,10 @@
     line: "COMPRESSXZ=(xz -c -z - --threads=0)"
 
 - name: Install AUR base packages
+  become: yes
+  become_user: "{{ user.name }}"
   aur:
     name: "{{ aur_packages }}"
-    user: "{{ user.name }}"
   tags:
     - aur
     - packages
@@ -50,6 +51,7 @@
     - packages
 
 - name: Enable and start pacman cache cleanup timer
-  service: name=paccache.timer enabled=yes state=started
+  service: name=paccache.timer enabled=yes
+  notify: start paccache
   tags:
     - packages

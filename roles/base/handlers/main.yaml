@@ -3,6 +3,13 @@
   service:
     name: paccache.timer
     state: restarted
+  when: ansible_is_chroot == False
+
+- name: start paccache
+  service:
+    name: paccache.timer
+    state: started
+  when: ansible_is_chroot == False
 
 - name: start user systemd instance
   service:

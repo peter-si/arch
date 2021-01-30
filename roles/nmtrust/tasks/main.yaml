@@ -1,8 +1,9 @@
 ---
 - name: Install nmtrust
+  become: yes
+  become_user: "{{ user.name }}"
   aur:
     name: nmtrust-git
-    user: "{{ user.name }}"
   tags:
     - aur
 

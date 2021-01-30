@@ -8,9 +8,10 @@
   shell: cmd="refind-install"
 
 - name: Install plymouth
+  become: yes
+  become_user: "{{ user.name }}"
   aur:
     name: plymouth-git
-    user: "{{ user.name }}"
 
 - name: Install bootloader theme
   git:

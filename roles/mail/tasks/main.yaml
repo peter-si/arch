@@ -1,8 +1,12 @@
 ---
 - name: Install Protonmail bridge
+  become: yes
+  become_user: "{{ user.name }}"
   aur: name=protonmail-bridge-bin user="{{ user.name }}"
 
 - name: Install Mailspring
+  become: yes
+  become_user: "{{ user.name }}"
   aur: name=mailspring-libre user="{{ user.name }}"
 
 # TODO firejail mailsync and protonmail-bridge

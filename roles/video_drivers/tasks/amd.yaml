@@ -1,6 +1,7 @@
 - name: Install amd video driver(s)
+  become: yes
+  become_user: "{{ user.name }}"
   aur:
-    user: "{{ user.name }}"
     name:
       - amdgpu-pro-libgl
       - lib32-amdgpu-pro-libgl

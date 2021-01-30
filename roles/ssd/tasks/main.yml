@@ -3,6 +3,8 @@
   pacman: name=hdparm state=present
 
 - name: Install btrfsmaintenance-git
+  become: yes
+  become_user: "{{ user.name }}"
   aur: name=btrfsmaintenance-git user="{{ user.name }}"
 
 - name: Check for TRIM support

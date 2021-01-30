@@ -1,10 +1,13 @@
 ---
 - name: Install phpstorm
+  become: yes
+  become_user: "{{ user.name }}"
   aur:
     name:
       - phpstorm
       - phpstorm-url-handler
-    user: "{{ user.name }}"
 
 - name: Install jetbrains-jre
+  become: yes
+  become_user: "{{ user.name }}"
   aur: name=phpstorm-jre user="{{ user.name }}"

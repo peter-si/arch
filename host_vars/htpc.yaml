@@ -11,6 +11,8 @@ aur_packages:
   - yay
   - ctop
   - downgrade
+  - libnvidia-container-bin
+  - libnvidia-container-tools-bin
   - nvidia-container-toolkit
 
 ssh:

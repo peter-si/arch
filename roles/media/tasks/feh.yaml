@@ -13,10 +13,11 @@
     - firejail
 
 - name: Install imlib2-heic
+  become: yes
+  become_user: "{{ user.name }}"
   aur:
     name: imlib2-heic
-    user: "{{ user.name }}"
-    skip_pgp: yes
+    skip_pgp_check: yes
   tags:
     - aur
     - feh

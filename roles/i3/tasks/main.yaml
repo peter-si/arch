@@ -10,8 +10,9 @@
     state: present
 
 - name: Install i3 aur packages
+  become: yes
+  become_user: "{{ user.name }}"
   aur:
-    user: "{{ user.name }}"
     name:
       - i3-volume
       - autotiling

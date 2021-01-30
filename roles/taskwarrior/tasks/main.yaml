@@ -3,6 +3,8 @@
   pacman: name=task state=present
 
 - name: Install taskopen
-  aur: name=taskopen user={{ user.name }}
+  become: yes
+  become_user: "{{ user.name }}"
+  aur: name=taskopen
   tags:
     - aur

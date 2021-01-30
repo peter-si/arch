@@ -1,12 +1,13 @@
 ---
 - name: Install magic-wormhole
+  become: yes
+  become_user: "{{ user.name }}"
   aur:
     name:
       - python-hkdf
       - python-spake2
       - python-txtorcon
       - magic-wormhole
-    user: "{{ user.name }}"
   tags:
     - aur
 

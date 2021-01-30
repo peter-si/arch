@@ -33,7 +33,9 @@
   pacman: name=powertop state=present
 
 - name: Install powerstat
-  aur: name=powerstat-git user={{ user.name }}
+  become: yes
+  become_user: "{{ user.name }}"
+  aur: name=powerstat-git
   tags:
     - aur
 
@@ -41,13 +43,15 @@
   pacman: name=cmake state=present
 
 - name: Install battery-stats
-  aur:
-    name: battery-stats-git
-    user: "{{ user.name }}"
+  become: yes
+  become_user: "{{ user.name }}"
+  aur: name=battery-stats-git
   tags:
     - aur
 
 #- name: Install battop
+#  become: yes
+#  become_user: "{{ user.name }}"
 #  aur:
 #    name: battop
 #    user: "{{ user.name }}"

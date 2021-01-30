@@ -34,10 +34,6 @@
     - { role: docker, tags: [ 'docker' ] }
     - { role: syncthing, tags: [ 'syncthing' ], when: "syncthing is defined" }
     - { role: firejail, tags: ['firejail'] }
-  vars_prompt:
-    - name: user_password
-      prompt: "Enter desired user password"
-      confirm: yes
 
 - hosts: gui
   become: yes

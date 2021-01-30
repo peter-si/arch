@@ -53,8 +53,9 @@
     state: present
 
 - name: Install xsv
+  become: yes
+  become_user: "{{ user.name }}"
   aur:
     name: xsv
-    user: "{{ user.name }}"
   tags:
     - aur

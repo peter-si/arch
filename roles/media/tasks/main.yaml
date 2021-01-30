@@ -59,6 +59,8 @@
     state: present
 
 #- name: Install recapp for screen recording
+#  become: yes
+#  become_user: "{{ user.name }}"
 #  aur:
 #    name:
 #      - recapp-git
