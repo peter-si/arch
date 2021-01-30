@@ -124,6 +124,13 @@ function install_system() {
     --register=no \
     --settings=false \
     --bind-ro=/install:/install \
+    --bind=/proc:/proc \
+    --bind-ro=/sys:/sys \
+    --bind=/sys/firmware/efi/efivars:/sys/firmware/efi/efivars \
+    --bind=/dev:/dev \
+    --bind=/dev/pts:/dev/pts \
+    --bind=/dev/shm:/dev/shm \
+    --bind=/run:/run \
     --directory=/mnt \
       ansible-playbook /install/playbook.yaml -M /install/library/ansible-aur/library -i /install/localhost -l "$host" --extra-vars "user_password=$(cat $root_pass_file)"
 }

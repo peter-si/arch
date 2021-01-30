@@ -1,11 +1,13 @@
 ---
 - name: Install refind
   pacman:
-    name: refind
+    name:
+      - refind
+      - sbsigntools
     state: present
 
 - name: Install refind to boot
-  shell: cmd="refind-install"
+  shell: cmd="/usr/bin/refind-install --localkeys"
 
 - name: Install plymouth
   become: yes
