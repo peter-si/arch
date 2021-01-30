@@ -8,5 +8,5 @@ root ALL=(ALL) ALL
 %wheel ALL=(ALL) ALL
 
 {% for entry in passwordless_sudo %}
-%wheel ALL=(ALL) NOPASSWD:{{ entry }}
+{{ user.name }} ALL=(ALL) NOPASSWD:{{ entry }}
 {% endfor %}

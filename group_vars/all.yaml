@@ -137,7 +137,8 @@ browser_choices:
   - tor-browser-en
 
 passwordless_sudo:
-  - /usr/bin/openvpn*
+  - /usr/bin/openvpn
+  - /usr/bin/pacman
 
 fingerprint: False
 
