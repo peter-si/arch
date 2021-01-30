@@ -32,6 +32,7 @@ function help() {
 }
 
 banner() {
+  echo ""
   msg="# $* #"
   edge=$(echo "$msg" | sed 's/./#/g')
   echo "$edge"
@@ -42,8 +43,8 @@ banner() {
 
 function ask_root_pass(){
   if [[ ! -f "$root_pass_file" ]]; then
-    read -rsp 'Root password: ' rootPass
-    echo ""
+    echo 'Enter password for root and disk encryption:'
+    read -rs rootPass
     echo "${rootPass}" > $root_pass_file
   fi
 }
@@ -70,13 +71,13 @@ function encrypt_disk() {
   banner "Encrypting disk"
   partprobe "$drive"
   ask_root_pass
-  cryptsetup luksFormat /dev/disk/by-partlabel/cryptsystem --key-file=$root_pass_file
+  echo "YES" | cryptsetup luksFormat --key-file=$root_pass_file /dev/disk/by-partlabel/cryptsystem
 }
 
 function open_luks() {
   banner "Opening luks encrypted disk"
   ask_root_pass
-  cryptsetup luksOpen /dev/disk/by-partlabel/cryptsystem system --key-file=$root_pass_file
+  cryptsetup luksOpen --key-file=$root_pass_file /dev/disk/by-partlabel/cryptsystem system
   cryptsetup plainOpen --key-file /dev/urandom /dev/disk/by-partlabel/cryptswap swap
 }
 
