@@ -71,7 +71,7 @@ function encrypt_disk() {
   banner "Encrypting disk"
   partprobe "$drive"
   ask_root_pass
-  echo "YES" | cryptsetup luksFormat --key-file=$root_pass_file /dev/disk/by-partlabel/cryptsystem
+  cryptsetup -q  luksFormat --key-file=$root_pass_file /dev/disk/by-partlabel/cryptsystem
 }
 
 function open_luks() {
@@ -121,7 +121,6 @@ function install_system() {
   systemd-nspawn --bind-ro=/install:/install --directory=/mnt /install/root_pass.sh "$(cat $root_pass_file)"
   systemd-nspawn \
     --as-pid2 \
-    --keep-unit \
     --register=no \
     --settings=false \
     --bind-ro=/install:/install \
