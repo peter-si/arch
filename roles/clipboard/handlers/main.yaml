@@ -1,0 +1,7 @@
+---
+- name: start greenclip service
+  systemd:
+    name: greenclip.service
+    scope: user
+    state: started
+  when: ansible_is_chroot == False

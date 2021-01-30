@@ -1,8 +1,7 @@
-- name: Enable and start {{ unit }}
+- name: Enable {{ unit }}
   systemd:
     name: "{{ unit }}"
     enabled: yes
-    state: started
   when: run_on == "all" and user_unit is not defined
 
 - name: Disable {{ unit }}
@@ -25,11 +24,10 @@
     line: "{{ unit }}"
   when: run_on != "trusted" and user_unit is not defined
 
-- name: Enable and start {{ unit }} for user
+- name: Enable {{ unit }} for user
   systemd:
     name: "{{ unit }}"
     enabled: yes
-    state: started
     scope: user
   become: yes
   become_user: "{{ user.name }}"

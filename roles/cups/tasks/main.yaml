@@ -20,8 +20,7 @@
     regexp: SystemGroup
     state: present
     line: "SystemGroup sys root printadmin"
-  notify:
-    - restart cups
+  notify: restart cups
 
 - name: Add the user to the print and print admin groups
   user:
@@ -35,4 +34,4 @@
   systemd:
     name: cups.service
     enabled: yes
-    state: started
+  notify: start cups

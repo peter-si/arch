@@ -42,10 +42,10 @@
   template:
     src: "betterlockscreen@.service"
     dest: "/etc/systemd/system/betterlockscreen@{{ user.name }}.d/override-locker.conf"
-  notify:
-    - reload systemd config
+  notify: reload systemd config
 
 - name: Enable betterlockscreen sleep hook
   systemd:
     name: "betterlockscreen@{{ user.name }}.service"
     enabled: yes
+  notify: start betterlockscreen

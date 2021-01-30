@@ -104,9 +104,6 @@ function bootstrap_arch() {
 
 function install_system() {
   banner "Installing system"
-  read -rsp 'Root password: ' rootPass
-  echo ""
-  systemd-nspawn --bind-ro=/install:/install --directory=/mnt /install/root_pass.sh "$rootPass"
   systemd-nspawn \
     --as-pid2 \
     --keep-unit \

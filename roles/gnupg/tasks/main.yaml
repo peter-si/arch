@@ -9,11 +9,11 @@
     name: gpg-agent.socket
     scope: user
     enabled: yes
-    state: started
   become: yes
   become_user: "{{ user.name }}"
   environment:
     XDG_RUNTIME_DIR: "/run/user/{{ user.uid }}"
+  notify: start gpg-agent
   when: gnupg.enable_agent == True
 
 - name: Enable dirmngr.socket
@@ -21,11 +21,11 @@
     name: dirmngr.socket
     scope: user
     enabled: yes
-    state: started
   become: yes
   become_user: "{{ user.name }}"
   environment:
     XDG_RUNTIME_DIR: "/run/user/{{ user.uid }}"
+  notify: start dirmngr
   when: gnupg.enable_agent == True
 
 - name: Enable gpg-agent-ssh.socket
@@ -33,9 +33,9 @@
     name: gpg-agent-ssh.socket
     scope: user
     enabled: yes
-    state: started
   become: yes
   become_user: "{{ user.name }}"
   environment:
     XDG_RUNTIME_DIR: "/run/user/{{ user.uid }}"
+  notify: start gpg-agent-ssh
   when: gnupg.enable_agent == True and gnupg.emulate_ssh == True

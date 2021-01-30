@@ -4,7 +4,8 @@
     name: paccache.timer
     state: restarted
 
-- name: stop systemd per-user instance
+- name: start user systemd instance
   service:
     name: "user@{{ user.uid }}"
-    state: stopped
+    state: started
+  when: ansible_is_chroot == False

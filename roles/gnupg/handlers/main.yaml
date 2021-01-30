@@ -1,0 +1,20 @@
+---
+- name: start gpg-agent
+  systemd:
+    name: gpg-agent.socket
+    scope: user
+    state: started
+  when: ansible_is_chroot == False
+
+- name: start dirmngr
+  systemd:
+    name: dirmngr.socket
+    scope: user
+    state: started
+
+
+- name: start gpg-agent-ssh
+  systemd:
+    name: gpg-agent-ssh.socket
+    scope: user
+    state: started

@@ -41,6 +41,7 @@
 
 - name: Enable Geoclue user service
   systemd: unit=geoclue-agent.service user=True enabled=True
+  notify: start Geoclue user service
 
 - name: Allow RedShift to access geoclue
   blockinfile:
