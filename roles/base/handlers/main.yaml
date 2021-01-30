@@ -1,18 +1,18 @@
 ---
 - name: restart paccache
-  service:
+  systemd:
     name: paccache.timer
     state: restarted
   when: ansible_is_chroot == False
 
 - name: start paccache
-  service:
+  systemd:
     name: paccache.timer
     state: started
   when: ansible_is_chroot == False
 
 - name: start user systemd instance
-  service:
+  systemd:
     name: "user@{{ user.uid }}"
     state: started
   when: ansible_is_chroot == False

@@ -1,7 +1,14 @@
 ---
 - name: restart unbound
-  service: name=unbound state=restarted
+  systemd: name=unbound state=restarted
+  when: ansible_is_chroot == False
+
+- name: Enable and start Unbound
+  systemd:
+    name: unbound.service
+    state: started
+  when: ansible_is_chroot == False
 
 - name: restart roothints
-  service: name=roothints.timer state=restarted
-  when: unbound.roothints_update == "all"
+  systemd: name=roothints.timer state=restarted
+  when: unbound.roothints_update == "all" and ansible_is_chroot == False

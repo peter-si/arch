@@ -1,6 +1,8 @@
 ---
 - name: restart iptables
-  service: name=iptables.service state=restarted
+  systemd: name=iptables.service state=restarted
+  when: ansible_is_chroot == False
 
 - name: restart ip6tables
-  service: name=ip6tables.service state=restarted
+  systemd: name=ip6tables.service state=restarted
+  when: ansible_is_chroot == False

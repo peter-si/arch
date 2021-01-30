@@ -18,10 +18,9 @@
     - restart unbound
 
 - name: Enable and start Unbound
-  service:
+  systemd:
     name: unbound.service
     enabled: yes
-    state: started
 
 - name: Push Unbound root hits update service file
   copy:

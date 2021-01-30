@@ -1,3 +1,8 @@
 ---
 - name: restart chrony
-  service: name=chronyd.service state=restarted
+  systemd: name=chronyd.service state=restarted
+  when: ansible_is_chroot == False
+
+- name: start chrony
+  systemd: name=chronyd.service state=started
+  when: ansible_is_chroot == False

@@ -3,7 +3,6 @@
   systemd: name=cups.service state=restarted
   when: ansible_is_chroot == False
 
-
 - name: start cups
   systemd: name=cups.service state=started
   when: ansible_is_chroot == False

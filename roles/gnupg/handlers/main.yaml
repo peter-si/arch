@@ -11,10 +11,11 @@
     name: dirmngr.socket
     scope: user
     state: started
-
+  when: ansible_is_chroot == False
 
 - name: start gpg-agent-ssh
   systemd:
     name: gpg-agent-ssh.socket
     scope: user
     state: started
+  when: ansible_is_chroot == False

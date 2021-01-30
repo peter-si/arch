@@ -15,12 +15,14 @@
     - restart sshd
 
 - name: Enable and start OpenSSH
-  service: name=sshd.service enabled=yes state=started
+  systemd: name=sshd.service enabled=yes
   when: ssh.enable_sshd is defined and ssh.enable_sshd == True
+  notify: start sshd
 
 - name: Disable and stop OpenSSH
-  service: name=sshd.service enabled=no state=stopped
+  systemd: name=sshd.service enabled=no
   when: ssh.enable_sshd is defined and ssh.enable_sshd == False
+  notify: stop sshd
 
 - name: Copy fuse configuration file
   copy: src=fuse.conf dest=/etc/fuse.conf

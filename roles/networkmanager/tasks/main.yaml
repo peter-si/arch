@@ -37,19 +37,19 @@
   when: network.conn_check is defined
 
 - name: Enable and start Dnsmasq
-  service:
+  systemd:
     name: dnsmasq.service
     enabled: yes
-#    state: started
+  notify: start Dnsmasq
 
 - name: Enable and start NetworkManager
-  service:
+  systemd:
     name: NetworkManager.service
     enabled: yes
-    state: started
+  notify: start NetworkManager
 
 - name: Enable and start NetworkManager dispatcher
-  service:
+  systemd:
     name: NetworkManager-dispatcher.service
     enabled: yes
-    state: started
+  notify: start NetworkManager dispatcher

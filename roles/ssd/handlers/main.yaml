@@ -1,0 +1,8 @@
+---
+- name: start filesystem TRIM timer
+  systemd: name=btrfs-trim.timer state=started
+  when: ansible_is_chroot == False
+
+- name: start filesystem Balance timer
+  systemd: name=btrfs-balance.timer state=started
+  when: ansible_is_chroot == False

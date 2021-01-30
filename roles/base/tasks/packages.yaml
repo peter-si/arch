@@ -51,7 +51,7 @@
     - packages
 
 - name: Enable and start pacman cache cleanup timer
-  service: name=paccache.timer enabled=yes
+  systemd: name=paccache.timer enabled=yes
   notify: start paccache
   tags:
     - packages

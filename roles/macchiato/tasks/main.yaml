@@ -11,11 +11,11 @@
   with_items: "{{ ansible_interfaces }}"
 
 - name: Enable macchiato
-  service: name=macchiato.service enabled=yes
+  systemd: name=macchiato.service enabled=yes
   when: network.spoof_mac == True
-  notify:
-    - start macchiato
+  notify: start macchiato
 
 - name: Disable and stop macchiato
-  service: name=macchiato.service enabled=no state=stopped
+  systemd: name=macchiato.service enabled=no
   when: network.spoof_mac == False
+  notify: stop macchiato

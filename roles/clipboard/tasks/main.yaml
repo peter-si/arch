@@ -17,7 +17,6 @@
     name: greenclip.service
     scope: user
     enabled: yes
-    state: started
   notify: start greenclip service
   become: yes
   become_user: "{{ user.name }}"

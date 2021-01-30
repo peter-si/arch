@@ -1,4 +1,8 @@
 ---
 - name: start macchiato
-  service: name=macchiato.service state=started
-  when: network.spoof_mac == True
+  systemd: name=macchiato.service state=started
+  when: network.spoof_mac == True and ansible_is_chroot == False
+
+- name: stop macchiato
+  systemd: name=macchiato.service state=stopped
+  when: network.spoof_mac == False and ansible_is_chroot == False

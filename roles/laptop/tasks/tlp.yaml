@@ -48,7 +48,7 @@
     - tlp
 
 - name: Enable TLP
-  service:
+  systemd:
     name: tlp.service
     enabled: yes
   tags:

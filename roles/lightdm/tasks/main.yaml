@@ -76,4 +76,4 @@
     firstmatch: yes
 
 - name: Enable LightDM
-  service: name=lightdm-plymouth.service enabled=yes
+  systemd: name=lightdm-plymouth.service enabled=yes

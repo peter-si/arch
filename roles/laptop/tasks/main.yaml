@@ -24,7 +24,8 @@
     - restart lowbatt
 
 - name: Enable and start lowbatt timer
-  service: name=lowbatt.timer enabled=yes state=started
+  systemd: name=lowbatt.timer enabled=yes
+  notify: start lowbatt
 
 - name: Install light
   pacman: name=light state=present

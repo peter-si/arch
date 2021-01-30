@@ -37,17 +37,21 @@
   become_user: "{{ user.name }}"
 
 - name: Unblock the bluetooth service
-  service: name="rfkill-block@bluetooth.service" enabled=no state=stopped
+  systemd: name="rfkill-block@bluetooth.service" enabled=no
   when: bluetooth.disable == False
+  notify: Unblock bluetooth service
 
 - name: Enable and start the bluetooth service
-  service: name=bluetooth.service enabled=yes state=started
+  systemd: name=bluetooth.service enabled=yes
   when: bluetooth.disable == False
+  notify: start the bluetooth service
 
 - name: Disable and stop the bluetooth service
-  service: name=bluetooth.service enabled=no state=stopped
+  systemd: name=bluetooth.service enabled=no
   when: bluetooth.disable == True
+  notify: stop the bluetooth service
 
 - name: Block the bluetooth service
-  service: name="rfkill-block@bluetooth.service" enabled=yes state=started
+  systemd: name="rfkill-block@bluetooth.service" enabled=yes
   when: bluetooth.disable == True
+  notify: Block bluetooth service

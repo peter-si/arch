@@ -13,8 +13,10 @@
   ignore_errors: True
 
 - name: Enable and start filesystem TRIM timer
-  service: name=btrfs-trim.timer enabled=yes state=started
+  systemd: name=btrfs-trim.timer enabled=yes
   when:  not ansible_check_mode and hdparm.rc == 0
+  notify: start filesystem TRIM timer
 
 - name: Enable and start filesystem Balance timer
-  service: name=btrfs-balance.timer enabled=yes state=started
+  systemd: name=btrfs-balance.timer enabled=yes
+  notify: start filesystem Balance timer

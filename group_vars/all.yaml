@@ -55,10 +55,10 @@ pacman_base_packages:
     - xclip
     - lm_sensors
     - freetype2
+    - go
 pacman_packages:
     - jre-openjdk
     - gsimplecal
-    - pacman-contrib
     - papirus-icon-theme
     - archiso
     - gnome-calculator
