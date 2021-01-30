@@ -1,7 +1,6 @@
 hostname: aluhtpc
 
 video_drivers:
-  - nouveau
   - nvidia
 
 pacman_packages:
@@ -12,16 +11,9 @@ aur_packages:
   - yay
   - ctop
   - downgrade
+  - nvidia-container-toolkit
 
 ssh:
   port: 22
   user_dir: /install/.ssh
   enable_sshd: True
-
-bootloader:
-  path: /boot
-  time: 0
-  theme_path: ~
-  theme_repo: ~
-  kernel_parameters:
-  silent: False

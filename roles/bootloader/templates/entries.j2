@@ -5,7 +5,7 @@ menuentry "Arch Hardened" {
     volume   "Arch Linux"
     loader   /vmlinuz-linux-hardened
     initrd   /initramfs-linux-hardened.img
-    options  "rd.luks.name={{ luks_uuid }}=system root=UUID={{ root_uuid }} rootflags=rw,subvol=root rw {% if 'AuthenticAMD' in ansible_processor %}initrd=amd-ucode.img{% elif 'GenuineIntel' in ansible_processor %}initrd=amd-ucode.img{% endif %} libahci.ignore_sss=1 {% if bootloader.silent %}vga=current quiet splash loglevel=3 rd.systemd.show_status=auto rd.udev.log_priority=3{% endif %} {{ bootloader.kernel_parameters }}"
+    options  "root=/dev/mapper/system rootflags=rw,subvol=root rw {% if 'AuthenticAMD' in ansible_processor %}initrd=amd-ucode.img{% elif 'GenuineIntel' in ansible_processor %}initrd=amd-ucode.img{% endif %} libahci.ignore_sss=1 {% if bootloader.silent %}vga=current quiet splash loglevel=3 rd.systemd.show_status=auto rd.udev.log_priority=3{% endif %} {{ bootloader.kernel_parameters }}"
     submenuentry "Boot using fallback initramfs" {
         initrd /initramfs-linux-hardened-fallback.img
     }
@@ -21,7 +21,7 @@ menuentry "Arch" {
     volume   "Arch Linux"
     loader   /vmlinuz-linux
     initrd   /initramfs-linux.img
-    options  "rd.luks.name={{ luks_uuid }}=system root=UUID={{ root_uuid }} rootflags=rw,subvol=root rw {% if 'AuthenticAMD' in ansible_processor %}initrd=amd-ucode.img{% elif 'GenuineIntel' in ansible_processor %}initrd=amd-ucode.img{% endif %} libahci.ignore_sss=1 {% if bootloader.silent %}vga=current quiet splash loglevel=3 rd.systemd.show_status=auto rd.udev.log_priority=3{% endif %} {{ bootloader.kernel_parameters }}"
+    options  "root=/dev/mapper/system rootflags=rw,subvol=root rw {% if 'AuthenticAMD' in ansible_processor %}initrd=amd-ucode.img{% elif 'GenuineIntel' in ansible_processor %}initrd=amd-ucode.img{% endif %} libahci.ignore_sss=1 {% if bootloader.silent %}vga=current quiet splash loglevel=3 rd.systemd.show_status=auto rd.udev.log_priority=3{% endif %} {{ bootloader.kernel_parameters }}"
     submenuentry "Boot using fallback initramfs" {
         initrd /initramfs-linux-fallback.img
     }

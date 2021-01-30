@@ -1,32 +1,32 @@
 ---
+- name: Install refind
+  pacman:
+    name: refind
+    state: present
+
+- name: Install refind to boot
+  shell: cmd="refind-install"
+
 - name: Install plymouth
   aur:
     name: plymouth-git
     user: "{{ user.name }}"
-
-- name: Check bootloader theme folder exists
-  stat:
-    path: "{{ bootloader.path }}/EFI/refind/{{ bootloader.theme_path }}"
-  register: bootloader_folder
 
 - name: Install bootloader theme
   git:
     dest: "{{ bootloader.path }}/EFI/refind/{{ bootloader.theme_path }}"
     repo: "{{ bootloader.theme_repo }}"
     depth: 1
-  when: bootloader.theme_repo is defined and bootloader.theme_path is defined and not bootloader_folder.stat.exists
 
 - name: Copy Arch hardened icon
   copy:
     dest: "{{ bootloader.path }}/EFI/refind/{{ bootloader.theme_path }}/icons/128-48/os_arch_hardened.png"
     src: os_arch_hardened.png
-  when: bootloader.theme_repo is defined and bootloader.theme_path is defined and not bootloader_folder.stat.exists
 
 - name: Copy bootloader background
   copy:
     dest: "{{ bootloader.path }}/EFI/refind/{{ bootloader.theme_path }}/icons/128-48/bg_plymouth.png"
     src: plymouth/bg_plymouth.png
-  when: bootloader.theme_repo is defined and bootloader.theme_path is defined and not bootloader_folder.stat.exists
 
 - name: Copy bootloader theme config
   template:
@@ -54,6 +54,12 @@
   copy:
     dest: /etc/plymouth/plymouthd.conf
     src: plymouth/plymouthd.conf
+
+- name: Copy crypttab.initramfs config
+  copy:
+    dest: /etc/crypttab.initramfs
+    src: crypttab.initramfs
+  notify: rebuild bootloader
 
 - include: microcode.yaml
 - include: entries.yaml

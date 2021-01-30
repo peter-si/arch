@@ -18,8 +18,10 @@
     state: present
 
 - name: Set the hostname
-  hostname:
-    name: "{{ hostname }}"
+  lineinfile:
+    path: /etc/hostname
+    line: "{{ hostname }}"
+    create: yes
   when: hostname is defined
 
 - name: Add localhost to hosts

@@ -6,7 +6,8 @@ user:
   log:
     dir: .log
     rotate: 8
-  timezone: Europe/Bratislava
+  region: Europe
+  city: Bratislava
 
 bootloader:
   path: /boot

@@ -16,5 +16,10 @@
     create: yes
 
 - name: Set timezone
-  timezone:
-    name: "{{ user.timezone }}"
+  file:
+    path: /etc/localtime
+    src: /usr/share/zoneinfo/{{ user.region }}/{{ user.city }}
+    state: link
+
+- name: Set system clock
+  shell: cmd="hwclock --systohc"

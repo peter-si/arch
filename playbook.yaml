@@ -1,5 +1,4 @@
 ---
-
 - hosts:
     - cli
     - gui

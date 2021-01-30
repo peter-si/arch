@@ -12,7 +12,7 @@
     replace: '#\1'
     backup: yes
 
-- name: Add swap to cryptsetup
+- name: Add `swap to cryptsetup
   lineinfile:
     path: /etc/crypttab
     line: "swap /dev/disk/by-partlabel/cryptswap  /dev/urandom  swap,offset=2048,cipher=aes-xts-plain64,size=256"
