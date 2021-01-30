@@ -2,7 +2,7 @@
 - name: Install zplug
   become: yes
   become_user: "{{ user.name }}"
-  aur: name=zplug user="{{ user.name }}"
+  aur: name=zplug
   notify: zplug install as user
 
 - name: Copy zshrc to root

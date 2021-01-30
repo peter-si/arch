@@ -11,7 +11,7 @@
 - name: Install hunspell-sk
   become: yes
   become_user: "{{ user.name }}"
-  aur: name=hunspell-sk user="{{ user.name }}"
+  aur: name=hunspell-sk
   tags:
     - hunspell
 
@@ -27,6 +27,6 @@
 - name: Install aspell-sk
   become: yes
   become_user: "{{ user.name }}"
-  aur: name=aspell-sk user="{{ user.name }}"
+  aur: name=aspell-sk
   tags:
     - aspell

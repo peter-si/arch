@@ -5,7 +5,7 @@
 - name: Install btrfsmaintenance-git
   become: yes
   become_user: "{{ user.name }}"
-  aur: name=btrfsmaintenance-git user="{{ user.name }}"
+  aur: name=btrfsmaintenance-git
 
 - name: Check for TRIM support
   shell: "hdparm -I /dev/disk/by-partlabel/cryptsystem | grep TRIM"

@@ -7,7 +7,7 @@
 - name: Install firewarden
   become: yes
   become_user: "{{ user.name }}"
-  aur: name=firewarden user="{{ user.name }}"
+  aur: name=firewarden
   tags:
     - aur
 
