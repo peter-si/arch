@@ -1,5 +1,5 @@
 ---
-- name: start docker
+- name: docker
   systemd: name=docker.service state=started
   when: ansible_is_chroot == False
-  listen: start docker
+  listen: "start docker"
