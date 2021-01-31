@@ -3,4 +3,4 @@
   systemd:
     name: "betterlockscreen@{{ user.name }}.service"
     state: started
-  when: ansible_is_chroot == False
+  when: running_in_chroot == False

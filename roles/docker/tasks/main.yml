@@ -25,4 +25,4 @@
   systemd:
     name: docker.service
     enabled: yes
-  notify: "start docker"
+  notify: start docker

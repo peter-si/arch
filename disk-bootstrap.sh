@@ -128,7 +128,7 @@ function install_system() {
     --bind-ro=/sys:/sys \
     --bind-ro=/sys/firmware/efi/efivars:/sys/firmware/efi/efivars \
     --directory=/mnt \
-      ansible-playbook /install/playbook.yaml -M /install/library/ansible-aur/library -i /install/localhost -l "$host" --extra-vars "user_password=$(cat $root_pass_file)"
+      ansible-playbook /install/playbook.yaml -M /install/library/ansible-aur/library -i /install/localhost -l "$host" --extra-vars "user_password=$(cat $root_pass_file) running_in_chroot=True"
 }
 
 ############################################################################

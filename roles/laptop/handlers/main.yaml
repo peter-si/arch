@@ -1,12 +1,12 @@
 ---
 - name: restart tlp
   systemd: name=tlp.service state=restarted
-  when: ansible_is_chroot == False
+  when: running_in_chroot == False
 
 - name: restart lowbatt
   systemd: name=lowbatt.timer state=restarted
-  when: ansible_is_chroot == False
+  when: running_in_chroot == False
 
 - name: start lowbatt
   systemd: name=lowbatt.timer state=started
-  when: ansible_is_chroot == False
+  when: running_in_chroot == False

@@ -4,18 +4,18 @@
     name: gpg-agent.socket
     scope: user
     state: started
-  when: ansible_is_chroot == False
+  when: running_in_chroot == False
 
 - name: start dirmngr
   systemd:
     name: dirmngr.socket
     scope: user
     state: started
-  when: ansible_is_chroot == False
+  when: running_in_chroot == False
 
 - name: start gpg-agent-ssh
   systemd:
     name: gpg-agent-ssh.socket
     scope: user
     state: started
-  when: ansible_is_chroot == False
+  when: running_in_chroot == False

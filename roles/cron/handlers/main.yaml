@@ -1,8 +1,8 @@
 ---
 - name: restart cron
   systemd: name=cronie.service state=restarted
-  when: ansible_is_chroot == False
+  when: running_in_chroot == False
 
 - name: start cron
   systemd: name=cronie.service state=started
-  when: ansible_is_chroot == False
+  when: running_in_chroot == False

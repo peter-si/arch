@@ -3,16 +3,16 @@
   systemd:
     name: NetworkManager-dispatcher.service
     state: started
-  when: ansible_is_chroot == False
+  when: running_in_chroot == False
 
 - name: start NetworkManager
   systemd:
     name: NetworkManager.service
     state: started
-  when: ansible_is_chroot == False
+  when: running_in_chroot == False
 
 - name: start Dnsmasq
   systemd:
     name: dnsmasq.service
     state: started
-  when: ansible_is_chroot == False
+  when: running_in_chroot == False

@@ -1,16 +1,16 @@
 ---
 - name: Unblock bluetooth service
   systemd: name="rfkill-block@bluetooth.service" state=stopped
-  when: bluetooth.disable == False and ansible_is_chroot == False
+  when: bluetooth.disable == False and running_in_chroot == False
 
 - name: start the bluetooth service
   systemd: name=bluetooth.service state=started
-  when: bluetooth.disable == False and ansible_is_chroot == False
+  when: bluetooth.disable == False and running_in_chroot == False
 
 - name: stop the bluetooth service
   systemd: name=bluetooth.service state=stopped
-  when: bluetooth.disable == True and ansible_is_chroot == False
+  when: bluetooth.disable == True and running_in_chroot == False
 
 - name: Block bluetooth service
   systemd: name="rfkill-block@bluetooth.service" state=started
-  when: bluetooth.disable == True and ansible_is_chroot == False
+  when: bluetooth.disable == True and running_in_chroot == False

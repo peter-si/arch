@@ -1,12 +1,12 @@
 ---
 - name: restart sshd
   systemd: name=sshd.socket state=restarted
-  when: ssh.enable_sshd == True and ansible_is_chroot == False
+  when: ssh.enable_sshd == True and running_in_chroot == False
 
 - name: start sshd
   systemd: name=sshd.service enabled=yes state=started
-  when: ssh.enable_sshd == True and ansible_is_chroot == False
+  when: ssh.enable_sshd == True and running_in_chroot == False
 
 - name: stop sshd
   systemd: name=sshd.service enabled=no state=stopped
-  when: ssh.enable_sshd == False and ansible_is_chroot == False
+  when: ssh.enable_sshd == False and running_in_chroot == False

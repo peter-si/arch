@@ -255,3 +255,5 @@ tor:
 
 localtime:
   run_on: trusted
+
+running_in_chroot: False

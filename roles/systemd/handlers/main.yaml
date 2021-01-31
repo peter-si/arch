@@ -1,4 +1,4 @@
 ---
 - name: reload systemd config
   command: systemctl daemon-reload
-  when: ansible_is_chroot == False
+  when: running_in_chroot == False

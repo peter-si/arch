@@ -3,16 +3,16 @@
   systemd:
     name: paccache.timer
     state: restarted
-  when: ansible_is_chroot == False
+  when: running_in_chroot == False
 
 - name: start paccache
   systemd:
     name: paccache.timer
     state: started
-  when: ansible_is_chroot == False
+  when: running_in_chroot == False
 
 - name: start user systemd instance
   systemd:
     name: "user@{{ user.uid }}"
     state: started
-  when: ansible_is_chroot == False
+  when: running_in_chroot == False

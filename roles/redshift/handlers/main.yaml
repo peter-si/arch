@@ -1,4 +1,4 @@
 ---
 - name: start Geoclue user service
   systemd: unit=geoclue-agent.service user=True state=started
-  when: ansible_is_chroot == False
+  when: running_in_chroot == False
