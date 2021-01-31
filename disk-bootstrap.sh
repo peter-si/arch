@@ -134,7 +134,7 @@ function install_system() {
 
 function add_key_file() {
     dd bs=512 count=8 if=/dev/urandom of=/mnt/crypto_keyfile.bin
-    cryptsetup luksAddKey /dev/disk/by-partlabel/cryptsystem /crypto_keyfile.bin
+    cryptsetup luksAddKey --key-file=$root_pass_file /dev/disk/by-partlabel/cryptsystem /crypto_keyfile.bin
     chmod 000 /mnt/crypto_keyfile.bin
     sed -i 's/^FILES=.*/FILES=(\/crypto_keyfile.bin)/' /mnt/etc/mkinitcpio.conf
     arch-chroot /mnt mkinitcpio -P
