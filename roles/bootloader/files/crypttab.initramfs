@@ -1,2 +1,2 @@
 # <name>    <device>                            <password>  <options>
-system      /dev/disk/by-partlabel/cryptsystem
+system      /dev/disk/by-partlabel/cryptsystem  none        luks,offset=8192,cipher=aes-xts-plain64,size=256

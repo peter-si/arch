@@ -71,7 +71,7 @@ function encrypt_disk() {
   banner "Encrypting disk"
   partprobe "$drive"
   ask_root_pass
-  cryptsetup -q  luksFormat --key-file=$root_pass_file /dev/disk/by-partlabel/cryptsystem
+  cryptsetup -q luksFormat --key-file=$root_pass_file --align-payload=8192 -s 256 -c aes-xts-plain64 /dev/disk/by-partlabel/cryptsystem
 }
 
 function open_luks() {
