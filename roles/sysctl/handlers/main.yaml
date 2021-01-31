@@ -1,3 +1,4 @@
 ---
 - name: reload sysctl
   command: sysctl --system
+  when: running_in_chroot == False
