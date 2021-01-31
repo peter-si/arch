@@ -71,13 +71,11 @@ function create_partitions() {
 function encrypt_disk() {
   banner "Encrypting disk"
   partprobe "$drive"
-  ask_root_pass
   cryptsetup -q luksFormat --align-payload=8192 -s 256 -c aes-xts-plain64 /dev/disk/by-partlabel/cryptsystem
 }
 
 function open_luks() {
   banner "Opening luks encrypted disk"
-  ask_root_pass
   cryptsetup luksOpen /dev/disk/by-partlabel/cryptsystem system
   cryptsetup plainOpen --key-file /dev/urandom /dev/disk/by-partlabel/cryptswap swap
 }
@@ -119,7 +117,6 @@ function bootstrap_arch() {
 
 function install_system() {
   banner "Installing system"
-  ask_root_pass
   systemd-nspawn --bind-ro=/install:/install --directory=/mnt /install/root_pass.sh "$(cat $root_pass_file)"
   systemd-nspawn \
     --as-pid2 \
@@ -163,6 +160,7 @@ shift $((OPTIND - 1))
 drive="$1"
 
 if [[ -n "$installOnly" ]]; then
+  ask_root_pass
   install_system
   exit
 fi
@@ -193,6 +191,7 @@ if [[ -z "$noFormat" ]]; then
 fi
 
 create_partitions
+ask_root_pass
 encrypt_disk
 open_luks
 format_partitions

@@ -26,6 +26,7 @@
     - { role: filesystems, tags: [ 'filesystems' ] }
     - { role: archive, tags: [ 'archive' ] }
     - { role: taskwarrior, tags: [ 'taskwarrior' ] }
+    - { role: no-dm, tags: [ 'no-dm' ], when: "display_manager == 'no-dm'" }
     - { role: virtualenv, tags: [ 'virtualenv' ] }
     - { role: wormhole, tags: [ 'wormhole' ] }
     - { role: hostsctl, tags: [ 'hostsctl' ], when: "hostsctl is defined" }
@@ -35,14 +36,13 @@
     - { role: docker, tags: [ 'docker' ] }
     - { role: syncthing, tags: [ 'syncthing' ], when: "syncthing is defined" }
     - { role: firejail, tags: ['firejail'] }
+    - { role: dotfiles, tags: ['dotfiles'] }
+    - { role: ssd, tags: [ 'ssd' ] }
 
 - hosts: gui
   become: yes
   roles:
-    - { role: dotfiles, tags: ['dotfiles'] }
-    - { role: ssd, tags: ['ssd'] }
     - { role: x, tags: ['x'] }
-    - { role: no-dm, tags: ['no-dm'], when: "display_manager == 'no-dm'" }
     - { role: lightdm, tags: ['lightdm'], when: "display_manager == 'lightdm'" }
     - { role: gdm, tags: ['gdm'], when: "display_manager == 'gdm'" }
     - { role: i3, tags: ['i3'], when: "desktop_environment == 'i3'" }
