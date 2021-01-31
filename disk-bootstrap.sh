@@ -132,13 +132,22 @@ function install_system() {
       ansible-playbook /install/playbook.yaml -M /install/library/ansible-aur/library -i /install/localhost -l "$host" --extra-vars "user_password=$(cat $root_pass_file) running_in_chroot=True"
 }
 
+function add_key_file() {
+    dd bs=512 count=8 if=/dev/urandom of=/mnt/crypto_keyfile.bin
+    cryptsetup luksAddKey /dev/disk/by-partlabel/cryptsystem /crypto_keyfile.bin
+    chmod 000 /mnt/crypto_keyfile.bin
+    sed -i 's/^FILES=.*/FILES=(\/crypto_keyfile.bin)/' /mnt/etc/mkinitcpio.conf
+    arch-chroot /mnt mkinitcpio -P
+}
+
 ############################################################################
 
-while getopts ":s:l:nmih" opt; do
+while getopts ":s:l:nmikh" opt; do
   case "${opt}" in
   n) noFormat=true ;;
   m) mountOnly=true ;;
   i) installOnly=true ;;
+  k) addKeyFile=true ;;
   s) diskSize="+${OPTARG}" ;;
   l) host="${OPTARG}" ;;
   h) help ;;
@@ -154,6 +163,11 @@ drive="$1"
 
 if [[ -n "$installOnly" ]]; then
   install_system
+  exit
+fi
+
+if [[ -z "$addKeyFile" ]]; then
+  add_key_file
   exit
 fi
 
