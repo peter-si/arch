@@ -49,6 +49,14 @@
   tags:
     - user
 
+- name: Create tmp directory for user
+  file:
+    path: /home/{{ user.name }}/tmp
+    state: directory
+    mode: 0755
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+
 - name: Create user socket directory
   file:
     path: /run/user/{{ user.uid }}
