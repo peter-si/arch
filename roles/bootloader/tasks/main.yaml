@@ -1,13 +1,4 @@
 ---
-- name: Install refind
-  pacman:
-    name: refind
-    state: present
-
-- name: Install refind to boot
-  shell:
-    cmd: "refind-install"
-
 - name: Install plymouth
   become: yes
   become_user: "{{ user.name }}"
