@@ -25,6 +25,7 @@ function help() {
   echo "  m - don't run install script, only mount volumes"
   echo "  m - run only installation"
   echo "  n - no-format disk"
+  echo "  k - add key file``"
   echo "  l - ansible host for which to run this installation"
   echo "  s - disk size for sgdisk e.g.: 200GiB"
 
@@ -166,7 +167,7 @@ if [[ -n "$installOnly" ]]; then
   exit
 fi
 
-if [[ -z "$addKeyFile" ]]; then
+if [[ -n "$addKeyFile" ]]; then
   add_key_file
   exit
 fi
