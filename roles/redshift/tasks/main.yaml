@@ -39,8 +39,20 @@
 - name: Push Geoclue user service
   copy: src=geoclue-agent.service dest=/home/{{ user.name }}/.config/systemd/user/geoclue-agent.service
 
+- name: Create user systemd default.target.wants dir
+  file:
+    path: "/home/{{ user.name }}/.config/systemd/user/default.target.wants"
+    state: directory
+    recurse: yes
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+    mode: 0755
+
 - name: Enable Geoclue user service
-  systemd: unit=geoclue-agent.service user=True enabled=True
+  file:
+    dest: "/home/{{ user.name }}/.config/systemd/user/default.target.wants/geoclue-agent.service"
+    src: "/home/{{ user.name }}/.config/systemd/user/geoclue-agent.service"
+    state: link
   notify: start Geoclue user service
 
 - name: Allow RedShift to access geoclue
