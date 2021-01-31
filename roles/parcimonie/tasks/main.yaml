@@ -3,6 +3,7 @@
   become: yes
   become_user: "{{ user.name }}"
   aur:
+    use: makepkg
     name: parcimonie-sh-git
     skip_pgp_check: yes
   tags:
