@@ -57,6 +57,15 @@
     owner: "{{ user.name }}"
     group: "{{ user.group }}"
 
+- name: Create user systemd config dir
+  file:
+    path: "/home/{{ user.name }}/.config/systemd/user"
+    state: directory
+    recurse: yes
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+    mode: 0755
+
 - name: Create user socket directory
   file:
     path: /run/user/{{ user.uid }}
