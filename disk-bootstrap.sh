@@ -72,13 +72,13 @@ function encrypt_disk() {
   banner "Encrypting disk"
   partprobe "$drive"
   ask_root_pass
-  cryptsetup -q luksFormat --key-file=$root_pass_file --align-payload=8192 -s 256 -c aes-xts-plain64 /dev/disk/by-partlabel/cryptsystem
+  cryptsetup -q luksFormat --align-payload=8192 -s 256 -c aes-xts-plain64 /dev/disk/by-partlabel/cryptsystem
 }
 
 function open_luks() {
   banner "Opening luks encrypted disk"
   ask_root_pass
-  cryptsetup luksOpen --key-file=$root_pass_file /dev/disk/by-partlabel/cryptsystem system
+  cryptsetup luksOpen /dev/disk/by-partlabel/cryptsystem system
   cryptsetup plainOpen --key-file /dev/urandom /dev/disk/by-partlabel/cryptswap swap
 }
 
@@ -135,7 +135,7 @@ function install_system() {
 
 function add_key_file() {
     dd bs=512 count=8 if=/dev/urandom of=/mnt/crypto_keyfile.bin
-    cryptsetup luksAddKey --key-file=$root_pass_file /dev/disk/by-partlabel/cryptsystem /mnt/crypto_keyfile.bin
+    cryptsetup luksAddKey /dev/disk/by-partlabel/cryptsystem /mnt/crypto_keyfile.bin
     chmod 000 /mnt/crypto_keyfile.bin
     sed -i 's/^FILES=.*/FILES=(\/crypto_keyfile.bin)/' /mnt/etc/mkinitcpio.conf
     arch-chroot /mnt mkinitcpio -P
