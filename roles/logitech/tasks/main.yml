@@ -1,0 +1,29 @@
+---
+- name: Add plugdev group
+  group:
+      name: plugdev
+      state: present
+
+- name: Add {{ user.name }} to plugdev group
+  user:
+      name: "{{ user.name }}"
+      groups: plugdev
+      append: yes
+  tags:
+    - user
+
+- name: Install Solaar and logid
+  pacman:
+      name: solaar logid
+      state: present
+
+- name: Copy logid config
+  copy:
+    src: logid.conf
+    dest: /etc/logid.conf
+
+- name: Enable logid service
+  systemd:
+    unit: logid.service
+    enabled: yes
+  notify: start logid

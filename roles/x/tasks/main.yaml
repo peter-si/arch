@@ -23,6 +23,9 @@
 - name: Install xautomation
   pacman: name=xautomation state=present
 
+- name: Install xbindkeys
+  pacman: name=xbindkeys state=present
+
 - name: Add user to video group
   user: name={{ user.name }} groups=video append=yes
   tags:

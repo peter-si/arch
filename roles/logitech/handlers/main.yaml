@@ -1,0 +1,4 @@
+---
+- name: start logid
+  systemd: name=logid.service state=started
+  when: running_in_chroot == False
