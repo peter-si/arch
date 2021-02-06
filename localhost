@@ -3,4 +3,4 @@ desktop   ansible_connection=local
 asus   ansible_connection=local
 
 [cli]
-htpc   ansible_connection=local
+kube-worker   ansible_connection=local

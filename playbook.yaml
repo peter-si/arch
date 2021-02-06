@@ -21,7 +21,6 @@
     - { role: openresolv, tags: [ 'openresolv' ] }
     - { role: networkmanager, tags: [ 'networkmanager' ] }
     - { role: gnome-keyring, tags: [ 'gnome-keyring' ] }
-    - { role: macchiato, tags: [ 'macchiato' ] }
     - { role: nmtrust, tags: [ 'nmtrust' ] }
     - { role: filesystems, tags: [ 'filesystems' ] }
     - { role: archive, tags: [ 'archive' ] }
@@ -33,8 +32,6 @@
     - { role: pkgfile, tags: [ 'pkgfile' ], when: "pkgfile is defined" }
     - { role: pydev, tags: [ 'pydev' ] }
     - { role: docker, tags: [ 'docker' ] }
-    - { role: syncthing, tags: [ 'syncthing' ], when: "syncthing is defined" }
-    - { role: firejail, tags: ['firejail'] }
     - { role: dotfiles, tags: ['dotfiles'] }
     - { role: ssd, tags: [ 'ssd' ] }
 
@@ -48,6 +45,8 @@
     - { role: i3, tags: ['i3'], when: "desktop_environment == 'i3'" }
     - { role: gnome, tags: ['gnome'], when: "desktop_environment == 'gnome'" }
     - { role: wireless, tags: ['wireless'] }
+    - { role: macchiato, tags: [ 'macchiato' ] }
+    - { role: firejail, tags: [ 'firejail' ] }
 #    - { role: unbound, tags: ['unbound'] }
     - { role: tor, tags: ['tor'], when: "tor is defined" }
     - { role: udisks, tags: ['udisks'] }
@@ -75,6 +74,7 @@
     - { role: spotify, tags: ['spotify'] }
     - { role: nemo, tags: ['nemo'] }
     - { role: leafpad, tags: ['leafpad'] }
+    - { role: syncthing, tags: [ 'syncthing' ], when: "syncthing is defined" }
     - { role: filezilla, tags: ['filezilla'] }
     - { role: seahorse, tags: ['seahorse'] }
 
@@ -82,6 +82,13 @@
   become: yes
   roles:
     - { role: logitech, tags: [ 'logitech' ] }
+
+- hosts:
+    - kube-admin
+    - kube-worker
+  become: yes
+  roles:
+    - { role: kubernetes, tags: [ 'kubernetes' ] }
 
 - hosts: asus
   become: yes

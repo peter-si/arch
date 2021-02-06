@@ -16,3 +16,4 @@
   lineinfile:
     path: /etc/crypttab
     line: "swap /dev/disk/by-partlabel/cryptswap  /dev/urandom  swap,offset=2048,cipher=aes-xts-plain64,size=256"
+  when: disable_swap is not defined or disable_swap != True

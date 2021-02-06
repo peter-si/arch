@@ -237,9 +237,6 @@ gnome:
     disable_top_left_hot_corner: False
     extensions_support: True
 
-hardened:
-  enable_namespaces: true
-
 syncthing:
   run_on: trusted
   open_ports: False

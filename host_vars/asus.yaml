@@ -3,3 +3,6 @@ hostname: aluwork
 video_drivers:
   - nouveau
   - nvidia
+
+hardened:
+  enable_namespaces: true

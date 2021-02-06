@@ -1,11 +1,13 @@
-hostname: aluhtpc
+hostname: alu-worker-1
 
 video_drivers:
   - nvidia
 
 pacman_packages:
+  - w3m
 
-additional_hosts:
+additional_hosts: |
+  192.168.2.100 control-plane
 
 aur_packages:
   - yay
@@ -19,3 +21,8 @@ ssh:
   port: 22
   user_dir: /install/.ssh
   enable_sshd: True
+
+kubernetes:
+  roles:
+    - control-plane
+    - node
