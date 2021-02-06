@@ -39,3 +39,9 @@
 - name: Copy user SSH keys
   copy: src={{ ssh.user_dir }}/ dest=/home/{{ user.name }}/.ssh mode=600 owner={{ user.name }} group={{ user.group }}
   when: ssh.user_dir is defined
+
+- name: Add user public key to authorized keys
+  authorized_key:
+    user: '{{ user.name }}'
+    state: present
+    key: "{{ lookup('file', '/home/{{ user.name }}/.ssh/id_rsa.pub') }}"
