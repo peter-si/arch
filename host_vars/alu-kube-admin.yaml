@@ -16,7 +16,7 @@ bootloader:
   plymouth: False
 
 additional_hosts: |
-  192.168.2.100 control-plane
+  192.168.2.110 control-plane
 
 aur_packages:
   - yay
