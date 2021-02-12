@@ -73,12 +73,12 @@ function create_partitions() {
 function encrypt_disk() {
   banner "Encrypting disk"
   partprobe "$drive"
-  cat "${root_pass_file}" | cryptsetup -q luksFormat --align-payload=8192 -s 256 -c aes-xts-plain64 -d - /dev/disk/by-partlabel/cryptsystem
+  cryptsetup luksFormat --key-slot 9 --align-payload=8192 -s 256 -c aes-xts-plain64 /dev/disk/by-partlabel/cryptsystem
 }
 
 function open_luks() {
   banner "Opening luks encrypted disk"
-  cat "${root_pass_file}" | cryptsetup luksOpen -d - /dev/disk/by-partlabel/cryptsystem system
+  cryptsetup luksOpen  /dev/disk/by-partlabel/cryptsystem system
   if [[ -z "$disableSwap" ]]; then
     cryptsetup plainOpen --key-file /dev/urandom /dev/disk/by-partlabel/cryptswap swap
   fi
@@ -139,7 +139,11 @@ function install_system() {
 }
 
 function add_key_file() {
-    systemd-nspawn --bind-ro=/install:/install --directory=/mnt /install/add-luks-key.sh
+  dd bs=512 count=8 if=/dev/urandom of=/mnt/crypto_keyfile.bin
+  cryptsetup luksAddKey /dev/disk/by-partlabel/cryptsystem /mnt/crypto_keyfile.bin
+  chmod 400 /mnt/crypto_keyfile.bin
+  sed -i 's/^FILES=.*/FILES=(\/crypto_keyfile.bin)/' /etc/mkinitcpio.conf
+  arch-chroot /mnt mkinitcpio -P
 }
 
 ############################################################################

@@ -1,5 +1,4 @@
 ---
-
 - name: Check that bootloader theme exists
   stat:
     path: "{{ bootloader.path }}/EFI/refind/{{ bootloader.theme_path }}"

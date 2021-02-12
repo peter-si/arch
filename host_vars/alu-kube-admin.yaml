@@ -9,8 +9,6 @@ pacman_packages:
 bootloader:
   path: /boot
   time: -1
-  theme_path: ~
-  theme_repo: ~
   kernel_parameters:
   silent: False
   plymouth: False

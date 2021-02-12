@@ -21,7 +21,7 @@
 
 - include: microcode.yaml
 - include: theme.yaml
-  when: bootloader.theme_path is defined and bootloader.theme_path != ''
+  when: bootloader.theme_path is defined and bootloader.theme_path != ""
 - include: plymouth.yaml
   when: bootloader.plymouth is defined and bootloader.plymouth == True
 - include: entries.yaml

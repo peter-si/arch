@@ -3,21 +3,25 @@
   file:
     path: "{{ bootloader.path }}/EFI/refind/{{ bootloader.theme_path }}/.git"
     state: absent
+  when: bootloader.theme_path is defined
 
 - name: Cleanup bootloader theme src
   file:
     path: "{{ bootloader.path }}/EFI/refind/{{ bootloader.theme_path }}/src"
     state: absent
+  when: bootloader.theme_path is defined
 
 - name: Cleanup bootloader theme install.sh
   file:
     path: "{{ bootloader.path }}/EFI/refind/{{ bootloader.theme_path }}/install.sh"
     state: absent
+  when: bootloader.theme_path is defined
 
 - name: Cleanup bootloader theme theme.conf
   file:
     path: "{{ bootloader.path }}/EFI/refind/{{ bootloader.theme_path }}/theme.conf"
     state: absent
+  when: bootloader.theme_path is defined
 
 - name: Cleanup bootloader default entries
   file:
