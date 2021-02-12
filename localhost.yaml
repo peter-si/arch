@@ -3,7 +3,7 @@ all:
   children:
     cli:
       hosts:
-        alu-kube-worker-01:
+        alu-kube-admin:
           ansible_connection: local
     gui:
       hosts:

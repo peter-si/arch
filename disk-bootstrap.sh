@@ -73,12 +73,12 @@ function create_partitions() {
 function encrypt_disk() {
   banner "Encrypting disk"
   partprobe "$drive"
-  cryptsetup -q luksFormat --align-payload=8192 -s 256 -c aes-xts-plain64 /dev/disk/by-partlabel/cryptsystem
+  cat "${root_pass_file}" | cryptsetup -q luksFormat --align-payload=8192 -s 256 -c aes-xts-plain64 -d - /dev/disk/by-partlabel/cryptsystem
 }
 
 function open_luks() {
   banner "Opening luks encrypted disk"
-  cryptsetup luksOpen /dev/disk/by-partlabel/cryptsystem system
+  cat "${root_pass_file}" | cryptsetup luksOpen -d - /dev/disk/by-partlabel/cryptsystem system
   if [[ -z "$disableSwap" ]]; then
     cryptsetup plainOpen --key-file /dev/urandom /dev/disk/by-partlabel/cryptswap swap
   fi
@@ -135,7 +135,7 @@ function install_system() {
     --bind-ro=/sys:/sys \
     --bind-ro=/sys/firmware/efi/efivars:/sys/firmware/efi/efivars \
     --directory=/mnt \
-      ansible-playbook /install/playbook.yaml -M /install/library/ansible-aur/library -i /install/localhost -l "$host" --extra-vars "user_password=$(cat $root_pass_file) running_in_chroot=True disable_swap=${disableSwap}"
+      ansible-playbook /install/playbook.yaml -M /install/library/ansible-aur/library -i /install/localhost.yaml -l "$host" --extra-vars "user_password=$(cat $root_pass_file) running_in_chroot=True disable_swap=${disableSwap}"
 }
 
 function add_key_file() {
