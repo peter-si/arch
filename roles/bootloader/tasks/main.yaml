@@ -1,58 +1,17 @@
 ---
-- name: Install plymouth
-  become: yes
-  become_user: "{{ user.name }}"
-  aur:
-    name: plymouth-git
-
-- name: Check that bootloader theme exists
-  stat:
-    path: "{{ bootloader.path }}/EFI/refind/{{ bootloader.theme_path }}"
-  register: bootloader_theme
-
-- name: Install bootloader theme
-  git:
-    dest: "{{ bootloader.path }}/EFI/refind/{{ bootloader.theme_path }}"
-    repo: "{{ bootloader.theme_repo }}"
-    depth: 1
-  when: not bootloader_theme.stat.exists
-
-- name: Copy Arch hardened icon
-  copy:
-    dest: "{{ bootloader.path }}/EFI/refind/{{ bootloader.theme_path }}/icons/128-48/os_arch_hardened.png"
-    src: os_arch_hardened.png
-
-- name: Copy bootloader background
-  copy:
-    dest: "{{ bootloader.path }}/EFI/refind/{{ bootloader.theme_path }}/icons/128-48/bg_plymouth.png"
-    src: plymouth/bg_plymouth.png
 
 - name: Copy bootloader theme config
   template:
     dest: "{{ bootloader.path }}/EFI/refind/theme.conf"
     src: theme.conf
 
-- name: Add theme to bootloader
+- name: Add our config to bootloader
   lineinfile:
     path: "{{ bootloader.path }}/EFI/refind/refind.conf"
-    line: "include theme.conf"
-
-- name: Add entries to bootloader
-  lineinfile:
-    path: "{{ bootloader.path }}/EFI/refind/refind.conf"
-    line: "include entries.conf"
-
-- name: Copy plymouth theme
-  synchronize:
-    dest: /usr/share/plymouth/
-    src: plymouth/themes
-  notify:
-    - make plymouth theme default
-
-- name: Copy plymouth config
-  copy:
-    dest: /etc/plymouth/plymouthd.conf
-    src: plymouth/plymouthd.conf
+    line: "{{ item }}"
+  with_items:
+    - "include theme.conf"
+    - "include entries.conf"
 
 - name: Copy crypttab.initramfs config
   copy:
@@ -61,5 +20,9 @@
   notify: rebuild bootloader
 
 - include: microcode.yaml
+- include: theme.yaml
+  when: bootloader.theme_path is defined and bootloader.theme_path != ''
+- include: plymouth.yaml
+  when: bootloader.plymouth is defined and bootloader.plymouth == True
 - include: entries.yaml
 - include: cleanup.yaml

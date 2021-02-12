@@ -22,7 +22,14 @@
     path: /etc/hostname
     line: "{{ hostname }}"
     create: yes
-  when: hostname is defined
+  when: hostname is defined and hostname != ''
+
+- name: Set the hostname
+  lineinfile:
+    path: /etc/hostname
+    line: "{{ inventory_hostname }}"
+    create: yes
+  when: hostname is not defined or hostname == ''
 
 - name: Add localhost to hosts
   lineinfile:

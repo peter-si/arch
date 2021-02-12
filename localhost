@@ -1,6 +1,0 @@
-[gui]
-desktop   ansible_connection=local
-asus   ansible_connection=local
-
-[cli]
-kube-worker   ansible_connection=local

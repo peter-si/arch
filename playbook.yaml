@@ -84,8 +84,7 @@
     - { role: logitech, tags: [ 'logitech' ] }
 
 - hosts:
-    - kube-admin
-    - kube-worker
+    - alu-kube-worker-01
   become: yes
   roles:
     - { role: kubernetes, tags: [ 'kubernetes' ] }

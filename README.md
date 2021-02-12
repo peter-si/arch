@@ -93,7 +93,7 @@ nmcli d wifi c name_of_network password SecretPassword
 To [check iptables dropped packets](https://wiki.archlinux.org/index.php/iptables#Logging) use
 
 ```bash
-journalctl -k | grep "IN=.*OUT=.*" | less
+journalctl -fk | grep "IN=.*OUT=.*"
 ```
 
 

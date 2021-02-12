@@ -1,3 +1,4 @@
+---
 user:
   name: alulord
   uid: 1000
@@ -16,6 +17,7 @@ bootloader:
   theme_repo: https://github.com/bobafetthotmail/refind-theme-regular.git
   kernel_parameters:
   silent: True
+  plymouth: True
 
 additional_hosts: |
   192.168.2.102 sonarr.rasp plex.rasp radarr.rasp jackett.rasp ombi.rasp resilio.rasp traefik.rasp monit.rasp muximux.rasp
@@ -254,3 +256,5 @@ localtime:
   run_on: trusted
 
 running_in_chroot: False
+
+user_password: default

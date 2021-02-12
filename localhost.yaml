@@ -1,0 +1,13 @@
+---
+all:
+  children:
+    cli:
+      hosts:
+        alu-kube-worker-01:
+          ansible_connection: local
+    gui:
+      hosts:
+        desktop:
+          ansible_connection: local
+        asus:
+          ansible_connection: local

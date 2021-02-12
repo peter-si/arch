@@ -125,7 +125,7 @@ function bootstrap_arch() {
 
 function install_system() {
   banner "Installing system"
-  systemd-nspawn --bind-ro=/install:/install --directory=/mnt /install/root_pass.sh "$(cat $root_pass_file)"
+  systemd-nspawn --bind-ro=/install:/install --directory=/mnt /install/root-pass.sh "$(cat $root_pass_file)"
   systemd-nspawn \
     --as-pid2 \
     --register=no \
@@ -139,11 +139,7 @@ function install_system() {
 }
 
 function add_key_file() {
-    dd bs=512 count=8 if=/dev/urandom of=/mnt/crypto_keyfile.bin
-    cryptsetup luksAddKey /dev/disk/by-partlabel/cryptsystem /mnt/crypto_keyfile.bin
-    chmod 000 /mnt/crypto_keyfile.bin
-    sed -i 's/^FILES=.*/FILES=(\/crypto_keyfile.bin)/' /mnt/etc/mkinitcpio.conf
-    arch-chroot /mnt mkinitcpio -P
+    systemd-nspawn --bind-ro=/install:/install --directory=/mnt /install/add-luks-key.sh
 }
 
 ############################################################################
@@ -171,11 +167,6 @@ drive="$1"
 if [[ -n "$installOnly" ]]; then
   ask_root_pass
   install_system
-  exit
-fi
-
-if [[ -n "$addKeyFile" ]]; then
-  add_key_file
   exit
 fi
 
@@ -208,5 +199,8 @@ create_subvolumes
 mount_volumes
 bootstrap_arch
 install_system
+if [[ -n "$addKeyFile" ]]; then
+  add_key_file
+fi
 
 banner "All done, reboot system"
