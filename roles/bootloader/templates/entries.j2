@@ -1,8 +1,8 @@
 {% if hardened is defined %}
 menuentry "Arch Hardened" {
-    {{ if bootloader.theme_path is defined }}
+    {% if bootloader.theme_path is defined %}
     icon     /EFI/refind/{{ bootloader.theme_path }}/icons/128-48/os_arch_hardened.png
-    {{ endif }}
+    {% endif %}
     ostype   Linux
     volume   "Arch Linux"
     loader   /vmlinuz-linux-hardened

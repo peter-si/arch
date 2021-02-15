@@ -6,6 +6,19 @@
       - docker-compose
     state: present
 
+# This doesn't work because nvidia-docker tries to create daemon.json and fails, when it already exists
+#- name: Install nvidia container toolkit
+#  become: yes
+#  become_user: "{{ user.name }}"
+#  aur:
+#    name:
+#      - nvidia-container-runtime-bin
+#      - libnvidia-container-tools-bin
+#      - libnvidia-container-bin
+#      - nvidia-container-toolkit
+#      - nvidia-docker
+#  when: nvidia_runtime is defined and nvidia_runtime == True
+
 - name: Add user to docker group
   user: name={{ user.name }} groups=docker append=yes
   tags:
@@ -17,9 +30,9 @@
     state: directory
 
 - name: Copy docker daemon settings
-  copy:
+  template:
     dest: /etc/docker/daemon.json
-    src: daemon.json
+    src: daemon.json.j2
 
 - name: Enable docker.service
   systemd:

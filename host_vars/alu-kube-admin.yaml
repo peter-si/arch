@@ -1,10 +1,12 @@
-hostname:
+hostname: alu-kube-admin
 
 video_drivers:
   - nvidia
 
 pacman_packages:
   - w3m
+
+nvidia_runtime: True
 
 bootloader:
   path: /boot
@@ -20,9 +22,7 @@ aur_packages:
   - yay
   - ctop
   - downgrade
-  - libnvidia-container-bin
-  - libnvidia-container-tools-bin
-  - nvidia-container-toolkit
+  - mergerfs
 
 ssh:
   port: 22

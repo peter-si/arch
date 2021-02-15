@@ -1,0 +1,13 @@
+{
+{% if nvidia_runtime is defined and nvidia_runtime == True %}
+    "default-runtime": "nvidia",
+    "runtimes": {
+        "nvidia": {
+            "path": "/usr/bin/nvidia-container-runtime",
+            "runtimeArgs": []
+        }
+    },
+{% endif %}
+    "storage-driver": "btrfs"
+}
+

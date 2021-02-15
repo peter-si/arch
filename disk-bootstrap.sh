@@ -23,7 +23,7 @@ function help() {
   echo "Optional parameters (need to be added before other parameters):"
   echo "  h - this help"
   echo "  m - don't run install script, only mount volumes"
-  echo "  m - run only installation"
+  echo "  i - run only installation"
   echo "  n - no-format disk"
   echo "  k - add key file``"
   echo "  l - ansible host for which to run this installation"
@@ -100,6 +100,7 @@ function create_subvolumes() {
   btrfs subvolume create /mnt/root
   btrfs subvolume create /mnt/home
   btrfs subvolume create /mnt/snapshots
+  btrfs subvolume create /mnt/lib
   umount -R /mnt
 }
 
@@ -110,6 +111,7 @@ function mount_volumes() {
   mount -t btrfs -o subvol=root,$o_btrfs LABEL=system /mnt
   mount -t btrfs -o subvol=home,$o_btrfs LABEL=system /mnt/home
   mount -t btrfs -o subvol=snapshots,$o_btrfs LABEL=system /mnt/.snapshots
+  mount -t btrfs -o subvol=lib,$o_btrfs LABEL=system /mnt/var/lib
   mount -o $o LABEL=EFI /mnt/boot
 }
 
@@ -142,7 +144,7 @@ function add_key_file() {
   dd bs=512 count=8 if=/dev/urandom of=/mnt/crypto_keyfile.bin
   cryptsetup luksAddKey /dev/disk/by-partlabel/cryptsystem /mnt/crypto_keyfile.bin
   chmod 400 /mnt/crypto_keyfile.bin
-  sed -i 's/^FILES=.*/FILES=(\/crypto_keyfile.bin)/' /etc/mkinitcpio.conf
+  sed -i 's/^FILES=.*/FILES=(\/crypto_keyfile.bin)/' /mnt/etc/mkinitcpio.conf
   arch-chroot /mnt mkinitcpio -P
 }
 

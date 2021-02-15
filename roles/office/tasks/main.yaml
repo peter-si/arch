@@ -45,12 +45,15 @@
     name: simple-scan
     state: present
 
-- name: Install pandoc and dependencies
-  pacman:
+- name: Install pandoc
+  become: yes
+  become_user: "{{ user.name }}"
+  aur:
     name:
-      - pandoc
-      - pandoc-citeproc
+      - pandoc-bin
     state: present
+  tags:
+    - aur
 
 - name: Install xsv
   become: yes

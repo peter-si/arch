@@ -58,6 +58,9 @@ pacman_base_packages:
     - lm_sensors
     - freetype2
     - go
+    - gptfdisk
+    - parted
+    - pacutils
 pacman_packages:
     - jre-openjdk
     - gsimplecal

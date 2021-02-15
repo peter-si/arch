@@ -31,7 +31,7 @@
 -A TCP -p tcp -m tcp --dport 80 -m comment --comment "Http" -j ACCEPT
 -A TCP -p tcp -m tcp --dport 443 -m comment --comment "Http" -j ACCEPT
 -A TCP -p tcp -m tcp --dport 6443 -m comment --comment "Kubernetes API server" -j ACCEPT
--A TCP -s 192.168.2.100 -p tcp -m tcp --dport 2379,2380 -m comment --comment "etcd server client API" -j ACCEPT
+-A TCP -s 192.168.2.100 -p tcp -m multiport --dports 2379,2380 -m comment --comment "etcd server client API" -j ACCEPT
 -A TCP -s 192.168.2.100 -p tcp -m tcp --dport 10250 -m comment --comment "kubelet API" -j ACCEPT
 -A TCP -p tcp -m tcp --dport 30000:32767 -m comment --comment "NodePort Services" -j ACCEPT
 -A UDP -p udp -m udp --dport 8472 -m comment --comment "Canal/Flannel VXLAN overlay networking" -j ACCEPT
