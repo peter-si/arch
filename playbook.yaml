@@ -88,6 +88,7 @@
   become: yes
   roles:
     - { role: kubernetes, tags: [ 'kubernetes' ] }
+    - { role: udev, tags: [ 'udev' ] }
 
 - hosts: asus
   become: yes

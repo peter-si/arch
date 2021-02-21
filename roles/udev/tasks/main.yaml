@@ -1,0 +1,5 @@
+---
+- name: Disable powering off of USB devices
+  file:
+    src: "50-usb_power_save.rules"
+    dest: /etc/udev/rules.d/50-usb_power_save.rules
