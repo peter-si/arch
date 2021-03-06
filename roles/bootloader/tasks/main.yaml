@@ -18,6 +18,7 @@
     dest: /etc/crypttab.initramfs
     src: crypttab.initramfs
   notify: rebuild bootloader
+  when: root_partition == "/dev/mapper/system"
 
 - include: microcode.yaml
 - include: theme.yaml

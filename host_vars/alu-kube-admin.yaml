@@ -22,7 +22,7 @@ aur_packages:
   - yay
   - ctop
   - downgrade
-  - mergerfs
+#  - mergerfs
 
 ssh:
   port: 22

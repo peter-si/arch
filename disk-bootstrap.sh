@@ -68,7 +68,6 @@ function create_partitions() {
     sgdisk --new="$((partNum=partNum+1)):0:+8GiB" --typecode="${partNum}":8200 --change-name="${partNum}":"${swapLabel}" "$drive"
   fi
   sgdisk --new="$((partNum=partNum+1)):0:${diskSize:-0}" --typecode="${partNum}":8300 --change-name="${partNum}":"${systemLabel}" "$drive"
-
 }
 
 function encrypt_disk() {
@@ -87,6 +86,7 @@ function open_luks() {
 
 function format_partitions() {
   banner "Formatting disk"
+  partprobe "$drive"
   if [[ -z "$disableSwap" ]]; then
     mkswap -L swap "${swapPath}"
     swapon -L swap
@@ -169,6 +169,18 @@ shift $((OPTIND - 1))
 
 drive="$1"
 
+if [[ -z "$noEncrypt" ]]; then
+  systemLabel="cryptsystem"
+  systemPath=/dev/mapper/system
+  swapLabel="cryptswap"
+  swapPath=/dev/mapper/swap
+else
+  systemLabel="system"
+  systemPath=/dev/disk/by-partlabel/system
+  swapLabel="swap"
+  swapPath=/dev/disk/by-partlabel/swap
+fi
+
 if [[ -n "$installOnly" ]]; then
   ask_root_pass
   install_system
@@ -181,7 +193,9 @@ if [[ -z "$drive" ]]; then
 fi
 
 if [[ -n "$mountOnly" ]]; then
-  open_luks
+  if [[ -z "$noEncrypt" ]]; then
+    open_luks
+  fi
   mount_volumes
   exit
 fi
@@ -193,18 +207,6 @@ fi
 
 if [[ -z "$noFormat" ]]; then
   clear_disk
-fi
-
-if [[ -z "$noEncrypt" ]]; then
-  systemLabel="cryptsystem"
-  systemPath=/dev/mapper/system
-  swapLabel="cryptswap"
-  swapPath=/dev/mapper/swap
-else
-  systemLabel="system"
-  systemPath=/dev/disk/by-partlabel/system
-  swapLabel="swap"
-  swapPath=/dev/disk/by-partlabel/swap
 fi
 
 create_partitions
