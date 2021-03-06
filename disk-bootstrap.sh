@@ -29,6 +29,7 @@ function help() {
   echo "  l - ansible host for which to run this installation"
   echo "  d - disk size for sgdisk e.g.: 200GiB"
   echo "  s - dont't create swap partition"
+  echo "  c - dont't encrypt disks"
 
   exit
 }
@@ -64,9 +65,9 @@ function create_partitions() {
   partNum=$(sgdisk -p "$drive" | tail -n 1 | awk '{print $1}')
   sgdisk --new="$((partNum=partNum+1)):0:+550MiB" --typecode="${partNum}":ef00 --change-name="${partNum}":EFI "$drive"
   if [[ -z "$disableSwap" ]]; then
-    sgdisk --new="$((partNum=partNum+1)):0:+8GiB" --typecode="${partNum}":8200 --change-name="${partNum}":cryptswap "$drive"
+    sgdisk --new="$((partNum=partNum+1)):0:+8GiB" --typecode="${partNum}":8200 --change-name="${partNum}":"${swapLabel}" "$drive"
   fi
-  sgdisk --new="$((partNum=partNum+1)):0:${diskSize:-0}" --typecode="${partNum}":8300 --change-name="${partNum}":cryptsystem "$drive"
+  sgdisk --new="$((partNum=partNum+1)):0:${diskSize:-0}" --typecode="${partNum}":8300 --change-name="${partNum}":"${systemLabel}" "$drive"
 
 }
 
@@ -87,11 +88,11 @@ function open_luks() {
 function format_partitions() {
   banner "Formatting disk"
   if [[ -z "$disableSwap" ]]; then
-    mkswap -L swap /dev/mapper/swap
+    mkswap -L swap "${swapPath}"
     swapon -L swap
   fi
   mkfs.fat -F32 -n EFI /dev/disk/by-partlabel/EFI
-  mkfs.btrfs --force --label system /dev/mapper/system
+  mkfs.btrfs --force --label system "${systemPath}"
 }
 
 function create_subvolumes() {
@@ -119,9 +120,6 @@ function bootstrap_arch() {
   banner "Bootstrapping Arch"
   pacstrap /mnt base base-devel linux linux-firmware linux-headers git nano ansible rsync refind
   genfstab -L -p /mnt >>/mnt/etc/fstab
-  if [[ -z "$disableSwap" ]]; then
-    sed -i "s+LABEL=swap+/dev/mapper/swap+" /mnt/etc/fstab
-  fi
   arch-chroot /mnt refind-install
 }
 
@@ -137,7 +135,7 @@ function install_system() {
     --bind-ro=/sys:/sys \
     --bind-ro=/sys/firmware/efi/efivars:/sys/firmware/efi/efivars \
     --directory=/mnt \
-      ansible-playbook /install/playbook.yaml -M /install/library/ansible-aur/library -i /install/localhost.yaml -l "$host" --extra-vars "user_password=$(cat $root_pass_file) running_in_chroot=True disable_swap=${disableSwap}"
+      ansible-playbook /install/playbook.yaml -M /install/library/ansible-aur/library -i /install/localhost.yaml -l "$host" --extra-vars "user_password=$(cat $root_pass_file) running_in_chroot=True disable_swap=${disableSwap} root_partition=${systemPath}"
 }
 
 function add_key_file() {
@@ -150,7 +148,7 @@ function add_key_file() {
 
 ############################################################################
 
-while getopts ":d:l:nmiksh" opt; do
+while getopts ":d:l:nmiksch" opt; do
   case "${opt}" in
   n) noFormat=true ;;
   m) mountOnly=true ;;
@@ -159,6 +157,7 @@ while getopts ":d:l:nmiksh" opt; do
   s) disableSwap=true ;;
   d) diskSize="+${OPTARG}" ;;
   l) host="${OPTARG}" ;;
+  c) noEncrypt=true ;;
   h) help ;;
   *)
     echo "Invalid Option: -$OPTARG" 1>&2
@@ -196,10 +195,24 @@ if [[ -z "$noFormat" ]]; then
   clear_disk
 fi
 
+if [[ -z "$noEncrypt" ]]; then
+  systemLabel="cryptsystem"
+  systemPath=/dev/mapper/system
+  swapLabel="cryptswap"
+  swapPath=/dev/mapper/swap
+else
+  systemLabel="system"
+  systemPath=/dev/disk/by-partlabel/system
+  swapLabel="swap"
+  swapPath=/dev/disk/by-partlabel/swap
+fi
+
 create_partitions
 ask_root_pass
-encrypt_disk
-open_luks
+if [[ -z "$noEncrypt" ]]; then
+  encrypt_disk
+  open_luks
+fi
 format_partitions
 create_subvolumes
 mount_volumes

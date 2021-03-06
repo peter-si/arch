@@ -260,4 +260,6 @@ localtime:
 
 running_in_chroot: False
 
+root_partition: /dev/mapper/system
+
 user_password: default

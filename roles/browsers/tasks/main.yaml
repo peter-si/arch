@@ -39,6 +39,7 @@
       whitelist ${HOME}/Downloads
       whitelist ${HOME}/Documents
       whitelist ${HOME}/Pictures
+      whitelist ${HOME}/Camera
       whitelist ${HOME}/Music
       whitelist ${HOME}/Videos
       whitelist ${HOME}/tmp

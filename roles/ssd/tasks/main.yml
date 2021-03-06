@@ -7,8 +7,8 @@
   become_user: "{{ user.name }}"
   aur: name=btrfsmaintenance-git
 
-- name: Check for TRIM support
-  shell: "hdparm -I /dev/disk/by-partlabel/cryptsystem | grep TRIM"
+- name: Check for TRIM support of cryptsystem
+  shell: "hdparm -I {{ root_partition }} | grep TRIM"
   register: hdparm
   ignore_errors: True
 
