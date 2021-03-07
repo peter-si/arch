@@ -96,6 +96,7 @@ aur_packages:
     - myrepos
     - teamviewer
     - nvme-cli
+    - nextcloud-client
 aur_fonts:
     - ttf-cooper-hewitt
     - ttf-courier-prime

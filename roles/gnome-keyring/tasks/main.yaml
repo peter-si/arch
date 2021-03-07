@@ -1,6 +1,10 @@
 ---
 - name: Install gnome-keyring
-  pacman: name=gnome-keyring state=present
+  pacman:
+    name:
+      - libgnome-keyring
+      - gnome-keyring
+    state: present
 
 - name: Add gnome-keyring session to pam config
   lineinfile:
