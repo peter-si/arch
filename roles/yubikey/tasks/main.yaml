@@ -8,4 +8,6 @@
       - pcsclite
       - libusb-compat
       - ccid
+      - libfido2
+      - pam-u2f
     state: present
