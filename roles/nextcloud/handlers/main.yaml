@@ -1,0 +1,9 @@
+---
+- name: start nextcloud
+  become: yes
+  become_user: "{{ user.name }}"
+  systemd:
+    name: nextcloud.service
+    state: started
+    scope: user
+  when: running_in_chroot == False

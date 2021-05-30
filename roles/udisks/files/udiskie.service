@@ -1,0 +1,10 @@
+[Unit]
+Description=Udiskie service
+
+[Service]
+Type=simple
+StandardOutput=journal
+ExecStart=/usr/bin/udiskie --quiet --no-automount --smart-tray
+
+[Install]
+WantedBy=default.target

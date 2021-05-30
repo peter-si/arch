@@ -75,6 +75,7 @@
     - { role: nemo, tags: ['nemo'] }
     - { role: leafpad, tags: ['leafpad'] }
     - { role: syncthing, tags: [ 'syncthing' ], when: "syncthing is defined" }
+    - { role: nextcloud, tags: [ 'nextcloud' ], when: "nextcloud is defined" }
     - { role: filezilla, tags: ['filezilla'] }
     - { role: seahorse, tags: ['seahorse'] }
 

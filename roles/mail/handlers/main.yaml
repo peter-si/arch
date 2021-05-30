@@ -1,0 +1,9 @@
+---
+- name: start protonmail-bridge
+  become: yes
+  become_user: "{{ user.name }}"
+  systemd:
+    name: protonmail-bridge.service
+    state: started
+    scope: user
+  when: running_in_chroot == False

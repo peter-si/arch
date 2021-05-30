@@ -1,0 +1,10 @@
+[Unit]
+Description=Nextcloud client service
+
+[Service]
+Type=simple
+StandardOutput=journal
+ExecStart=/usr/bin/nextcloud --background --logfile -
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,23 @@
+---
+- name: Install Nextcloud
+  become: yes
+  become_user: "{{ user.name }}"
+  aur:
+    name:  nextcloud-client
+  tags:
+    - aur
+    - packages
+
+- name: Create Nextcloud user unit
+  copy:
+    src: nextcloud.service
+    dest: /home/{{ user.name }}/.config/systemd/user/nextcloud.service
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+
+
+- include_tasks: roles/nmtrust/tasks/unit.yaml
+  vars:
+    unit: nextcloud.service
+    run_on: "{{ nextcloud.run_on }}"
+    user_unit: true

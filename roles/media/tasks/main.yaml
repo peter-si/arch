@@ -58,12 +58,13 @@
     name: digikam
     state: present
 
-#- name: Install recapp for screen recording
-#  become: yes
-#  become_user: "{{ user.name }}"
-#  aur:
-#    name:
-#      - recapp-git
-#      - python-pulse-control
-#    user: "{{ user.name }}"
+- name: Install recapp for screen recording
+  become: yes
+  become_user: "{{ user.name }}"
+  aur:
+    name:
+      - recapp
+      - python-pulsectl
+    user: "{{ user.name }}"
+    skip_pgp_check: yes
 

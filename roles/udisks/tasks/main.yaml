@@ -13,3 +13,21 @@
 
 - name: Install udiskie
   pacman: name=udiskie state=present
+
+- name: Create udiskie user unit
+  copy:
+    src: udiskie.service
+    dest: /home/{{ user.name }}/.config/systemd/user/udiskie.service
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+
+- name: Enable udiskie
+  systemd:
+    name: udiskie.service
+    scope: user
+    enabled: yes
+  become: yes
+  become_user: "{{ user.name }}"
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ user.uid }}"
+  notify: start udiskie

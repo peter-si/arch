@@ -3,11 +3,74 @@
   become: yes
   become_user: "{{ user.name }}"
   aur: name=protonmail-bridge-bin
+  tags:
+    - protonmail
 
-- name: Install Mailspring
-  become: yes
-  become_user: "{{ user.name }}"
-  aur: name=mailspring-libre
+- name: Create Protonmail bridge user unit
+  copy:
+    src: protonmail-bridge.service
+    dest: /home/{{ user.name }}/.config/systemd/user/protonmail-bridge.service
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+  tags:
+    - protonmail
 
-# TODO firejail mailsync and protonmail-bridge
+- include_tasks: roles/nmtrust/tasks/unit.yaml
+  vars:
+    unit: protonmail-bridge.service
+    run_on: "{{ protonmail.run_on }}"
+    user_unit: true
+  tags:
+    - protonmail
+
+- name: Install Thunderbird
+  pacman:
+    name:
+      - thunderbird
+      - thunderbird-i18n-sk
+  tags:
+    - thunderbird
+
+- name: Jail Thunderbird
+  file:
+    src: /usr/bin/thunderbird
+    dest: /usr/local/bin/thunderbird
+    state: link
+  tags:
+    - thunderbird
+    - firejail
+
+- name: Verify Thunderbird firejail local profile exists
+  file:
+    path: /etc/firejail/thunderbird.local
+    state: touch
+  tags:
+    - thunderbird
+    - firejail
+
+- name: Restrict Thunderbird access to /etc
+  lineinfile:
+    dest: /etc/firejail/thunderbird.local
+    regexp: "^private-etc"
+    line: "private-etc firejail,passwd,group,hostname,hosts,nsswitch.conf,resolv.conf,gtk-2.0,gtk-3.0,fonts,mime.types,asound.conf,pulse,localtime"
+  tags:
+    - thunderbird
+    - firejail
+
+- name: Allow Thunderbird access to home directories
+  blockinfile:
+    dest: /etc/firejail/thunderbird.local
+    block: |
+      whitelist ${HOME}/Downloads
+      whitelist ${HOME}/Documents
+      whitelist ${HOME}/Pictures
+      whitelist ${HOME}/Camera
+      whitelist ${HOME}/Music
+      whitelist ${HOME}/Videos
+      whitelist ${HOME}/tmp
+  tags:
+    - thunderbird
+    - firejail
+
+# TODO firejail protonmail-bridge
 # possibly run only on trusted networks

@@ -96,7 +96,6 @@ aur_packages:
     - myrepos
     - teamviewer
     - nvme-cli
-    - nextcloud-client
 aur_fonts:
     - ttf-cooper-hewitt
     - ttf-courier-prime
@@ -243,9 +242,9 @@ gnome:
     disable_top_left_hot_corner: False
     extensions_support: True
 
-syncthing:
-  run_on: trusted
-  open_ports: False
+#syncthing:
+#  run_on: trusted
+#  open_ports: False
 
 mirrorlist:
   run_on: trusted
@@ -257,6 +256,12 @@ tor:
   run_on: trusted
 
 localtime:
+  run_on: trusted
+
+protonmail:
+  run_on: trusted
+
+nextcloud:
   run_on: trusted
 
 running_in_chroot: False

@@ -1,0 +1,9 @@
+---
+- name: start udiskie
+  become: yes
+  become_user: "{{ user.name }}"
+  systemd:
+    name: udiskie.service
+    state: started
+    scope: user
+  when: running_in_chroot == False
