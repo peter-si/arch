@@ -61,6 +61,14 @@
   notify:
     - reload sysctl
 
+- name: enable sysrq
+  lineinfile:
+    path: /etc/sysctl.d/99-sysrq.conf
+    line: "kernel.sysrq=1"
+    create: yes
+  notify:
+    - reload sysctl
+
 - include: locale.yaml
 - include: shell.yaml
 - include: user.yaml
