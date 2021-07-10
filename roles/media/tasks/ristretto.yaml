@@ -1,0 +1,5 @@
+---
+- name: Install ristretto
+  pacman: name=ristretto state=present
+  tags:
+    - ristretto

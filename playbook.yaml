@@ -43,6 +43,7 @@
     - { role: lightdm, tags: ['lightdm'], when: "display_manager == 'lightdm'" }
     - { role: gdm, tags: ['gdm'], when: "display_manager == 'gdm'" }
     - { role: i3, tags: ['i3'], when: "desktop_environment == 'i3'" }
+    - { role: xfce-i3, tags: ['xfce-i3'], when: "desktop_environment == 'xfce-i3'" }
     - { role: gnome, tags: ['gnome'], when: "desktop_environment == 'gnome'" }
     - { role: wireless, tags: ['wireless'] }
     - { role: macchiato, tags: [ 'macchiato' ] }
@@ -51,8 +52,7 @@
     - { role: tor, tags: ['tor'], when: "tor is defined" }
     - { role: udisks, tags: ['udisks'] }
     - { role: spell, tags: ['spell'] }
-    - { role: browsers, tags: ['browsers'] }
-#    - { role: yubikey, tags: ['yubikey'] }
+    - { role: yubikey, tags: ['yubikey'] }
     - { role: media, tags: ['media'] }
     - { role: mpv, tags: ['mpv'] }
     - { role: mail, tags: ['mail'] }
@@ -72,10 +72,11 @@
     - { role: signal, tags: [ 'signal' ] }
     - { role: jetbrains, tags: ['jetbrains'] }
     - { role: spotify, tags: ['spotify'] }
-    - { role: nemo, tags: ['nemo'] }
+#    - { role: nemo, tags: ['nemo'] }
     - { role: leafpad, tags: ['leafpad'] }
     - { role: syncthing, tags: [ 'syncthing' ], when: "syncthing is defined" }
     - { role: nextcloud, tags: [ 'nextcloud' ], when: "nextcloud is defined" }
+    - { role: browsers, tags: ['browsers'] }
     - { role: filezilla, tags: ['filezilla'] }
     - { role: seahorse, tags: ['seahorse'] }
 

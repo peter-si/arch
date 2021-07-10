@@ -1,0 +1,5 @@
+---
+- name: Install mousepad
+  pacman: name=mousepad state=present
+  tags:
+    - mousepad

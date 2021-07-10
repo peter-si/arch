@@ -1,0 +1,58 @@
+---
+- name: Install XFCE and i3 packages
+  pacman:
+    name:
+      - dunst
+      - python-pywal
+      - python-dbus
+      - picom
+      - i3-gaps
+      - libi3ipc-glib
+      - xfce4-i3-workspaces-plugin
+      - libqt5libqgtk2
+      - libqt5svg5
+      - exo
+      - garcon
+      - libxfce4ui
+      - libxfce4util
+      - thunar
+      - thunar-volman
+      - thunar-media-tags-plugin
+      - thunar-archive-plugin
+      - tumbler
+      - xfce4-dev-tools
+      - xfce4-power-manager
+      - xfce4-session
+      - xfce4-settings
+      - xfconf
+    state: present
+
+- name: Install XFCE and i3 aur packages
+  become: yes
+  become_user: "{{ user.name }}"
+  aur:
+    name:
+      - i3-volume
+      - autotiling
+      - rofi-git
+      - polybar
+      - python-fontawesome
+      - i3gopher
+      - i3icons2-git
+  tags:
+    - aur
+
+- name: Copy the autostart scripts
+  copy: src=autostart/{{item}} dest=/home/{{ user.name }}/.config/autostart/ owner={{ user.name }} group={{ user.group }} mode='u=rw'
+  with_items:
+    - picom.desktop
+#    - i3.desktop
+
+- name: Remove previous xfce4 sessions
+  file: path=/home/{{ user.name }}/.cache/sessions state=absent
+
+- name: Create xfce4 configuration directory in user home
+  file: path=/home/{{ user.name }}/.config/xfce4/xfconf/xfce-perchannel-xml state=directory owner={{ user.name }} group={{ user.group }} mode='u=rw'
+
+- name: Copy xfce4 configuration file
+  copy: src=xfce/xfce4-session.xml dest=/home/{{ user.name }}/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml owner={{ user.name }} group={{ user.group }} mode='u=rw'

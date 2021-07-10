@@ -16,8 +16,8 @@ bootloader:
   theme_path: refind-theme-regular
   theme_repo: https://github.com/bobafetthotmail/refind-theme-regular.git
   kernel_parameters:
-  silent: True
-  plymouth: True
+  silent: False
+  plymouth: False
 
 additional_hosts: |
   192.168.2.102 sonarr.rasp plex.rasp radarr.rasp jackett.rasp ombi.rasp resilio.rasp traefik.rasp monit.rasp muximux.rasp
@@ -139,7 +139,7 @@ browser_choices:
   - firefox -P default
   - firefox -P work
   - firewarden chromium
-  - tor-browser-en
+#  - tor-browser-en
 
 passwordless_sudo:
   - /usr/bin/openvpn
@@ -198,7 +198,7 @@ x:
 
 display_manager: no-dm
 
-desktop_environment: i3
+desktop_environment: xfce-i3
 
 gdm:
   sound: False
@@ -252,8 +252,8 @@ mirrorlist:
 pkgfile:
   run_on: trusted
 
-tor:
-  run_on: trusted
+#tor:
+#  run_on: trusted
 
 localtime:
   run_on: trusted

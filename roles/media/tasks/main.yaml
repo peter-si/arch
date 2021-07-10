@@ -2,6 +2,11 @@
 - include: imagemagick.yaml
 - include: gimp.yaml
 - include: gthumb.yaml
+  when: "desktop_environment != 'xfce-i3'"
+- include: mousepad.yaml
+  when: "desktop_environment == 'xfce-i3'"
+- include: ristretto.yaml
+  when: "desktop_environment == 'xfce-i3'"
 - include: feh.yaml
 - include: qcode.yaml
 - include: theme.yaml
@@ -65,6 +70,5 @@
     name:
       - recapp
       - python-pulsectl
-    user: "{{ user.name }}"
     skip_pgp_check: yes
 

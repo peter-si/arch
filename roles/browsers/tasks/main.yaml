@@ -84,25 +84,10 @@
   blockinfile:
     dest: /etc/firejail/chromium.local
     block: |
+      whitelist ${HOME}/Downloads
       whitelist ${HOME}/tmp
   tags:
     - chromium
-    - firejail
-
-- name: Install Tor browser
-  pacman:
-    name: torbrowser-launcher
-    state: present
-  tags:
-    - tor-browser
-
-- name: Jail Tor browser
-  file:
-    src: /usr/bin/firejail
-    dest: /usr/local/bin/torbrowser-launcher
-    state: link
-  tags:
-    - tor-browser
     - firejail
 
 - name: Push rofi browser chooser
