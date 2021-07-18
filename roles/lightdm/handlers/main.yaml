@@ -1,0 +1,4 @@
+---
+- name: Enable LightDM
+  systemd: name=lightdm-plymouth.service enabled=yes
+  when: running_in_chroot == False

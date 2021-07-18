@@ -71,4 +71,5 @@
       - recapp
       - python-pulsectl
     skip_pgp_check: yes
+  ignore_errors: True
 

@@ -61,6 +61,10 @@ pacman_base_packages:
     - gptfdisk
     - parted
     - pacutils
+    - nvme-cli
+    - acpi
+    - acpi_call
+    - sxhkd
 pacman_packages:
     - jre-openjdk
     - gsimplecal
@@ -69,6 +73,7 @@ pacman_packages:
     - gnome-calculator
     - jre-openjdk
     - gucharmap
+    - discord
 pacman_fonts:
     - adobe-source-code-pro-fonts
     - cantarell-fonts
@@ -95,7 +100,8 @@ aur_packages:
     - downgrade
     - myrepos
     - teamviewer
-    - nvme-cli
+    - slack-desktop
+    -
 aur_fonts:
     - ttf-cooper-hewitt
     - ttf-courier-prime
@@ -198,7 +204,7 @@ x:
 
 display_manager: no-dm
 
-desktop_environment: xfce-i3
+desktop_environment: xfce-bspwm
 
 gdm:
   sound: False

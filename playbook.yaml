@@ -69,11 +69,11 @@
     - { role: wttr, tags: ['wttr'] }
     - { role: vpn, tags: ['vpn'] }
     - { role: steam, tags: ['steam'] }
-    - { role: signal, tags: [ 'signal' ] }
+#    - { role: signal, tags: [ 'signal' ] }
     - { role: jetbrains, tags: ['jetbrains'] }
     - { role: spotify, tags: ['spotify'] }
 #    - { role: nemo, tags: ['nemo'] }
-    - { role: leafpad, tags: ['leafpad'] }
+#    - { role: leafpad, tags: ['leafpad'] }
     - { role: syncthing, tags: [ 'syncthing' ], when: "syncthing is defined" }
     - { role: nextcloud, tags: [ 'nextcloud' ], when: "nextcloud is defined" }
     - { role: browsers, tags: ['browsers'] }

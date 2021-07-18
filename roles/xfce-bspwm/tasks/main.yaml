@@ -6,7 +6,6 @@
       - python-pywal
       - python-dbus
       - picom
-      - i3-gaps
       - exo
       - garcon
       - libxfce4ui
@@ -28,14 +27,10 @@
   become_user: "{{ user.name }}"
   aur:
     name:
-      - i3-volume
-      - autotiling
       - rofi-git
       - polybar
       - python-fontawesome
-      - i3gopher
-      - i3icons2-git
-      - xfce4-i3-workspaces-plugin
+      - bspi-git
   tags:
     - aur
 
@@ -48,7 +43,9 @@
     - protonmail-bridge.desktop
     - spotify.desktop
     - thunderbird.desktop
-    - i3.desktop
+
+- name: Add bspwm to autostart
+  copy: src=bspwm.desktop dest=/home/{{ user.name }}/.config/autostart/ owner={{ user.name }} group={{ user.group }}
 
 - name: Remove previous xfce4 sessions
   file: path=/home/{{ user.name }}/.cache/sessions state=absent

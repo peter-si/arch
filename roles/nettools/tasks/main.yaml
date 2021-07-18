@@ -17,7 +17,6 @@
       - bmon
       - speedtest-cli
       - wireguard-tools
-      - wireguard-dkms
     state: present
 
 - name: Add user to wireshark group

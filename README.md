@@ -30,6 +30,17 @@ cp -r ~/.ssh ~/archlive/airootfs/install
 
 **Note:** Don't leave your unencrypted private keys in live usb
 
+To set correct perimissions add
+
+```
+  ["/install/clean-disk.sh"]="0:0:755"
+  ["/install/disk-bootstrap.sh"]="0:0:755"
+  ["/install/root-pass.sh"]="0:0:755"
+  ["/install/.ssh/id_rsa"]="0:0:600"
+```
+
+into your `archlive/profiledef.sh`
+
 ## Running
 
 If you are on wifi connect to internet via `iwctl`
@@ -38,45 +49,32 @@ If you are on wifi connect to internet via `iwctl`
 station wlan0 connect name_of_network
 ```
 
-Copy your `.ssh` folder to `/install`
+If you have password protected ssh key, you must first remove the password
 
 ```bash
-cp -r /media/location/.ssh /install
+ssh-keygen -p -f /install/.ssh/id_rsa
 ```
 
 Navigate to `/install` and set up disks with following command (and follow prompts)
 
 ```bash
-./disk-bootstrap.sh /dev/sdX 
+./disk-bootstrap.sh -l {ansible_host} /dev/sdX
 ```
 
-Once installed you will be in `systemd-nspawn` system. Right now `chpasswd` is not working, so we have to set up password manually. Run following commands to get to correct nspawn container:
+There some special cases:
+* installing side by side other system (you need to manually remove disk partitions when reinstalling): `./disk-bootstrap.sh -n -l {ansible_host} /dev/sdX`
+* just installing (retry, when ansible fails installation): `./disk-bootstrap.sh -n -i -l {ansible_host} /dev/sdX`
 
-```bash
-passwd
-logout
-```
-
-Once inside navigate to `/install` and run ansible playbook as root. By default it will run a "pc" inventory. You can change it by adding `-i some_inventory`.
-
-```bash
-ansible-playbook -l desktop playbook.yaml
-```
-Or
-```bash
-ansible-playbook -l asus playbook.yaml
-```
 
 When run, Ansible will prompt for the user password. This only needs to be
 provided on the first run when the user is being created. On later runs,
 providing any password -- whether the current user password or a new one --
 will have no effect.
 
-This will bootstrap installation with dotfiles and necessary configs. If it is done, you can `poweroff` nspawn container.
-
 We have to regenerate bootloader
 
 ```bash
+arch-chroot /mnt
 refind-install
 ```
 

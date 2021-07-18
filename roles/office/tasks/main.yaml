@@ -52,6 +52,7 @@
     name:
       - pandoc-bin
     state: present
+  ignore_errors: True
   tags:
     - aur
 

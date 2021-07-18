@@ -33,6 +33,9 @@
 #    - okular
 #    - firejail
 
+- name: Verify that default applications file exists
+  file: path=/etc/xdg/mimeapps.list state=touch
+
 - name: Set epdfview as default PDF viewer
   lineinfile:
     dest: /etc/xdg/mimeapps.list
