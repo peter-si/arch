@@ -20,6 +20,7 @@
       - xfce4-session
       - xfce4-settings
       - xfconf
+      - wmname
     state: present
 
 - name: Install XFCE and i3 aur packages
