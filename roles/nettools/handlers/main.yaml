@@ -1,0 +1,6 @@
+---
+- name: start avahi-daemon dispatcher
+  systemd:
+    name: avahi-daemon.service
+    state: started
+  when: running_in_chroot == False

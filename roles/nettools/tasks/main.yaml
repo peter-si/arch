@@ -23,3 +23,9 @@
   user: name={{ user.name }} groups=wireshark append=yes
   tags:
     - user
+
+- name: Enable and start avahi-daemon
+  service:
+    name: avahi-daemon.service
+    enabled: yes
+  notify: start avahi-daemon dispatcher
