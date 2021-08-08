@@ -1,11 +1,11 @@
 [Desktop Entry]
 Type=Application
-Name=bspwm
+Name=awesome
 NoDisplay=true
 GenericName=A dynamic tiling window manager
 Comment=improved dynamic tiling window manager
-Exec=bspwm
-X-GNOME-WMName=bspwm
+Exec=awesome
+X-GNOME-WMName=awesome
 X-GNOME-Autostart-Phase=WindowManager
 X-GNOME-Provides=windowmanager
 X-GNOME-Autostart-Notify=false

@@ -2,12 +2,15 @@
 - include: imagemagick.yaml
 - include: gimp.yaml
 - include: gthumb.yaml
-  when: "desktop_environment != 'xfce-i3'"
+  when: "'xfce' not in desktop_environment"
 - include: mousepad.yaml
-  when: "desktop_environment == 'xfce-i3'"
+  when: "'xfce' in desktop_environment"
+- include: leafpad.yaml
+  when: "'xfce' not in desktop_environment"
 - include: ristretto.yaml
-  when: "desktop_environment == 'xfce-i3'"
+  when: "'xfce' in desktop_environment"
 - include: feh.yaml
+  when: "'awesome' not in desktop_environment"
 - include: qcode.yaml
 - include: theme.yaml
 

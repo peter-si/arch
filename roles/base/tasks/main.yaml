@@ -1,8 +1,19 @@
 ---
 - name: Copy pacman configuration file
   copy:
-    src: pacman.conf
+    src: pacman/pacman.conf
     dest: /etc/pacman.conf
+
+- name: Make sure pacman hooks dir exists
+  file: path=/etc/pacman.d/hooks state=directory mode="0755"
+
+- name: Copy pacman hooks
+  copy:
+    src: "pacman/{item}.hook"
+    dest: "/etc/pacman.d/hooks/{item}.hook"
+  with_items:
+    - arch-audit
+    - orphans
 
 - name: Add archlinux gpg keys
   command:

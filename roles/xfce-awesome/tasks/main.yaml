@@ -1,52 +1,56 @@
 ---
-- name: Install XFCE and i3 packages
+- name: Install XFCE and awesome packages
   pacman:
     name:
       - dunst
-      - python-pywal
       - python-dbus
       - picom
       - exo
       - garcon
       - libxfce4ui
       - libxfce4util
-      - thunar
-      - thunar-volman
-      - thunar-media-tags-plugin
-      - thunar-archive-plugin
-      - tumbler
       - xfce4-dev-tools
       - xfce4-power-manager
       - xfce4-session
       - xfce4-settings
       - xfconf
-      - wmname
     state: present
 
-- name: Install XFCE and i3 aur packages
+- name: Install XFCE and awesome aur packages
   become: yes
   become_user: "{{ user.name }}"
   aur:
     name:
       - rofi-git
-      - polybar
       - python-fontawesome
-      - bspi-git
+      - wpgtk
+      - tdrop-git
   tags:
     - aur
 
-- name: Copy the autostart scripts
-  copy: src=/usr/share/applications/{{item}} dest=/home/{{ user.name }}/.config/autostart/ owner={{ user.name }} group={{ user.group }}
+- name: Push desktop apps
+  copy:
+    src: {{ item }}.desktop
+    dest: /usr/local/share/applications/{{ item }}.desktop
   with_items:
-    - picom.desktop
-    - nm-applet.desktop
-    - redshift-gtk.desktop
-    - protonmail-bridge.desktop
-    - spotify.desktop
-    - thunderbird.desktop
+    - sxhkd
+    - awesome
 
-- name: Add bspwm to autostart
-  copy: src=bspwm.desktop dest=/home/{{ user.name }}/.config/autostart/ owner={{ user.name }} group={{ user.group }}
+- name: Copy the autostart scripts
+  copy: src=/usr/share/applications/{{item}}.desktop dest=/home/{{ user.name }}/.config/autostart/ owner={{ user.name }} group={{ user.group }}
+  with_items:
+    - picom
+    - nm-applet
+    - redshift-gtk
+    - protonmail-bridge
+    - spotify
+    - thunderbird
+    - sxhkd
+    - awesome
+    - com.nextcloud.desktopclient.nextcloud
+
+- name: Copy spotify client script
+  copy: src=sp dest=/usr/local/bin/sp mode=755
 
 - name: Remove previous xfce4 sessions
   file: path=/home/{{ user.name }}/.cache/sessions state=absent

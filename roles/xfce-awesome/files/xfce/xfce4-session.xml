@@ -15,7 +15,7 @@
       <property name="Client0_Priority" type="int" value="1"/>
       <property name="Client0_PerScreen" type="bool" value="false"/>
       <property name="Client1_Command" type="array">
-        <value type="string" value="bspwm"/>
+        <value type="string" value="awesome"/>
       </property>
       <property name="Client1_Priority" type="int" value="5"/>
       <property name="Client1_PerScreen" type="bool" value="false"/>

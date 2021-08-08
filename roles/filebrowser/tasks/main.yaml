@@ -1,0 +1,5 @@
+---
+- include: thunar.yaml
+  when: "'xfce' in desktop_environment"
+- include: nemo.yaml
+  when: "'xfce' not in desktop_environment"

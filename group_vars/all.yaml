@@ -74,6 +74,7 @@ pacman_packages:
     - jre-openjdk
     - gucharmap
     - discord
+    - arch-audit
 pacman_fonts:
     - adobe-source-code-pro-fonts
     - cantarell-fonts
@@ -101,7 +102,8 @@ aur_packages:
     - myrepos
     - teamviewer
     - slack-desktop
-    -
+    - pacman-cleanup-hook
+
 aur_fonts:
     - ttf-cooper-hewitt
     - ttf-courier-prime
@@ -204,7 +206,7 @@ x:
 
 display_manager: no-dm
 
-desktop_environment: xfce-bspwm
+desktop_environment: xfce-awesome
 
 gdm:
   sound: False

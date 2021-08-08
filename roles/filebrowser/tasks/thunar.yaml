@@ -1,0 +1,17 @@
+---
+- name: Install Thunar file browser
+  pacman:
+    state: present
+    name:
+      - thunar
+      - thunar-volman
+      - thunar-media-tags-plugin
+      - thunar-archive-plugin
+
+- name: Jail Thunar
+  file:
+    src: /usr/bin/firejail
+    dest: /usr/local/bin/thunar
+    state: link
+  tags:
+    - firejail
