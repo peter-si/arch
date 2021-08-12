@@ -14,6 +14,7 @@
       - xfce4-session
       - xfce4-settings
       - xfconf
+      - light
     state: present
 
 - name: Install XFCE and awesome aur packages
