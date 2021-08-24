@@ -6,3 +6,6 @@ video_drivers:
 
 hardened:
   enable_namespaces: true
+firewall:
+    xdebug: true
+    avahi: true

@@ -35,3 +35,9 @@
     name: cups.service
     enabled: yes
   notify: start cups
+
+- name: Enable and start CUPS browsed
+  systemd:
+    name: cups-browsed.service
+    enabled: yes
+  notify: start cups-browsed

@@ -6,3 +6,7 @@
 - name: start cups
   systemd: name=cups.service state=started
   when: running_in_chroot == False
+
+- name: start cups-browsed
+  systemd: name=cups-browsed.service state=started
+  when: running_in_chroot == False
