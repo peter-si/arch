@@ -44,17 +44,18 @@
 
 - name: Copy the autostart scripts
   copy:
-    src: /usr/share/applications/{{ item }}
-    dest: /home/{{ user.name }}/.config/autostart/{{ item }}
+    src: /usr/share/applications/{{ item }}.desktop
+    dest: /home/{{ user.name }}/.config/autostart/
     owner: '{{ user.name }}'
     group: '{{ user.group }}'
   with_items:
-    - picom.desktop
-    - nm-applet.desktop
-#    - protonmail-bridge.desktop
-#    - spotify.desktop
-#    - thunderbird.desktop
-    - i3.desktop
+    - picom
+    - nm-applet
+    - sxhkd
+#    - protonmail-bridge
+#    - spotify
+#    - thunderbird
+    - i3
 
 - name: Remove previous xfce4 sessions
   file:
