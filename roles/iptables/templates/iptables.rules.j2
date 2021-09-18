@@ -47,4 +47,13 @@
 -A TCP -p tcp -m tcp --dport 22000 -j ACCEPT
 -A UDP -p udp -m udp --dport 21027 -j ACCEPT
 {% endif %}
+{% if firewall.xdebug is defined and firewall.xdebug == True %}
+-A TCP -s 172.0.0.0/8 -p tcp -m tcp --dport 9003 -m comment --comment "docker xdebug 3" -j ACCEPT
+-A TCP -d 172.0.0.0/8 -p tcp -m tcp --dport 9003 -m comment --comment "docker xdebug 3" -j ACCEPT
+-A TCP -d 172.0.0.0/8 -p tcp -m tcp --dport 9000 -m comment --comment "docker xdebug 2" -j ACCEPT
+-A TCP -s 172.0.0.0/8 -p tcp -m tcp --dport 9000 -m comment --comment "docker xdebug 2" -j ACCEPT
+{% endif %}
+{% if firewall.avahi is defined and firewall.avahi == True %}
+-A UDP -p udp -m udp --dport 5353 -m comment --comment Avahi -j ACCEPT
+{% endif %}
 COMMIT

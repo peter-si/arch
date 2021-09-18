@@ -20,8 +20,6 @@ bootloader:
   plymouth: False
 
 additional_hosts: |
-  192.168.2.102 sonarr.rasp plex.rasp radarr.rasp jackett.rasp ombi.rasp resilio.rasp traefik.rasp monit.rasp muximux.rasp
-  127.0.0.1 sonarr.docker plex.docker radarr.docker jackett.docker ombi.docker resilio.docker traefik.docker monit.docker muximux.docker
   127.0.0.1 admin.odin auth.odin platform.odin helpdesk.odin frm.odin web.odin rest.odin rabbitmq.odin phpmyadmin.odin services.odin
   10.1.13.70 kibana.ws.int
 
@@ -143,6 +141,8 @@ wireless_packages:
 
 video_drivers:
 
+firewall:
+
 browser_choices:
   - firefox -P default
   - firefox -P work
@@ -204,7 +204,7 @@ x:
   middle_click_button: "274"
   keyboard_model: "pc105"
 
-display_manager: no-dm
+display_manager: lightdm
 
 desktop_environment: xfce-awesome
 

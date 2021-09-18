@@ -17,6 +17,7 @@
       - xcb-util-cursor
       - awesome
       - light-locker
+      - light
     state: present
 
 - name: Install XFCE and awesome aur packages

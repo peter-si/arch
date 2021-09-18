@@ -13,6 +13,12 @@
 
 - name: Add gnome-keyring auth to pam config
   lineinfile:
+    dest: /etc/pam.d/login
+    insertafter: "^auth"
+    line: "auth       optional     pam_gnome_keyring.so"
+
+- name: Add gnome-keyring auth to pam config
+  lineinfile:
     dest: /etc/pam.d/passwd
     line: "password	optional pam_gnome_keyring.so"
     insertafter: "^password"

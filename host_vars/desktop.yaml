@@ -9,3 +9,7 @@ video_drivers:
 
 display_manager: lightdm
 desktop_environment: xfce-i3
+
+firewall:
+    xdebug: true
+    avahi: true
