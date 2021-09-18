@@ -1,8 +1,8 @@
 ---
 - name: Enable LightDM
   systemd: name=lightdm-plymouth.service enabled=yes
-  when: bootloader.plymouth is True
+  when: bootloader.plymouth == True
 
 - name: Enable LightDM
   systemd: name=lightdm.service enabled=yes
-  when: bootloader.plymouth is False
+  when: bootloader.plymouth == False
