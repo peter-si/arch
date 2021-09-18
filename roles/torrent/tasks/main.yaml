@@ -12,3 +12,4 @@
   tags:
     - transmission
     - firejail
+  when: firejail.enabled is defined and firejail.enabled == True
