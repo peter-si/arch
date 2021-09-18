@@ -1,18 +1,4 @@
 ---
-
-- name: Copy bootloader theme config
-  template:
-    dest: "{{ bootloader.path }}/EFI/refind/theme.conf"
-    src: theme.conf
-
-- name: Add our config to bootloader
-  lineinfile:
-    path: "{{ bootloader.path }}/EFI/refind/refind.conf"
-    line: "{{ item }}"
-  with_items:
-    - "include theme.conf"
-    - "include entries.conf"
-
 - name: Copy crypttab.initramfs config
   copy:
     dest: /etc/crypttab.initramfs
@@ -20,10 +6,23 @@
   notify: rebuild bootloader
   when: root_partition == "/dev/mapper/system"
 
+- name: Comment out root partition from fstab since we are loading it rw
+  replace:
+    path: /etc/fstab
+    regexp: "(.*subvol=root.*)"
+    replace: '#\1'
+    backup: yes
+
+- name: Add `swap to cryptsetup
+  lineinfile:
+    path: /etc/crypttab
+    line: "swap /dev/disk/by-partlabel/cryptswap  /dev/urandom  swap,offset=2048,cipher=aes-xts-plain64,size=256"
+  when: disable_swap is not defined or disable_swap != True
+
 - include: microcode.yaml
-- include: theme.yaml
-  when: bootloader.theme_path is defined and bootloader.theme_path != ""
 - include: plymouth.yaml
   when: bootloader.plymouth is defined and bootloader.plymouth == True
-- include: entries.yaml
-- include: cleanup.yaml
+- include: refind.yaml
+  when: bootloader.loader == 'refind'
+- include: systemd.yaml
+  when: bootloader.loader == 'systemd'

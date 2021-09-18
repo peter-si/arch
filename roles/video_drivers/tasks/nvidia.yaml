@@ -5,8 +5,6 @@
       - nvidia-utils
       - nvidia-settings
       - lib32-nvidia-utils
-      - libva-utils
-      - libva-vdpau-driver
     state: present
 
 - name: Install nvidia dkms on hardened

@@ -1,7 +1,6 @@
 hostname: aluhome
 
 video_drivers:
-  - nouveau
   - nvidia
 
 #hardened:
@@ -13,3 +12,11 @@ desktop_environment: xfce-i3
 firewall:
     xdebug: true
     avahi: true
+
+bootloader:
+  loader: systemd
+  path: /boot
+  time: 3
+  kernel_parameters:
+  silent: False
+  plymouth: False

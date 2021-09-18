@@ -1,0 +1,28 @@
+---
+- name: Install refind
+  pacman:
+    name: refind
+    state: present
+
+- name: Copy bootloader theme config
+  template:
+    dest: "{{ bootloader.path }}/EFI/refind/theme.conf"
+    src: refind/theme.conf
+
+- name: Add our config to bootloader
+  lineinfile:
+    path: "{{ bootloader.path }}/EFI/refind/refind.conf"
+    line: "{{ item }}"
+  with_items:
+    - "include theme.conf"
+    - "include entries.conf"
+
+- name: Template bootloader entries
+  template:
+    src: refind/entries.j2
+    dest: "{{ bootloader.path }}/EFI/refind/entries.conf"
+  when: not ansible_check_mode
+
+- include: theme.yaml
+  when: bootloader.theme_path is defined and bootloader.theme_path != ""
+- include: cleanup.yaml

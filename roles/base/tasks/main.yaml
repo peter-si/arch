@@ -72,6 +72,14 @@
   notify:
     - reload sysctl
 
+- name: Restricting access to kernel logs
+  lineinfile:
+    path: /etc/sysctl.d/51-dmesg-restrict.conf
+    line: "kernel.dmesg_restrict = 1"
+    create: yes
+  notify:
+    - reload sysctl
+
 - name: enable sysrq
   lineinfile:
     path: /etc/sysctl.d/99-sysrq.conf
@@ -79,6 +87,22 @@
     create: yes
   notify:
     - reload sysctl
+
+- name: Restrict user login with PAM
+  blockinfile:
+    block: |
+      +:{{ user.name }}:LOCAL
+      +:root:LOCAL
+      +:(wheel):LOCAL
+      -:ALL:ALL
+    path: /etc/security/access.conf
+
+- name: Limit amount of processes
+  blockinfile:
+    block: |
+      * soft nproc 1500
+      * hard nproc 2500
+    path: /etc/security/limits.conf
 
 - include: locale.yaml
 - include: shell.yaml

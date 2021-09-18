@@ -73,14 +73,14 @@ function create_partitions() {
 function encrypt_disk() {
   banner "Encrypting disk"
   partprobe "$drive"
-  cryptsetup luksFormat --key-slot 9 --align-payload=8192 -s 256 -c aes-xts-plain64 -q -d "$root_pass_file" /dev/disk/by-partlabel/cryptsystem
+  cryptsetup luksFormat --key-slot 9 --align-payload=8192 -s 256 -c aes-xts-plain64 -q -d "$root_pass_file" --label system /dev/disk/by-partlabel/cryptsystem
 }
 
 function open_luks() {
   banner "Opening luks encrypted disk"
   cryptsetup luksOpen  -d "$root_pass_file" /dev/disk/by-partlabel/cryptsystem system
   if [[ -z "$disableSwap" ]]; then
-    cryptsetup plainOpen --key-file /dev/urandom /dev/disk/by-partlabel/cryptswap swap
+    cryptsetup plainOpen --label swap  --key-file /dev/urandom /dev/disk/by-partlabel/cryptswap swap
   fi
 }
 
@@ -118,7 +118,7 @@ function mount_volumes() {
 
 function bootstrap_arch() {
   banner "Bootstrapping Arch"
-  pacstrap /mnt base base-devel linux linux-firmware linux-headers git nano ansible rsync refind
+  pacstrap /mnt base base-devel linux linux-firmware linux-headers git nano ansible rsync
   genfstab -L -p /mnt >>/mnt/etc/fstab
   arch-chroot /mnt refind-install
 }

@@ -7,3 +7,12 @@
   when: '"nouveau" in video_drivers'
 - include: nvidia.yaml
   when: '"nvidia" in video_drivers'
+
+- name: Install vulkan and hardware acceleration utils
+  pacman:
+    name:
+      - vulkan-tools
+      - libva-utils
+      - libva-vdpau-driver
+      - vdpauinfo
+    state: present

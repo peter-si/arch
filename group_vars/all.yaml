@@ -11,6 +11,7 @@ user:
   city: Bratislava
 
 bootloader:
+  loader: refind
   path: /boot
   time: 3
   theme_path: refind-theme-regular
