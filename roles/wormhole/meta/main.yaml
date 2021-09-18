@@ -1,3 +1,3 @@
 ---
 dependencies:
-  - { role: firejail }
+  - { role: firejail, when: firejail.enabled is defined and firejail.enabled == True }

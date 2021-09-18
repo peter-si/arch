@@ -13,4 +13,4 @@
     state: link
   tags:
     - firejail
-  when: firejail.enabled | default(False)
+  when: firejail.enabled is defined and firejail.enabled == True

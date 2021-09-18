@@ -39,7 +39,7 @@
   tags:
     - thunderbird
     - firejail
-  when: firejail.enabled | default(False)
+  when: firejail.enabled is defined and firejail.enabled == True
 
 - name: Verify Thunderbird firejail local profile exists
   file:
@@ -48,7 +48,7 @@
   tags:
     - thunderbird
     - firejail
-  when: firejail.enabled | default(False)
+  when: firejail.enabled is defined and firejail.enabled == True
 
 - name: Restrict Thunderbird access to /etc
   lineinfile:
@@ -58,7 +58,7 @@
   tags:
     - thunderbird
     - firejail
-  when: firejail.enabled | default(False)
+  when: firejail.enabled is defined and firejail.enabled == True
 
 - name: Allow Thunderbird access to home directories
   blockinfile:
@@ -74,7 +74,7 @@
   tags:
     - thunderbird
     - firejail
-  when: firejail.enabled | default(False)
+  when: firejail.enabled is defined and firejail.enabled == True
 
 # TODO firejail protonmail-bridge
 # possibly run only on trusted networks

@@ -17,7 +17,7 @@
         state=link
   tags:
     - firejail
-  when: firejail.enabled | default(False)
+  when: firejail.enabled is defined and firejail.enabled == True
 
 - name: Push magic-wormhole firejail profile
   copy: src=firejail/wormhole.profile dest=/usr/local/etc/firejail/wormhole.profile
@@ -25,4 +25,4 @@
     - activate firejail profiles
   tags:
     - firejail
-  when: firejail.enabled | default(False)
+  when: firejail.enabled is defined and firejail.enabled == True

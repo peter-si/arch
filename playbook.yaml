@@ -48,7 +48,7 @@
     - { role: gnome, tags: ['gnome'], when: "desktop_environment == 'gnome'" }
     - { role: wireless, tags: ['wireless'] }
     - { role: macchiato, tags: [ 'macchiato' ] }
-    - { role: firejail, tags: [ 'firejail' ], when: firejail.enabled | default(False) }
+    - { role: firejail, tags: [ 'firejail' ], when: firejail.enabled is defined and firejail.enabled == True }
 #    - { role: unbound, tags: ['unbound'] }
     - { role: tor, tags: ['tor'], when: "tor is defined" }
     - { role: udisks, tags: ['udisks'] }

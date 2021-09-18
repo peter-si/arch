@@ -8,7 +8,7 @@
         state=link
   tags:
     - firejail
-  when: firejail.enabled | default(False)
+  when: firejail.enabled is defined and firejail.enabled == True
 
 - name: Push play script
   copy: src=play.sh dest=/usr/local/bin/play mode=0755

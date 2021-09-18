@@ -20,7 +20,7 @@
   tags:
     - gimp
     - firejail
-  when: firejail.enabled | default(False)
+  when: firejail.enabled is defined and firejail.enabled == True
 
 - name: Install GIMP raw support
   pacman: name=gimp-nufraw state=present

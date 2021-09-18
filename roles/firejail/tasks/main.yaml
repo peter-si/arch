@@ -3,6 +3,7 @@
   pacman:
     name: firejail
     state: present
+  when: firejail.enabled is defined and firejail.enabled == True
 
 - name: Install firewarden
   become: yes

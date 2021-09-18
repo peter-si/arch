@@ -5,17 +5,16 @@
     state: present
   tags:
     - firefox
-  when: firejail.enabled | default(False)
 
 - name: Jail Firefox
   file:
     src: /usr/bin/firejail
     dest: /usr/local/bin/firefox
     state: link
+  when: firejail.enabled is defined and firejail.enabled == True
   tags:
     - firefox
     - firejail
-  when: firejail.enabled | default(False)
 
 - name: Verify Firefox firejail local profile exists
   file:
@@ -24,7 +23,7 @@
   tags:
     - firefox
     - firejail
-  when: firejail.enabled | default(False)
+  when: firejail.enabled is defined and firejail.enabled == True
 
 - name: Restrict Firefox access to /etc
   lineinfile:
@@ -34,7 +33,7 @@
   tags:
     - firefox
     - firejail
-  when: firejail.enabled | default(False)
+  when: firejail.enabled is defined and firejail.enabled == True
 
 - name: Allow Firefox access to home directories
   blockinfile:
@@ -50,7 +49,7 @@
   tags:
     - firefox
     - firejail
-  when: firejail.enabled | default(False)
+  when: firejail.enabled is defined and firejail.enabled == True
 
 - name: Install Chromium
   pacman:
@@ -67,7 +66,7 @@
   tags:
     - chromium
     - firejail
-  when: firejail.enabled | default(False)
+  when: firejail.enabled is defined and firejail.enabled == True
 
 - name: Verify Chromium firejail local profile exists
   file:
@@ -76,7 +75,7 @@
   tags:
     - chromium
     - firejail
-  when: firejail.enabled | default(False)
+  when: firejail.enabled is defined and firejail.enabled == True
 
 - name: Restrict Chromium access to /etc
   lineinfile:
@@ -86,7 +85,7 @@
   tags:
     - chromium
     - firejail
-  when: firejail.enabled | default(False)
+  when: firejail.enabled is defined and firejail.enabled == True
 
 - name: Allow Chromium access to home directories
   blockinfile:
@@ -97,7 +96,7 @@
   tags:
     - chromium
     - firejail
-  when: firejail.enabled | default(False)
+  when: firejail.enabled is defined and firejail.enabled == True
 
 - name: Push rofi browser chooser
   template:

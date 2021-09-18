@@ -1,4 +1,4 @@
 ---
 dependencies:
   - { role: nmtrust }
-  - { role: firejail }
+  - { role: firejail, when: firejail.enabled is defined and firejail.enabled == True }
