@@ -15,8 +15,7 @@
     - additional
 
 - name: Create pacman hook directory
-  file: path=/etc/pacman.d/hooks
-        state=directory
+  file: path=/etc/pacman.d/hooks state=directory
   tags:
     - packages
 

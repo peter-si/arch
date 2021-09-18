@@ -11,6 +11,7 @@
     state: link
   tags:
     - firejail
+  when: firejail.enabled | default(False)
 
 - name: Verify LibreOffice firejail local profile exists
   file:
@@ -18,6 +19,7 @@
     state: touch
   tags:
     - firejail
+  when: firejail.enabled | default(False)
 
 - name: Restrict LibreOffice network access
   lineinfile:
@@ -26,6 +28,7 @@
     line: "net none"
   tags:
     - firejail
+  when: firejail.enabled | default(False)
 
 - name: Restrict LibreOffice access to /etc
   lineinfile:
@@ -34,6 +37,7 @@
     line: "private-etc firejail,libreoffice,fonts,passwd"
   tags:
     - firejail
+  when: firejail.enabled | default(False)
 
 - name: Install enscript
   pacman:

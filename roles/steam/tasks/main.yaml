@@ -2,10 +2,11 @@
 - name: Install Steam
   pacman: name=steam state=present
 
-- name: Jail GIMP
+- name: Jail Steam
   file: src=/usr/bin/firejail
         dest=/usr/local/bin/steam
         state=link
   tags:
     - steam
     - firejail
+  when: firejail.enabled | default(False)

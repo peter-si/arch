@@ -15,3 +15,4 @@
     state: link
   tags:
     - firejail
+  when: firejail.enabled | default(False)

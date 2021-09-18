@@ -11,3 +11,4 @@
   tags:
     - feh
     - firejail
+  when: firejail.enabled | default(False)

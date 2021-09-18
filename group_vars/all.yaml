@@ -172,6 +172,7 @@ bluetooth:
   disable: False
 
 firejail:
+  enabled: False
   blacklist:
     - ~/.calendars
     - ~/.config/vdirsyncer
