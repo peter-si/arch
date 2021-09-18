@@ -76,3 +76,11 @@
     insertafter: "^\\#\\%PAM"
     firstmatch: yes
   notify: Enable LightDM
+
+- name: Enable LightDM
+  systemd: name=lightdm-plymouth.service enabled=yes
+  when: bootloader.plymouth == True
+
+- name: Enable LightDM
+  systemd: name=lightdm.service enabled=yes
+  when: bootloader.plymouth is not defined or bootloader.plymouth == False

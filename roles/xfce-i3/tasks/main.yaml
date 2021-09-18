@@ -40,6 +40,7 @@
       - i3gopher
       - i3icons2-git
       - xfce4-i3-workspaces-plugin
+      - wpgtk
   tags:
     - aur
 
