@@ -17,6 +17,7 @@
       - bmon
       - speedtest-cli
       - wireguard-tools
+      - avahi
     state: present
 
 - name: Add user to wireshark group
@@ -24,8 +25,8 @@
   tags:
     - user
 
-- name: Enable and start avahi-daemon
-  service:
+- name: Enable avahi-daemon
+  systemd:
     name: avahi-daemon.service
     enabled: yes
   notify: start avahi-daemon dispatcher

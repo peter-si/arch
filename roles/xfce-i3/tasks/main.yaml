@@ -24,6 +24,7 @@
       - xcb-util-cursor
       - awesome
       - light-locker
+      - sxhkd
     state: present
 
 - name: Install XFCE and i3 aur packages
@@ -51,7 +52,7 @@
   with_items:
     - picom
     - nm-applet
-    - sxhkd
+#    - sxhkd
 #    - protonmail-bridge
 #    - spotify
 #    - thunderbird

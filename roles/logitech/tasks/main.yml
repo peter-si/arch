@@ -12,15 +12,21 @@
   tags:
     - user
 
-- name: Install Solaar and logid
+- name: Install Solaar
   pacman:
-      name: solaar logid
+      name: solaar
       state: present
+
+- name: Install Logiops
+  become: yes
+  become_user: "{{ user.name }}"
+  aur:
+    name: logiops
 
 - name: Copy logid config
   copy:
-    src: logid.conf
-    dest: /etc/logid.conf
+    src: logid.cfg
+    dest: /etc/logid.cfg
 
 - name: Enable logid service
   systemd:

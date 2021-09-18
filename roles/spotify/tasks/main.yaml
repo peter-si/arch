@@ -1,16 +1,16 @@
 ---
-- name: Install Spotify
-  become: yes
-  become_user: "{{ user.name }}"
-  aur: name=spotify use=makepkg skip_pgp_check=yes
+#- name: Install Spotify
+#  become: yes
+#  become_user: "{{ user.name }}"
+#  aur: name=spotify use=makepkg skip_pgp_check=yes
 
-- name: Jail Spotify
-  file:
-    src: /usr/bin/firejail
-    dest: /usr/local/bin/spotify
-    state: link
-  tags:
-    - firejail
+#- name: Jail Spotify
+#  file:
+#    src: /usr/bin/firejail
+#    dest: /usr/local/bin/spotify
+#    state: link
+#  tags:
+#    - firejail
 
-- name: Copy the autostart script
-  copy: src="/usr/share/applications/spotify.desktop" dest=/home/{{ user.name }}/.config/autostart/ owner={{ user.name }} group={{ user.group }}
+#- name: Copy the autostart script
+#  copy: src="/usr/share/applications/spotify.desktop" dest=/home/{{ user.name }}/.config/autostart/ owner={{ user.name }} group={{ user.group }}
