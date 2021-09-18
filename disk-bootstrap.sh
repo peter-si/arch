@@ -73,7 +73,7 @@ function create_partitions() {
 function encrypt_disk() {
   banner "Encrypting disk"
   partprobe "$drive"
-  cryptsetup luksFormat --key-slot 9 --align-payload=8192 -s 256 -c aes-xts-plain64 --label system /dev/disk/by-partlabel/cryptsystem
+  cryptsetup luksFormat --label system /dev/disk/by-partlabel/cryptsystem
 }
 
 function open_luks() {
