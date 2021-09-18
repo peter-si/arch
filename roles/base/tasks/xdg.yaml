@@ -11,6 +11,11 @@
   tags:
     - xdg
 
+- name: Verify autostart dir exists
+  file: path=/home{{ user.name }}/.config/autostart state=directory
+  tags:
+    - xdg
+
 - name: Install perl-file-mimeinfo
   pacman: name=perl-file-mimeinfo state=present
   tags:

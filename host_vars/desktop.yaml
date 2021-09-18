@@ -4,5 +4,8 @@ video_drivers:
   - nouveau
   - nvidia
 
-hardened:
-  enable_namespaces: true
+#hardened:
+#  enable_namespaces: true
+
+display_manager: lightdm
+desktop_environment: xfce-i3

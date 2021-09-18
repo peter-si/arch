@@ -14,6 +14,9 @@
       - xfce4-session
       - xfce4-settings
       - xfconf
+      - xcb-util-cursor
+      - awesome
+      - light-locker
     state: present
 
 - name: Install XFCE and awesome aur packages
@@ -30,24 +33,19 @@
 
 - name: Push desktop apps
   copy:
-    src: {{ item }}.desktop
-    dest: /usr/local/share/applications/{{ item }}.desktop
+    src: "{{ item }}.desktop"
+    dest: "/usr/share/applications/{{ item }}.desktop"
   with_items:
     - sxhkd
     - awesome
 
 - name: Copy the autostart scripts
-  copy: src=/usr/share/applications/{{item}}.desktop dest=/home/{{ user.name }}/.config/autostart/ owner={{ user.name }} group={{ user.group }}
+  copy: src="/usr/share/applications/{{ item }}.desktop" dest=/home/{{ user.name }}/.config/autostart/ owner={{ user.name }} group={{ user.group }}
   with_items:
     - picom
     - nm-applet
-    - redshift-gtk
-    - protonmail-bridge
-    - spotify
-    - thunderbird
     - sxhkd
     - awesome
-    - com.nextcloud.desktopclient.nextcloud
 
 - name: Copy spotify client script
   copy: src=sp dest=/usr/local/bin/sp mode=755

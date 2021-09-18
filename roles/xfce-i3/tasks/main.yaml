@@ -2,7 +2,7 @@
 - name: Install XFCE and i3 packages
   pacman:
     name:
-      - dunst
+#      - dunst
       - python-pywal
       - python-dbus
       - picom
@@ -21,6 +21,9 @@
       - xfce4-session
       - xfce4-settings
       - xfconf
+      - xcb-util-cursor
+      - awesome
+      - light-locker
     state: present
 
 - name: Install XFCE and i3 aur packages
@@ -40,21 +43,41 @@
     - aur
 
 - name: Copy the autostart scripts
-  copy: src=/usr/share/applications/{{item}} dest=/home/{{ user.name }}/.config/autostart/ owner={{ user.name }} group={{ user.group }}
+  copy:
+    src: /usr/share/applications/{{item}}
+    dest: /home/{{ user.name }}/.config/autostart/
+    owner: {{ user.name }}
+    group: {{ user.group }}
   with_items:
     - picom.desktop
     - nm-applet.desktop
-    - redshift-gtk.desktop
-    - protonmail-bridge.desktop
-    - spotify.desktop
-    - thunderbird.desktop
+#    - protonmail-bridge.desktop
+#    - spotify.desktop
+#    - thunderbird.desktop
     - i3.desktop
 
 - name: Remove previous xfce4 sessions
-  file: path=/home/{{ user.name }}/.cache/sessions state=absent
+  file:
+    path: /home/{{ user.name }}/.cache/sessions
+    state: absent
 
 - name: Create xfce4 configuration directory in user home
-  file: path=/home/{{ user.name }}/.config/xfce4/xfconf/xfce-perchannel-xml owner={{ user.name }} group={{ user.group }} state=directory
+  file:
+    path: /home/{{ user.name }}/.config/xfce4/xfconf/xfce-perchannel-xml
+    owner: {{ user.name }}
+    group: {{ user.group }}
+    state: directory
 
 - name: Copy xfce4 configuration file
-  copy: src=xfce/xfce4-session.xml dest=/home/{{ user.name }}/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml owner={{ user.name }} group={{ user.group }}
+  copy:
+    src: xfce/{{item}}
+    dest: /home/{{ user.name }}/.config/xfce4/xfconf/xfce-perchannel-xml/{{item}}
+    owner: {{ user.name }}
+    group: {{ user.group }}
+  with_items:
+    - xfce4-keyboard-shortcuts.xml
+    - xfce4-session.xml
+    - keyboards.xml
+    - xfce4-power-manager.xml
+    - xsettings.xml
+    - xfce4-notifyd.xml

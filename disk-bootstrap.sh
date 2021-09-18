@@ -48,7 +48,7 @@ function ask_root_pass(){
   if [[ ! -f "$root_pass_file" ]]; then
     echo 'Enter password for root and disk encryption:'
     read -rs rootPass
-    echo "${rootPass}" > $root_pass_file
+    printf "%s" "${rootPass}" > $root_pass_file
   fi
 }
 
@@ -73,12 +73,12 @@ function create_partitions() {
 function encrypt_disk() {
   banner "Encrypting disk"
   partprobe "$drive"
-  cryptsetup luksFormat --key-slot 9 --align-payload=8192 -s 256 -c aes-xts-plain64 /dev/disk/by-partlabel/cryptsystem
+  cryptsetup luksFormat --key-slot 9 --align-payload=8192 -s 256 -c aes-xts-plain64 -q -d "$root_pass_file" /dev/disk/by-partlabel/cryptsystem
 }
 
 function open_luks() {
   banner "Opening luks encrypted disk"
-  cryptsetup luksOpen  /dev/disk/by-partlabel/cryptsystem system
+  cryptsetup luksOpen  -d "$root_pass_file" /dev/disk/by-partlabel/cryptsystem system
   if [[ -z "$disableSwap" ]]; then
     cryptsetup plainOpen --key-file /dev/urandom /dev/disk/by-partlabel/cryptswap swap
   fi
@@ -135,7 +135,7 @@ function install_system() {
     --bind-ro=/sys:/sys \
     --bind-ro=/sys/firmware/efi/efivars:/sys/firmware/efi/efivars \
     --directory=/mnt \
-      ansible-playbook /install/playbook.yaml -M /install/library/ansible-aur/library -i /install/localhost.yaml -l "$host" --extra-vars "user_password=$(cat $root_pass_file) running_in_chroot=True disable_swap=${disableSwap} root_partition=${systemPath}"
+      ansible-playbook /install/playbook.yaml -M /install/library/ansible-aur/library -i /install/localhost.yaml -l "$host" --skip-tags firejail,bootloader --extra-vars "user_password=$(cat $root_pass_file) running_in_chroot=True disable_swap=${disableSwap} root_partition=${systemPath}"
 }
 
 function add_key_file() {

@@ -63,3 +63,6 @@
       allowed=true
       system=false
       users=
+
+- name: Copy the autostart scripts
+  copy: src="/usr/share/applications/redshift-gtk.desktop" dest=/home/{{ user.name }}/.config/autostart/ owner={{ user.name }} group={{ user.group }}

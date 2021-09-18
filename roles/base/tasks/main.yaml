@@ -9,8 +9,8 @@
 
 - name: Copy pacman hooks
   copy:
-    src: "pacman/{item}.hook"
-    dest: "/etc/pacman.d/hooks/{item}.hook"
+    src: "pacman/{{ item }}.hook"
+    dest: "/etc/pacman.d/hooks/{{ item }}.hook"
   with_items:
     - arch-audit
     - orphans

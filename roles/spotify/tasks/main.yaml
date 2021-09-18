@@ -11,3 +11,6 @@
     state: link
   tags:
     - firejail
+
+- name: Copy the autostart script
+  copy: src="/usr/share/applications/spotify.desktop" dest=/home/{{ user.name }}/.config/autostart/ owner={{ user.name }} group={{ user.group }}
