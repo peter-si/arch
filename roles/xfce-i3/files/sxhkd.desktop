@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=sxhkd
+NoDisplay=true
+GenericName=sxhkd
+Comment=X daemon that reacts to input events by executing commands
+Exec=sxhkd

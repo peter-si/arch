@@ -43,6 +43,13 @@
   tags:
     - aur
 
+- name: Push desktop apps
+  copy:
+    src: "{{ item }}.desktop"
+    dest: "/usr/share/applications/{{ item }}.desktop"
+  with_items:
+    - sxhkd
+
 - name: Copy the autostart scripts
   copy:
     src: /usr/share/applications/{{ item }}.desktop
@@ -52,7 +59,7 @@
   with_items:
     - picom
     - nm-applet
-#    - sxhkd
+    - sxhkd
 #    - protonmail-bridge
 #    - spotify
 #    - thunderbird
