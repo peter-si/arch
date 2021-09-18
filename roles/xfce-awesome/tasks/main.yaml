@@ -58,4 +58,15 @@
   file: path=/home/{{ user.name }}/.config/xfce4/xfconf/xfce-perchannel-xml owner={{ user.name }} group={{ user.group }} state=directory
 
 - name: Copy xfce4 configuration file
-  copy: src=xfce/xfce4-session.xml dest=/home/{{ user.name }}/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml owner={{ user.name }} group={{ user.group }}
+  copy:
+    src: xfce/{{item}}
+    dest: /home/{{ user.name }}/.config/xfce4/xfconf/xfce-perchannel-xml/{{ item }}
+    owner: '{{ user.name }}'
+    group: '{{ user.group }}'
+  with_items:
+    - xfce4-keyboard-shortcuts.xml
+    - xfce4-session.xml
+    - keyboards.xml
+    - xfce4-power-manager.xml
+    - xsettings.xml
+    - xfce4-notifyd.xml

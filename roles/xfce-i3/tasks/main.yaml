@@ -44,10 +44,10 @@
 
 - name: Copy the autostart scripts
   copy:
-    src: /usr/share/applications/{{item}}
-    dest: /home/{{ user.name }}/.config/autostart/
-    owner: {{ user.name }}
-    group: {{ user.group }}
+    src: /usr/share/applications/{{ item }}
+    dest: /home/{{ user.name }}/.config/autostart/{{ item }}
+    owner: '{{ user.name }}'
+    group: '{{ user.group }}'
   with_items:
     - picom.desktop
     - nm-applet.desktop
@@ -64,16 +64,16 @@
 - name: Create xfce4 configuration directory in user home
   file:
     path: /home/{{ user.name }}/.config/xfce4/xfconf/xfce-perchannel-xml
-    owner: {{ user.name }}
-    group: {{ user.group }}
+    owner: '{{ user.name }}'
+    group: '{{ user.group }}'
     state: directory
 
 - name: Copy xfce4 configuration file
   copy:
-    src: xfce/{{item}}
-    dest: /home/{{ user.name }}/.config/xfce4/xfconf/xfce-perchannel-xml/{{item}}
-    owner: {{ user.name }}
-    group: {{ user.group }}
+    src: xfce/{{ item }}
+    dest: /home/{{ user.name }}/.config/xfce4/xfconf/xfce-perchannel-xml/{{ item }}
+    owner: '{{ user.name }}'
+    group: '{{ user.group }}'
   with_items:
     - xfce4-keyboard-shortcuts.xml
     - xfce4-session.xml
