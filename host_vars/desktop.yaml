@@ -24,3 +24,6 @@ bootloader:
 pacman_additional_packages:
   - networkmanager-l2tp
   - strongswan
+
+aur_additional_packages:
+  - gotask-taskfile-bin
