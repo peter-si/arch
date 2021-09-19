@@ -63,6 +63,7 @@
   blockinfile:
     dest: /etc/geoclue/geoclue.conf
     block: |
+      url=https://location.services.mozilla.com/v1/geolocate?key=geoclue
       [redshift]
       allowed=true
       system=false
