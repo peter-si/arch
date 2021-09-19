@@ -12,3 +12,7 @@ display_manager: lightdm
 firewall:
     xdebug: true
     avahi: true
+
+pacman_additional_packages:
+  - networkmanager-l2tp
+  - strongswan

@@ -20,3 +20,7 @@ bootloader:
   kernel_parameters:
   silent: False
   plymouth: False
+
+pacman_additional_packages:
+  - networkmanager-l2tp
+  - strongswan

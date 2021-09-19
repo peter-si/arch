@@ -14,6 +14,15 @@
     - packages
     - additional
 
+- name: Install additional packages
+  pacman:
+    name: "{{ pacman_additional_packages }}"
+    state: present
+  tags:
+    - packages
+    - additional
+  when: pacman_additional_packages is defined and (pacman_additional_packages|length>0)
+
 - name: Create pacman hook directory
   file: path=/etc/pacman.d/hooks state=directory
   tags:
@@ -33,6 +42,16 @@
   tags:
     - aur
     - packages
+
+- name: Install AUR additional packages
+  pacman:
+    name: "{{ aur_additional_packages }}"
+    state: present
+  tags:
+    - aur
+    - packages
+    - additional
+  when: aur_additional_packages is defined and (aur_additional_packages|length>0)
 
 - name: Push pacman cache cleanup service
   copy: src=paccache.service dest=/etc/systemd/system/paccache.service
