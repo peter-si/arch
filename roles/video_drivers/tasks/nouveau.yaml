@@ -3,4 +3,5 @@
     name:
       - mesa
       - lib32-mesa
+      - xf86-video-nouveau
     state: present

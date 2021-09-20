@@ -1,6 +1,8 @@
 ---
 - name: Install Steam
-  pacman: name=steam state=present
+  pacman:
+    name: steam lib32-fontconfig ttf-liberation
+    state: present
 
 - name: Jail Steam
   file: src=/usr/bin/firejail

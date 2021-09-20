@@ -95,7 +95,8 @@
 - hosts: asus
   become: yes
   roles:
-    - { role: laptop, tags: ['laptop'], when: "'xfce' not in desktop_environment" }
+#    - { role: tlp, tags: ['tlp'] }
+    - { role: laptop, tags: ['laptop'] }
     - { role: logitech, tags: [ 'logitech' ] }
     - { role: asus, tags: ['asus'] }
     - { role: bluetooth, tags: ['bluetooth'], when: "bluetooth is defined" }

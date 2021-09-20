@@ -1,6 +1,4 @@
 ---
-- include: tlp.yaml
-
 - name: Copy touchpad configuration file
   copy: src=30-touchpad.conf dest=/etc/X11/xorg.conf.d/30-touchpad.conf
   tags:

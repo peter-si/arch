@@ -12,7 +12,7 @@
 
 - name: Push TLP battery threshold config
   copy:
-    src: tlp/20-battery.conf
+    src: 20-battery.conf
     dest: /etc/tlp.d/
   notify:
     - restart tlp
@@ -21,7 +21,7 @@
 
 - name: Push TLP radio device config
   copy:
-    src: tlp/20-rdw.conf
+    src: 20-rdw.conf
     dest: /etc/tlp.d/
   notify:
     - restart tlp
@@ -30,7 +30,7 @@
 
 - name: Push TLP PCIe config
   copy:
-    src: tlp/20-pcie.conf
+    src: 20-pcie.conf
     dest: /etc/tlp.d/
   notify:
     - restart tlp
