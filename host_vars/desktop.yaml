@@ -24,6 +24,8 @@ bootloader:
 pacman_additional_packages:
   - networkmanager-l2tp
   - strongswan
+  - kubectl
 
 aur_additional_packages:
   - gotask-taskfile-bin
+  - rke-bin

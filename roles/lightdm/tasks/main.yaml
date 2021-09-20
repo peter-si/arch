@@ -4,7 +4,7 @@
     name:
       - lightdm
       - lightdm-gtk-greeter
-      - numlockx
+#      - numlockx
     state: present
   notify: Enable LightDM
 
@@ -75,7 +75,6 @@
     line: "auth        sufficient  pam_succeed_if.so user ingroup nopasswdlogin"
     insertafter: "^\\#\\%PAM"
     firstmatch: yes
-  notify: Enable LightDM
 
 - name: Enable LightDM
   systemd: name=lightdm-plymouth.service enabled=yes

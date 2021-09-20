@@ -4,6 +4,17 @@
   become_user: "{{ user.name }}"
   aur: name=nordvpn-bin
 
+- name: Create nordvpn group
+  group:
+    name: nordvpn
+    state: present
+
+- name: Add user to nordvpn group
+  user:
+    name: "{{ user.name }}"
+    group: nordvpn
+    append: yes
+
 #- name: Enable nordvpnd.service
 #  systemd:
 #    name: nordvpnd.service

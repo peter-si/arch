@@ -100,8 +100,8 @@
 - name: Limit amount of processes
   blockinfile:
     block: |
-      * soft nproc 1500
-      * hard nproc 2500
+      * soft nproc 2500
+      * hard nproc 3000
     path: /etc/security/limits.conf
 
 - include: locale.yaml
