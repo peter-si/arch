@@ -11,9 +11,9 @@ user:
   city: Bratislava
 
 bootloader:
-  loader: refind
+  loader: systemd
   path: /boot
-  time: 3
+  time: 1
   theme_path: refind-theme-regular
   theme_repo: https://github.com/bobafetthotmail/refind-theme-regular.git
   kernel_parameters:
@@ -208,7 +208,7 @@ x:
 
 display_manager: lightdm
 
-desktop_environment: xfce-awesome
+desktop_environment: xfce-i3
 
 gdm:
   sound: False

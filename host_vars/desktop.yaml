@@ -7,7 +7,6 @@ video_drivers:
 #  enable_namespaces: true
 
 display_manager: lightdm
-desktop_environment: xfce-i3
 
 firewall:
     xdebug: true

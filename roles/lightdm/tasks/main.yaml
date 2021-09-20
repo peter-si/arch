@@ -6,7 +6,6 @@
       - lightdm-gtk-greeter
 #      - numlockx
     state: present
-  notify: Enable LightDM
 
 - name: Create autologin group
   group:
@@ -18,10 +17,10 @@
     name: nopasswdlogin
     state: present
 
-- name: Add the user to autologin group
-  user: name={{ user.name }} groups=autologin append=yes
-  tags:
-    - user
+#- name: Add the user to autologin group
+#  user: name={{ user.name }} groups=autologin append=yes
+#  tags:
+#    - user
 
 #- name: Add the user to nopasswdlogin group
 #  user: name={{ user.name }} groups=nopasswdlogin append=yes

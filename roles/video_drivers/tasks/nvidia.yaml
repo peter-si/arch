@@ -9,12 +9,17 @@
 
 - name: Install nvidia dkms on hardened
   pacman:
-    name:
-      - nvidia-dkms
+    name: nvidia-dkms
     state: present
   when: hardened is defined
   tags:
     - hardened
+
+- name: Install nvidia prime when more drivers are selected
+  pacman:
+    name: nvidia-prime
+    state: present
+  when: video_drivers|length > 1
 
 - name: Copy nvdia kernel module config
   copy: src=nvidia.conf dest=/etc/modprobe.d/nvidia.conf
