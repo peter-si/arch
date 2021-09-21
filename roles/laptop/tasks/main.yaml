@@ -56,3 +56,25 @@
 #    user: "{{ user.name }}"
 #  tags:
 #    - aur
+
+- name: Install gestures prerequisites
+  pacman:
+    name:
+      - wmctrl
+      - xdotool
+    state: present
+
+- name: Install gestures
+  become: yes
+  become_user: "{{ user.name }}"
+  aur: name=libinput-gestures
+  tags:
+    - aur
+
+- name: Add the user to the input groups
+  user:
+    name: "{{ user.name }}"
+    groups: input
+    append: yes
+  tags:
+    - user
