@@ -39,3 +39,11 @@
     XDG_RUNTIME_DIR: "/run/user/{{ user.uid }}"
   notify: start gpg-agent-ssh
   when: gnupg.enable_agent == True and gnupg.emulate_ssh == True
+
+- name: Create .gnupg dir
+  file:
+    path: /home/{{ user.name }}/.gnupg
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+    state: directory
+    mode: 0700

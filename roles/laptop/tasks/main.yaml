@@ -56,3 +56,27 @@
 #    user: "{{ user.name }}"
 #  tags:
 #    - aur
+
+- name: Install clight
+  become: yes
+  become_user: "{{ user.name }}"
+  aur:
+    name:
+      - clightd
+      - clight
+      - clight-gui-git
+  tags:
+    - aur
+
+- name: Allow clight to access geoclue
+  blockinfile:
+    dest: /etc/geoclue/geoclue.conf
+    block: |
+      url=https://location.services.mozilla.com/v1/geolocate?key=geoclue
+      [clightc]
+      allowed=true
+      system=false
+      users=
+
+- name: Copy the autostart scripts
+  copy: src="/usr/share/applications/clight-gui.desktop" dest=/home/{{ user.name }}/.config/autostart/ owner={{ user.name }} group={{ user.group }}

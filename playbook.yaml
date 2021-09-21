@@ -60,7 +60,6 @@
     - { role: cups, tags: ['cups'] }
     - { role: office, tags: ['office'] }
     - { role: pdf, tags: ['pdf'] }
-    - { role: redshift, tags: ['redshift'] }
     - { role: torrent, tags: ['torrent'] }
     - { role: virtualbox, tags: ['virtualbox'] }
     - { role: sound, tags: ['sound'] }
@@ -89,13 +88,14 @@
     - alu-kube-admin
   become: yes
   roles:
+    - { role: redshift, tags: ['redshift'] }
     - { role: kubernetes, tags: [ 'kubernetes' ] }
 #    - { role: udev, tags: [ 'udev' ] }
 
 - hosts: asus
   become: yes
   roles:
-#    - { role: tlp, tags: ['tlp'] }
+    - { role: tlp, tags: ['tlp'] }
     - { role: laptop, tags: ['laptop'] }
     - { role: logitech, tags: [ 'logitech' ] }
     - { role: asus, tags: ['asus'] }

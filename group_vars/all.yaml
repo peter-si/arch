@@ -20,9 +20,6 @@ bootloader:
   silent: False
   plymouth: False
 
-additional_hosts: |
-  127.0.0.1 admin.odin auth.odin platform.odin helpdesk.odin frm.odin web.odin rest.odin rabbitmq.odin phpmyadmin.odin services.odin
-  10.1.13.70 kibana.ws.int
 
 dotfiles:
   url: git@github.com:peter-si/arch-dotfiles.git
