@@ -49,7 +49,7 @@
     - aur
 
 #- name: Install battop
-#  become: yes
+#  become: yesblueproximity-py3-git
 #  become_user: "{{ user.name }}"
 #  aur:
 #    name: battop
@@ -80,3 +80,25 @@
 
 - name: Copy the autostart scripts
   copy: src="/usr/share/applications/clight-gui.desktop" dest=/home/{{ user.name }}/.config/autostart/ owner={{ user.name }} group={{ user.group }}
+
+- name: Install gestures prerequisites
+  pacman:
+    name:
+      - wmctrl
+      - xdotool
+    state: present
+
+- name: Install gestures
+  become: yes
+  become_user: "{{ user.name }}"
+  aur: name=libinput-gestures
+  tags:
+    - aur
+
+- name: Add the user to the input groups
+  user:
+    name: "{{ user.name }}"
+    groups: input
+    append: yes
+  tags:
+    - user
