@@ -3,8 +3,18 @@
   pacman:
     name:
       - lightdm
-      - lightdm-gtk-greeter
+#      - lightdm-gtk-greeter
+      - lightdm-webkit2-greeter
+      - accountsservice
 #      - numlockx
+    state: present
+
+- name: Install LightDM
+  become: yes
+  become_user: "{{ user.name }}"
+  aur:
+    name:
+      - lightdm-webkit2-theme-glorious
     state: present
 
 - name: Create autologin group
@@ -27,16 +37,19 @@
 #  tags:
 #    - user
 
-- name: Copy lightdm greeter config
+- name: Copy lightdm greeters config
   copy:
-    dest: /etc/lightdm/lightdm-gtk-greeter.conf
-    src: lightdm-gtk-greeter.conf
+    dest: /etc/lightdm/
+    src: "{{ item }}"
+  with_items:
+#    - lightdm-gtk-greeter.conf
+    - lightdm-webkit2-greeter.conf
 
 - name: Specify LightDM greeter session
   lineinfile:
     dest: /etc/lightdm/lightdm.conf
     regexp: "^\\#?greeter-session="
-    line: "greeter-session=lightdm-gtk-greeter"
+    line: "greeter-session=lightdm-webkit2-greeter"
 
 - name: Specify LightDM greeter session wrapper
   lineinfile:
@@ -82,3 +95,9 @@
 - name: Enable LightDM
   systemd: name=lightdm.service enabled=yes
   when: bootloader.plymouth is not defined or bootloader.plymouth == False
+
+- name: Allow lightdm to login with PAM
+  lineinfile:
+    line: "+:lightdm:LOCAL"
+    insertbefore: '\+:root:LOCAL'
+    dest: /etc/security/access.conf
