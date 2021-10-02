@@ -7,8 +7,7 @@
       - tlp
       - tlp-rdw
     state: present
-  tags:
-    - tlp
+
 
 - name: Push TLP battery threshold config
   copy:
@@ -16,8 +15,7 @@
     dest: /etc/tlp.d/
   notify:
     - restart tlp
-  tags:
-    - tlp
+
 
 - name: Push TLP radio device config
   copy:
@@ -25,8 +23,7 @@
     dest: /etc/tlp.d/
   notify:
     - restart tlp
-  tags:
-    - tlp
+
 
 - name: Push TLP PCIe config
   copy:
@@ -34,22 +31,25 @@
     dest: /etc/tlp.d/
   notify:
     - restart tlp
-  tags:
-    - tlp
+
 
 - name: Mask systemd radio service
   command: systemctl mask systemd-rfkill.service
-  tags:
-    - tlp
+
 
 - name: Mask systemd radio socket
   command: systemctl mask systemd-rfkill.socket
-  tags:
-    - tlp
+
 
 - name: Enable TLP
   systemd:
     name: tlp.service
     enabled: yes
+
+
+- name: Install tlpui
+  become: yes
+  become_user: "{{ user.name }}"
+  aur: name=tlpui
   tags:
-    - tlp
+    - aur

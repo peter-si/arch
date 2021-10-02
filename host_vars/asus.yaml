@@ -21,3 +21,28 @@ pacman_additional_packages:
 aur_additional_packages:
   - gotask-taskfile-bin
   - rke-bin
+
+additional_hosts: |
+  # Development stack
+  127.0.0.1       frm.odin
+  127.0.0.1       admin.odin helpdesk.odin
+  127.0.0.1       rest.odin
+  127.0.0.1       auth.odin
+  127.0.0.1       notification.odin
+  127.0.0.1       services.odin
+  127.0.0.1       payment.odin
+  127.0.0.1       paywall.odin
+  127.0.0.1       invoice-validation.odin
+  127.0.0.1       spa-cart.website.odin
+  127.0.0.1       api-cart.website.odin
+  127.0.0.1       sk.website.odin
+  127.0.0.1       cz.website.odin
+  127.0.0.1       hu.website.odin
+  127.0.0.1       rabbitmq.infra.odin
+  127.0.0.1       db.infra.odin
+  127.0.0.1       develadmin.odin
+  # Delete after release of New Website in SK market
+  127.0.0.1       spa-cart.web.odin
+  127.0.0.1       api-cart.web.odin
+  127.0.0.1       web.odin
+  10.1.13.70 kibana.ws.int
