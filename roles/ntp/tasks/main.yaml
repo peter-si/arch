@@ -1,20 +1,15 @@
 ---
-- name: Install chrony
-  pacman: name=chrony state=present
+- name: Set timesyncd pools
+  lineinfile:
+    regexp: "^\\#?NTP="
+    line: NTP=europe.pool.ntp.org 0.arch.pool.ntp.org 1.arch.pool.ntp.org 2.arch.pool.ntp.org 3.arch.pool.ntp.org
+    path: /etc/systemd/timesyncd.conf
 
-- name: Install chrony networkmanager dispatcher
-  become: yes
-  become_user: "{{ user.name }}"
-  aur: name=networkmanager-dispatcher-chrony
-  tags:
-    - aur
-    - networkmanager
+- name: Enable timesyncd
+  systemd:
+    name: systemd-timesyncd.service
+    enabled: yes
+  notify: Start timesyncd
 
-- name: Push chrony configuration file
-  copy: src=chrony.conf dest=/etc/chrony.conf
-  notify:
-    - restart chrony
-
-- name: Enable and start chrony
-  systemd: name=chronyd.service enabled=yes
-  notify: start chrony
+- name: Enable ntp
+  command: timedatectl set-ntp true

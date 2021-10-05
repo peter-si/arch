@@ -1,8 +1,4 @@
 ---
-- name: restart chrony
-  systemd: name=chronyd.service state=restarted
-  when: running_in_chroot == False
-
-- name: start chrony
-  systemd: name=chronyd.service state=started
+- name: Start timesyncd
+  systemd: name=systemd-timesyncd.service state=started
   when: running_in_chroot == False
