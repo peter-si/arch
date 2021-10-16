@@ -2,7 +2,6 @@
 - name: Install XFCE and i3 packages
   pacman:
     name:
-#      - dunst
       - python-pywal
       - python-dbus
       - picom
@@ -22,7 +21,7 @@
       - xfce4-settings
       - xfconf
       - xcb-util-cursor
-      - xsecurelock
+      - light-locker
       - sxhkd
     state: present
 
