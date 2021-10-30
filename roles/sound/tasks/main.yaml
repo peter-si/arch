@@ -4,23 +4,24 @@
     name: alsa-utils
     state: present
 
-- name: Install Pipewire
+- name: Install PulseAudio
   pacman:
     name:
-      - pipewire
-      - pipewire-pulse
-      - pipewire-alsa
+      - pulseaudio
+      - pulseaudio-alsa
       - pavucontrol
     state: present
 
-- name: Create pipewire config dir
-  file:
-    path: /etc/pipewire/media-session.d
-    state: directory
-    recurse: yes
+- name: Switch output to newly connected devices
+  lineinfile:
+    dest: /etc/pulse/default.pa
+    state: present
+    line: "load-module module-switch-on-connect"
 
-- name: Enable pipewire bluez5 module
-  file:
-    path: /etc/pipewire/media-session.d/with-pulseaudio
-    state: touch
-
+- name: Install pulseaudio-ctl
+  become: yes
+  become_user: "{{ user.name }}"
+  aur:
+    name: pulseaudio-ctl
+  tags:
+    - aur
