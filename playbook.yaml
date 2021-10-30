@@ -44,7 +44,6 @@
     - { role: gdm, tags: ['gdm'], when: "display_manager == 'gdm'" }
     - { role: i3, tags: ['i3'], when: "desktop_environment == 'i3'" }
     - { role: xfce-i3, tags: ['xfce-i3'], when: "desktop_environment == 'xfce-i3'" }
-    - { role: xfce-awesome, tags: ['xfce-awesome'], when: "desktop_environment == 'xfce-awesome'" }
     - { role: gnome, tags: ['gnome'], when: "desktop_environment == 'gnome'" }
     - { role: wireless, tags: ['wireless'] }
     - { role: macchiato, tags: [ 'macchiato' ] }

@@ -14,7 +14,7 @@
   become_user: "{{ user.name }}"
   aur:
     name:
-      - lightdm-webkit2-theme-glorious
+      - lightdm-webkit-theme-aether
     state: present
 
 - name: Create autologin group
@@ -101,3 +101,26 @@
     line: "+:lightdm:LOCAL"
     insertbefore: '\+:root:LOCAL'
     dest: /etc/security/access.conf
+
+- name: Copy user icon
+  copy:
+    src: archlinux-user.png
+    dest: /usr/share/icons/archlinux-user.png
+
+- name: Make localstorage dir
+  file:
+    path: /var/lib/lightdm/.local/share/webkitgtk
+    state: directory
+    recurse: yes
+    owner: lightdm
+    group: lightdm
+    mode: 0700
+
+- name: Copy localstorage
+  copy:
+    src: localstorage
+    dest: /var/lib/lightdm/.local/share/webkitgtk
+    owner: lightdm
+    group: lightdm
+    mode: 0700
+    directory_mode: 0700

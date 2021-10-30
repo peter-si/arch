@@ -144,7 +144,7 @@ firewall:
 browser_choices:
   - firefox -P default
   - firefox -P work
-  - firewarden chromium
+  - chromium
 #  - tor-browser-en
 
 passwordless_sudo:
