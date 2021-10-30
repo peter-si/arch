@@ -62,6 +62,7 @@
     - { role: torrent, tags: ['torrent'] }
     - { role: virtualbox, tags: ['virtualbox'] }
     - { role: sound, tags: ['sound'] }
+    - { role: bluetooth, tags: ['bluetooth'], when: "bluetooth is defined" }
     - { role: parcimonie, tags: ['parcimonie'], when: "tor is defined" }
     - { role: localtime, tags: ['localtime'], when: "localtime is defined" }
     - { role: clipboard, tags: ['clipboard'] }
@@ -98,7 +99,6 @@
     - { role: laptop, tags: ['laptop'] }
     - { role: logitech, tags: [ 'logitech' ] }
     - { role: asus, tags: ['asus'] }
-    - { role: bluetooth, tags: ['bluetooth'], when: "bluetooth is defined" }
 
 #    - { role: thinkpad, tags: ['thinkpad'], when: "'ThinkPad' in ansible_product_version" }
 #    - { role: optical, tags: ['optical'] }

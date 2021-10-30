@@ -165,9 +165,6 @@ fingerprint: False
 #    - docker
 #  allow_lan_dns: True
 
-bluetooth:
-  disable: False
-
 firejail:
   enabled: False
   blacklist:

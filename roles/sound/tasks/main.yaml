@@ -8,8 +8,19 @@
   pacman:
     name:
       - pipewire
-      - wireplumber
       - pipewire-pulse
       - pipewire-alsa
       - pavucontrol
     state: present
+
+- name: Create pipewire config dir
+  file:
+    path: /etc/pipewire/media-session.d
+    state: directory
+    recurse: yes
+
+- name: Enable pipewire bluez5 module
+  file:
+    path: /etc/pipewire/media-session.d/with-pulseaudio
+    state: touch
+

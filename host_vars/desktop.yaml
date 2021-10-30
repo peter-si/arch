@@ -29,6 +29,9 @@ aur_additional_packages:
   - gotask-taskfile-bin
   - rke-bin
 
+bluetooth:
+  disable: False
+
 additional_hosts: |
   # Development stack
   127.0.0.1       frm.odin

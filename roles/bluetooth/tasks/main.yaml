@@ -32,3 +32,8 @@
   systemd: name="rfkill-block@bluetooth.service" enabled=yes
   when: bluetooth.disable == True
   notify: Block bluetooth service
+
+- name: Copy pipewire bluez config
+  copy:
+    src: bluez-monitor.conf
+    dest: /etc/pipewire/media-session.d/bluez-monitor.conf
