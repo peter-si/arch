@@ -15,6 +15,7 @@
       - thunar-media-tags-plugin
       - thunar-archive-plugin
       - tumbler
+      - file-roller
       - xfce4-dev-tools
       - xfce4-power-manager
       - xfce4-session
