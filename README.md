@@ -98,12 +98,12 @@ journalctl -fk | grep "IN=.*OUT=.*"
 ## SSH
 
 By default, Ansible will attempt to install the private SSH key for the user. The
-key should be available at the path specified in the `ssh.user_key` variable.
+key should be available at the path specified in the `ssh_user_key` variable.
 Removing this variable will cause the key installation task to be skipped.
 
 ### SSHD
 
-If `ssh.enable_sshd` is set to `True` the [systemd socket service][4] will be
+If `ssh_enable_sshd` is set to `True` the [systemd socket service][4] will be
 enabled. By default, sshd is configured but not enabled.
 
 ## Dotfiles

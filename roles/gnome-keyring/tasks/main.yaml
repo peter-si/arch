@@ -2,7 +2,6 @@
 - name: Install gnome-keyring
   pacman:
     name:
-      - libgnome-keyring
       - gnome-keyring
     state: present
 
@@ -17,6 +16,7 @@
     insertafter: "^auth"
     line: "auth       optional     pam_gnome_keyring.so"
 
+# /etc/pam.d/passwd sometimes contains only @include....take this into consideration
 - name: Add gnome-keyring auth to pam config
   lineinfile:
     dest: /etc/pam.d/passwd

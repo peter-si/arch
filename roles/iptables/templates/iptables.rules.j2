@@ -43,10 +43,6 @@
 -A TCP -p tcp -m tcp --dport 30000:32767 -m comment --comment "NodePort Services" -j ACCEPT
 -A UDP -p udp -m udp --dport 8472 -m comment --comment "Canal/Flannel VXLAN overlay networking" -j ACCEPT
 {% endif %}
-{% if syncthing.open_ports is defined and syncthing.open_ports == True %}
--A TCP -p tcp -m tcp --dport 22000 -j ACCEPT
--A UDP -p udp -m udp --dport 21027 -j ACCEPT
-{% endif %}
 {% if firewall.xdebug is defined and firewall.xdebug == True %}
 -A TCP -s 172.0.0.0/8 -p tcp -m tcp --dport 9003 -m comment --comment "docker xdebug 3" -j ACCEPT
 -A TCP -d 172.0.0.0/8 -p tcp -m tcp --dport 9003 -m comment --comment "docker xdebug 3" -j ACCEPT
