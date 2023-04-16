@@ -24,5 +24,6 @@
   vars:
     fallback: true
 
-- name: Update bootclt bootloader
-  command: bootctl update
+- name: Update bootctl bootloader
+  command: bootctl update --graceful
+  notify: rebuild bootloader

@@ -32,6 +32,7 @@
 
 - name: Install x11-ask-pass
   pacman: name=x11-ssh-askpass state=present
+  when: desktop_environment != 'gnome'
 
 - name: Make directory for user SSH key
   file: path=/home/{{ user.name }}/.ssh state=directory owner={{ user.name }} group={{ user.group }} mode=0700

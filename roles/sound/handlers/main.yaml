@@ -8,4 +8,15 @@
   become_user: "{{ user.name }}"
   environment:
     XDG_RUNTIME_DIR: "/run/user/{{ user.uid }}"
-  when: running_in_chroot == False
+  when: running_in_chroot == False and sound == 'pulse'
+
+- name: restart pipewire as user
+  systemd:
+    name: pipewire-pulse.service
+    scope: user
+    state: restarted
+  become: yes
+  become_user: "{{ user.name }}"
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ user.uid }}"
+  when: running_in_chroot == False and sound == 'pipewire'

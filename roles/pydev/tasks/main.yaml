@@ -13,5 +13,4 @@
   pacman:
     name:
       - python-docs
-      - python2-docs
     state: present

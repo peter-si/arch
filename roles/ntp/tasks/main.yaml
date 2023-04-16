@@ -9,7 +9,6 @@
   systemd:
     name: systemd-timesyncd.service
     enabled: yes
-  notify: Start timesyncd
-
-- name: Enable ntp
-  command: timedatectl set-ntp true
+  notify:
+    - Start timesyncd
+    - Enable ntp

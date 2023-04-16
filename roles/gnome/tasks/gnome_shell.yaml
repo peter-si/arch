@@ -15,5 +15,4 @@
   pacman:
     name:
       - gnome-shell-extensions
-      - chrome-gnome-shell
     state: "{{ 'present' if gnome.gnome_shell.extensions_support else 'absent' }}"

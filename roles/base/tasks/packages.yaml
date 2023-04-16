@@ -21,7 +21,7 @@
   tags:
     - packages
     - additional
-  when: pacman_additional_packages is defined and (pacman_additional_packages|length>0)
+  when: pacman_additional_packages is defined and (pacman_additional_packages|default([])|length>0)
 
 - name: Create pacman hook directory
   file: path=/etc/pacman.d/hooks state=directory
@@ -51,7 +51,7 @@
     - aur
     - packages
     - additional
-  when: aur_additional_packages is defined and (aur_additional_packages|length>0)
+  when: aur_additional_packages is defined and (aur_additional_packages|default([])|length>0)
 
 - name: Push pacman cache cleanup service
   copy: src=paccache.service dest=/etc/systemd/system/paccache.service

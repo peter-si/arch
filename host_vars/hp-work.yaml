@@ -1,9 +1,12 @@
-hostname: aluasus
+hostname: aluwork
 
 video_drivers:
+  - amdgpu
   - nvidia
 
-display_manager: lightdm
+display_manager: gdm
+
+desktop_environment: gnome
 
 #hardened:
 #  enable_namespaces: true
@@ -17,5 +20,8 @@ pacman_additional_packages:
   - strongswan
   - kubectl
 
+sound: pipewire
+
 bluetooth:
   disable: False
+

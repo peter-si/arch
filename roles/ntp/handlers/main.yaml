@@ -2,3 +2,7 @@
 - name: Start timesyncd
   systemd: name=systemd-timesyncd.service state=started
   when: running_in_chroot == False
+
+- name: Enable ntp
+  command: timedatectl set-ntp true
+  when: running_in_chroot == False

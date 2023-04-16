@@ -90,14 +90,16 @@ pacman_fonts:
     - ttf-opensans
     - ttf-ubuntu-font-family
     - ttf-font-awesome
+    - ttf-firacode-nerd
+    - ttf-jetbrains-mono-nerd
+
+pacman_additional_packages: []
 
 aur_packages:
     - yay
     - ctop
     - downgrade
     - myrepos
-    - teamviewer
-    - slack-desktop
     - pacman-cleanup-hook
 
 aur_fonts:
@@ -109,10 +111,10 @@ aur_fonts:
     - ttf-oswald
     - ttf-quintessential
     - ttf-signika
-    - nerd-fonts-fira-code
-    - nerd-fonts-jetbrains-mono
     - ttf-font-awesome-4
     - ttf-weather-icons
+
+aur_additional_packages: []
 
 ssh:
   port: 22
@@ -138,6 +140,8 @@ wireless_packages:
   - iwd
 
 video_drivers:
+
+sound: pulse
 
 firewall:
 
@@ -185,6 +189,13 @@ firejail:
     - ~/.config/syncthing
     - ~/.config/syncthing-gtk
     - ~/.local/tasks
+
+additional_hosts: |
+  # Development stack
+  #127.0.0.1 alpinresorts.com
+  #127.0.0.1 www.alpinresorts.com
+  #127.0.0.1 dev.alpinresorts.com
+  192.168.2.210 sonarr.alu-kube radarr.alu-kube plex.alu-kube dash.alu-kube resilio.alu-kube
 
 journal:
   max_size: 500M
@@ -240,7 +251,7 @@ gnome:
   theme:
     theme_name: Adwaita
     icon_theme_name: Adwaita
-    font_name: Dejavu Sans 13
+    font_name: FiraCode Nerd Font Mono Regular 13
     dark_variant: True
   gnome_shell:
     disable_top_left_hot_corner: False

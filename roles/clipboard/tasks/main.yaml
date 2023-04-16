@@ -3,22 +3,10 @@
   become: yes
   become_user: "{{ user.name }}"
   aur:
-    name: rofi-greenclip
+    name: gnome-shell-extension-clipboard-indicator
   tags:
     - aur
+  when: desktop_environment == 'gnome'
 
-- name: copy greenclip.service
-  copy:
-    src: greenclip.service
-    dest: /etc/systemd/user/greenclip.service
-
-- name: Enable greenclip.service
-  systemd:
-    name: greenclip.service
-    scope: user
-    enabled: yes
-  notify: start greenclip service
-  become: yes
-  become_user: "{{ user.name }}"
-  environment:
-    XDG_RUNTIME_DIR: "/run/user/{{ user.uid }}"
+- include: greenclip.yaml
+  when: desktop_environment != 'gnome'

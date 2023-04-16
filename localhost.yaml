@@ -11,3 +11,5 @@ all:
           ansible_connection: local
         asus:
           ansible_connection: local
+        hp-work:
+          ansible_connection: local

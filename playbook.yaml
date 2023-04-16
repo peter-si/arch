@@ -38,7 +38,8 @@
 - hosts: gui
   become: yes
   roles:
-    - { role: x, tags: ['x'] }
+    - { role: x, tags: ['x'], when: "desktop_environment != 'gnome'" }
+    - { role: sound, tags: ['sound'] }
     - { role: no-dm, tags: [ 'no-dm' ], when: "display_manager == 'no-dm'" }
     - { role: lightdm, tags: ['lightdm'], when: "display_manager == 'lightdm'" }
     - { role: gdm, tags: ['gdm'], when: "display_manager == 'gdm'" }
@@ -60,8 +61,7 @@
     - { role: office, tags: ['office'] }
     - { role: pdf, tags: ['pdf'] }
     - { role: torrent, tags: ['torrent'] }
-    - { role: virtualbox, tags: ['virtualbox'] }
-    - { role: sound, tags: ['sound'] }
+#    - { role: virtualbox, tags: ['virtualbox'] }
     - { role: bluetooth, tags: ['bluetooth'], when: "bluetooth is defined" }
     - { role: parcimonie, tags: ['parcimonie'], when: "tor is defined" }
     - { role: localtime, tags: ['localtime'], when: "localtime is defined" }
@@ -91,6 +91,13 @@
     - { role: redshift, tags: ['redshift'] }
     - { role: kubernetes, tags: [ 'kubernetes' ] }
 #    - { role: udev, tags: [ 'udev' ] }
+
+- hosts: hp-work
+  become: yes
+  roles:
+    - { role: tlp, tags: ['tlp'] }
+    - { role: laptop, tags: ['laptop'] }
+    - { role: logitech, tags: [ 'logitech' ] }
 
 - hosts: asus
   become: yes

@@ -1,0 +1,14 @@
+---
+- name: Install Pipewire
+  pacman:
+    name:
+      - pipewire
+      - pipewire-pulse
+      - pavucontrol
+      - wireplumber
+    state: present
+
+- name: Install pasystray
+  pacman:
+    name: pasystray
+    state: present

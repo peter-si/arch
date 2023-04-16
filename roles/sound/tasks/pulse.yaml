@@ -1,0 +1,22 @@
+---
+- name: Install PulseAudio
+  pacman:
+    name:
+      - pulseaudio
+      - pulseaudio-alsa
+      - pavucontrol
+    state: present
+
+- name: Switch output to newly connected devices
+  lineinfile:
+    dest: /etc/pulse/default.pa
+    state: present
+    line: "load-module module-switch-on-connect"
+
+- name: Install pulseaudio-ctl
+  become: yes
+  become_user: "{{ user.name }}"
+  aur:
+    name: pulseaudio-ctl
+  tags:
+    - aur
